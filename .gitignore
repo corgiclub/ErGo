@@ -128,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# ignore CPM-LM
+cpm-lm-tf2_v2/

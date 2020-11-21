@@ -1,22 +1,20 @@
 # ErGo
+
 A qq-bot named 二狗, powered by mirai.
 
 > Cogito, ergo sum.
 >
 > 我思，故我在。
 
+## 一个基于 Garia 的测试性 bot
 
-## 一个基于Garia的测试性bot
+#### Bot 功能
 
-#### Bot功能
-
-pixiv搜图
+pixiv 搜图
 
 备忘录
 
 视频详细信息
-
-
 
 ### 数据库
 
@@ -28,23 +26,35 @@ pixiv搜图
 
 #### 群聊数据库
 
-##### 	群A表
+##### 群 A 表
 
-	user_id	type    content     is_instruction
+    user_id	type    content     is_instruction
 
 #### 多媒体数据库
 
-##### 	ImageInGroupMessage（注意存储格式）
+##### ImageInGroupMessage（注意存储格式）
 
     content     mentioned_times     is_porn
 
-##### 	AudioInGroupMessage
+##### AudioInGroupMessage
 
     content
 
-##### 	AnimeImageHistory
+##### AnimeImageHistory
 
-	content	pid	twitter_url	is_porn	tag
-
+    content	pid	twitter_url	is_porn	tag
 
 #### 外置数据库
+
+# 依赖
+
+## CPM-LM-TF2 中文预训练 GPT 模型
+
+源码: https://github.com/qhduan/CPM-LM-TF2
+
+模型下载链接: https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ 密码: n0nt
+--来自百度网盘超级会员 V7 的分享
+
+or GDrive：
+
+https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing
