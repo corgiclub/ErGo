@@ -52,3 +52,16 @@ async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageC
         ]))
 
 
+def detect_vid(text):
+    pass
+
+
+"""
+av号     
+bv号     
+含av链接
+含bv链接
+移动端短链接
+
+
+"""
