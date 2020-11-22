@@ -1,8 +1,12 @@
 import re
 
-pat = 'av[1-9][0-9]*'
-st = 'av12'
+pat_aid = 'av[1-9][0-9]{0,8}'
+pat_bid = 'bv[0-9a-z]{10}'
+pat_srt = 'https://b23.tv/[0-9a-zA-z]{6}'
 
-g = re.match(pat, st, flags=re.I)
+st = '3333av1223245'
 
-print(g)
+g = re.search(pat_aid, st, flags=re.I)
+
+print(g.group())
+
