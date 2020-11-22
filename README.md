@@ -6,6 +6,18 @@ A qq-bot named 二狗, powered by mirai.
 >
 > 我思，故我在。
 
+## 运行方法
+
+build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
+
+运行 bot 容器并启动 bot: `sh scripts/docker-start-bot.sh`
+
+仅运行 bot 容器环境(debug 使用): `sh scripts/docker-run.sh`
+
+接入正在运行的 bot 容器: `docker attach ergo-bot-container`
+
+退出正在运行的 bot 容器（不可直接 ctrl+c 或 ctrl+d）: ctrl+p ctrl+q
+
 ## 一个基于 Garia 的测试性 bot
 
 #### Bot 功能
@@ -46,9 +58,9 @@ pixiv 搜图
 
 #### 外置数据库
 
-# 依赖
+## 依赖
 
-## CPM-LM-TF2 中文预训练 GPT 模型
+### CPM-LM-TF2 中文预训练 GPT 模型
 
 源码: https://github.com/qhduan/CPM-LM-TF2
 

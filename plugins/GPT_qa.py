@@ -21,9 +21,13 @@ bcc = Get.bcc()
 async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     if message.asDisplay().startswith(('二狗')):
         try:
-            query = str(re.sub('av', '', message.asDisplay(), flags=re.I))
+            query = str(
+                re.sub('二狗', '', message.asDisplay(), flags=re.I)).strip()
+            print(f"二狗QA正在处理query: {query}")
+            answer = sample(query)[0]
+            print(f"二狗QA回答: {answer}")
             await app.sendGroupMessage(group, MessageChain.create([
-                Plain(sample(query)),
+                Plain(answer),
             ]))
         except ValueError:
             return

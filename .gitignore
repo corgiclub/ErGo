@@ -132,3 +132,7 @@ dmypy.json
 
 # ignore CPM-LM
 cpm-lm-tf2_v2/
+
+# ignore local mirai
+mirai/
+.lastupdate
