@@ -19,7 +19,7 @@ bcc = Get.bcc()
 
 
 def cut_by_symbol(sentence):
-    symbols = [',', '，', '.', '。', '《', '》']
+    symbols = [',', '，', '.', '。', '《', '》', '?', '？', '!', "！"]
     symbol_idx = [sentence.rfind(symbol) for symbol in symbols]
     cut_idx = max(symbol_idx)
     if cut_idx == -1:
