@@ -12,8 +12,8 @@ import re
 import PIL.Image as Img
 import imghdr
 
-__plugin_name__ = '键值响应'
-__plugin_usage__ = '根据键值对回复'
+__plugin_name__ = '数据库存储'
+__plugin_usage__ = '存储每一条群聊数据'
 
 bcc = Get.bcc()
 
