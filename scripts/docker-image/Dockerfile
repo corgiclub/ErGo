@@ -11,6 +11,9 @@ RUN apt-get install screen -y
 # Dependency for CPM-LM (Chinese GPT)
 RUN pip install sentencepiece jieba regex tensorflow tensorflow-hub -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+# System stat metric
+RUN pip install linux-metrics
+
 # Bot dependency
 RUN pip install graia-application-mirai -i https://pypi.tuna.tsinghua.edu.cn/simple
 
