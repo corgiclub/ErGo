@@ -23,9 +23,9 @@ async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageC
         try:
             query = str(
                 re.sub('二狗', '', message.asDisplay(), flags=re.I)).strip()
-            print(f"二狗QA正在处理query: {query}")
-            answer = sample(query)[0]
-            print(f"二狗QA回答: {answer}")
+            # print(f"二狗QA正在处理query: {query}")
+            answer = sample(query, length=50)[0]
+            # print(f"二狗QA回答: {answer}")
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain(answer),
             ]))
