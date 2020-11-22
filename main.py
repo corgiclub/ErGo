@@ -19,7 +19,7 @@ if __name__ == '__main__':
         debug_flag=True
         )
     )
-    core.load_plugins(Path('plugins'), active_groups=[600302544, 722077615])
+    core.load_plugins(Path('plugins'), active_groups=[600302544, 722077615, 1168529926])
     app = core.Get.app()
     bcc = core.Get.bcc()
 
