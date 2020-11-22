@@ -14,12 +14,10 @@
 # limitations under the License.
 """utils for creating datasets"""
 import os
-import math
 
-from .samplers import DistributedBatchSampler
-from .datasets import json_dataset, csv_dataset, split_ds, ConcatDataset, SplitDataset, bert_sentencepair_dataset, GPT2Dataset
+from .datasets import json_dataset, csv_dataset, split_ds, ConcatDataset, bert_sentencepair_dataset, GPT2Dataset
 from .lazy_loader import exists_lazy, make_lazy, lazy_array_loader
-from .tokenization import Tokenization, CommandToken, Tokenizer, CharacterLevelTokenizer, BertWordPieceTokenizer, GPT2BPETokenizer, make_tokenizer
+from .tokenization import make_tokenizer
 from . import corpora
 
 TRAIN_DATA = 0

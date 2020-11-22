@@ -1,28 +1,15 @@
-from graia.broadcast import Broadcast
-from graia.application import GraiaMiraiApplication, Session
-from graia.application.message.chain import MessageChain
-import asyncio
+import urllib.request
 
-from graia.application.message.elements.internal import Plain
-from graia.application.friend import Friend
+hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       'Accept-Encoding': 'none',
+       'Accept-Language': 'en-US,en;q=0.8',
+       'Connection': 'keep-alive'}
 
-loop = asyncio.get_event_loop()
 
-bcc = Broadcast(loop=loop)
-app = GraiaMiraiApplication(
-    broadcast=bcc,
-    connect_info=Session(
-        host="http://localhost:8765", # 填入 httpapi 服务运行的地址
-        authKey="ERGOBOTAUTHKEY", # 填入 authKey
-        account=634493876, # 你的机器人的 qq 号
-        websocket=True # Graia 已经可以根据所配置的消息接收的方式来保证消息接收部分的正常运作.
-    )
-)
+req = urllib.request.Request("https://b23.tv/wuTuDi", headers=hdr)
+res = urllib.request.urlopen(req)
 
-@bcc.receiver("FriendMessage")
-async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
-    await app.sendFriendMessage(friend, MessageChain.create([
-        Plain("Hello, World!")
-    ]))
-
-app.launch_blocking()
+print(res.headers)
+print(res.read().decode('utf8'))

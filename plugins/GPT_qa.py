@@ -8,7 +8,7 @@ from mirai_core import Get
 
 import re
 
-from cpm_lm.sample import sample
+from extensions.cpm_lm.sample import sample
 
 
 __plugin_name__ = '二狗QA'
