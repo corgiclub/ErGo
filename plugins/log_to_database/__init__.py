@@ -32,19 +32,14 @@ async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageC
             _img_type = imghdr.what(file=None, h=_img_bytes)
 
             if _img_type == 'gif':
-                _gif_list = []
-                for i in range(_img.n_frames):
-                    _img.seek(i)
-                    _gif_list.append(_img)
-                _gif_list[0].save(pic_fp + img.imageId[1: -7] + '.' + _img_type, save_all=True, loop=True,
-                                  append_images=_gif_list[1:], duration=_img.info['duration'])
+                # fixme 这种方法保存的 gif 帧间隔不变，导致速度不对
+                pass
+                # _gif_list = []
+                # for i in range(_img.n_frames):
+                #     _img.seek(i)
+                #     _gif_list.append(_img)
+                # _gif_list[0].save(pic_fp + img.imageId[1: -7] + '.' + _img_type, save_all=True, loop=True,
+                #                   append_images=_gif_list[1:], duration=_img.info['duration'])
             else:
                 _img.save(pic_fp + img.imageId[1: -7] + '.' + _img_type)
-
-
-
-
-
-
-#todo 开发中
 
