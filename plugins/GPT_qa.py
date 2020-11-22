@@ -51,7 +51,7 @@ async def gpt_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain
 
             # 返回信息
             await app.sendGroupMessage(group, MessageChain.create([
-                Plain(answer),
+                Plain(answer + '。'),
                 Plain('\n'),
                 Plain(10*"-"),
                 Plain(f"\n耗时: {_time_taken}s; 句长(截断前/后):{_original_len}/{_cutted_len}; 截断长度:{_original_len - _cutted_len};"),

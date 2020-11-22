@@ -1,0 +1,10 @@
+aiohttp~=3.7.3
+graia-application-mirai
+Pillow~=8.0.1
+requests~=2.25.0
+regex~=2020.11.13
+sentencepiece
+jieba
+tensorflow
+tensorflow-hub
+linux-metrics
