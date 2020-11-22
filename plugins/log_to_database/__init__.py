@@ -20,7 +20,7 @@ bcc = Get.bcc()
 
 # noinspection PyTypeChecker
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
-async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
+async def log_to_database(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
 
     pic_fp = 'plugins/log_to_database/pic_cache/'
 
