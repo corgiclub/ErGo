@@ -14,8 +14,8 @@ def load_config():
 
     :return: class Config
     """
-
-    name = os.path.basename(inspect.stack()[1][1])[:-3]
+    path = inspect.stack()[1][1]
+    name = os.path.basename(path)[:-3] if os.path.basename(path)[:-3] != '__init__' else os.path.basename(path[:-12])
     config_json = json.load(open('config/'+name+'.json', 'r'))
 
     return Cfg(**config_json)
