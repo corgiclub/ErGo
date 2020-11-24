@@ -6,17 +6,18 @@ from graia.application.group import Group, Member
 from mirai_core import judge
 from mirai_core import Get
 
-__plugin_name__ = '氦'
-__plugin_description__ = '呼唤bot'
-__plugin_usage__ = '发送"氦"'
+from extensions.metric_util import get_metric
+
+__plugin_name__ = '系统状态汇报'
+__plugin_description__ = '用于汇报状态数据'
+__plugin_usage__ = '发送"系统状态"'
 
 bcc = Get.bcc()
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
-async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    if message.asDisplay() == '氦':
+async def system_stat(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
+    if message.asDisplay() == '系统状态':
         await app.sendGroupMessage(group, MessageChain.create([
-            Plain(f"Cogito, ergo sum."),
+            Plain(get_metric()),
         ]))
-
