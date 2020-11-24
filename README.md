@@ -1,6 +1,6 @@
-# ErGo
+# ErGo - 一个基于 Garia 的测试性 qq-bot
 
-A qq-bot named 二狗, powered by mirai.
+A qq-bot named 二狗, powered by mirai / Garia.
 
 > Cogito, ergo sum.
 >
@@ -18,45 +18,22 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 退出正在运行的 bot 容器（不可直接 ctrl+c 或 ctrl+d）: ctrl+p ctrl+q
 
-## 一个基于 Garia 的测试性 bot
+## Todo list
 
 #### Bot 功能
 
-pixiv 搜图
+- [ ] pixiv 搜图
+- [ ] 推特相关功能
+- [ ] 备忘录，自动提醒
 
-备忘录
+- [ ] 视频详细信息（小程序支持）
+- [ ] 聊天记录保存至数据库
 
-视频详细信息
+#### 现有待修复 BUG
 
-### 数据库
-
-库 / 表 / 字段设计待定
-
-#### 用户数据库
-
-    qq
-
-#### 群聊数据库
-
-##### 群 A 表
-
-    user_id	type    content     is_instruction
-
-#### 多媒体数据库
-
-##### ImageInGroupMessage（注意存储格式）
-
-    content     mentioned_times     is_porn
-
-##### AudioInGroupMessage
-
-    content
-
-##### AnimeImageHistory
-
-    content	pid	twitter_url	is_porn	tag
-
-#### 外置数据库
+- 视频详细信息功能对短链接的支持
+- config 加载函数逻辑优化
+- 存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？
 
 ## 依赖
 
