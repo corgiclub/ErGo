@@ -140,3 +140,5 @@ mirai/
 
 #ignore config files
 config/*.json
+config.zip
+
