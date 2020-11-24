@@ -25,13 +25,14 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 - [ ] pixiv 搜图
 - [ ] 推特相关功能
 - [ ] 备忘录，自动提醒
-
 - [ ] 视频详细信息（小程序支持）
 - [ ] 聊天记录保存至数据库
+- [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋）
+- [ ] 画一个logo
 
 #### 现有待修复 BUG
 
-- 视频详细信息功能对短链接的支持
+- 视频详细信息功能对短链接的支持存在判断问题
 - config 加载函数逻辑优化
 - 存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？
 
@@ -42,8 +43,6 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 源码: https://github.com/qhduan/CPM-LM-TF2
 
 模型下载链接: https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ 密码: n0nt
---来自百度网盘超级会员 V7 的分享
 
-or GDrive：
+or GDrive：https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing
 
-https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing

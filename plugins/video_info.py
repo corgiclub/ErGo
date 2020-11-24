@@ -11,7 +11,8 @@ import aiohttp
 import requests
 
 __plugin_name__ = 'B站视频信息查看'
-__plugin_usage__ = '发送任意av/BV号获取视频信息'
+__plugin_description__ = '获取B站视频信息'
+__plugin_usage__ = '发送任意av/BV号，或分享链接、小程序，获取视频信息'
 
 bcc = Get.bcc()
 
@@ -53,7 +54,8 @@ def detect_vid(text):
     pat_srt = 'https://b23.tv/[0-9a-zA-z]{6}'
 
     hdr = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) '
+                      'Chrome/23.0.1271.64 Safari/537.11',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
         'Accept-Encoding': 'none',

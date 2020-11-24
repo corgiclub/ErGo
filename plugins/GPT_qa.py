@@ -13,7 +13,8 @@ from extensions.cpm_lm.sample import sample
 
 
 __plugin_name__ = '二狗QA'
-__plugin_usage__ = '召唤bot使用模型推理'
+__plugin_description__ = '召唤bot使用模型推理'
+__plugin_usage__ = '发送“二狗 ...”'
 
 bcc = Get.bcc()
 
@@ -31,7 +32,7 @@ def cut_by_symbol(sentence):
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def gpt_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    if message.asDisplay().startswith(('二狗')):
+    if message.asDisplay().startswith('二狗 '):
         try:
             msg = message.asDisplay()
             query = msg[2:]

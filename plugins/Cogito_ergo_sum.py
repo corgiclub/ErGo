@@ -7,7 +7,8 @@ from mirai_core import judge
 from mirai_core import Get
 
 __plugin_name__ = '氦'
-__plugin_usage__ = '呼唤bot'
+__plugin_description__ = '呼唤bot'
+__plugin_usage__ = '发送"氦"'
 
 bcc = Get.bcc()
 
