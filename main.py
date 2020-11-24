@@ -10,16 +10,21 @@ import asyncio
 from graia.application.message.elements.internal import Plain
 from graia.application.friend import Friend
 
+from extensions.load_config import load_config
+
+
 if __name__ == '__main__':
+    config = load_config()
+
     core.init(Session(
-        host="http://localhost:8765",
-        authKey="ERGOBOTAUTHKEY",
-        account=3254622926,
+        host=config.host,
+        authKey=config.authKey,
+        account=config.account,
         websocket=True,
         debug_flag=True
         )
     )
-    core.load_plugins(Path('plugins'), active_groups=[600302544, 722077615, 1168529926])
+    core.load_plugins(Path('plugins'), active_groups=config.active_groups)
     app = core.Get.app()
     bcc = core.Get.bcc()
 
