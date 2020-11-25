@@ -16,7 +16,8 @@ import textwrap
 import uuid
 
 __plugin_name__ = '二狗QA'
-__plugin_usage__ = '召唤bot使用模型推理'
+__plugin_description__ = '召唤bot使用模型推理'
+__plugin_usage__ = '发送“二狗 ...”'
 
 bcc = Get.bcc()
 
