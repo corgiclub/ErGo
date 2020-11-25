@@ -38,17 +38,22 @@ def _draw_multiple_line_text(image, text, font, text_color, text_start_height, w
 
 def text_to_img(text):
 
-    # image_width
-    width, height = 300, 200
-    image = Image.new('RGB', (width, height), color=(0, 0, 0))
-    fontsize = 12  # starting font size
+    # Image fixed-width
+    width = 600
+    fontsize = 40  # starting font size
+    n_character = len(text)
+    n_character_per_line = width // fontsize
+    # Adaptive height
+    n_lines = (n_character // n_character_per_line) + 1
+    text_start_height = 10  # 0
+    height = n_lines * fontsize + text_start_height * 2
+
+    image = Image.new('RGB', (width, height), color=(255, 255, 255))
     font = ImageFont.truetype(
         "/ErGo/plugins/gpt_qa/ChaoZiSheGuoFengRanSongJian-2.ttf", fontsize)
-
-    text_color = (200, 200, 200)
-    text_start_height = 0
+    text_color = (0, 0, 0)
     _draw_multiple_line_text(
-        image, text, font, text_color, text_start_height, width=width//fontsize)
+        image, text, font, text_color, text_start_height, width=n_character_per_line // 1)
 
     img_filename = str(uuid.uuid4()) + '.png'
     image.save(img_filename)
