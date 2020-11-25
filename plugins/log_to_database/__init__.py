@@ -11,11 +11,13 @@ import io
 import re
 import PIL.Image as Img
 import imghdr
+from extensions.load_config import load_config
 
 __plugin_name__ = '数据库存储'
 __plugin_usage__ = '存储每一条群聊数据'
 
 bcc = Get.bcc()
+# config = load_config()
 
 
 # noinspection PyTypeChecker
