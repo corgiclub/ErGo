@@ -26,17 +26,17 @@
       | _id  | user_id   | source    | type  | content                          | is_instruction            | is_bot      |
       | ---- | --------- | --------- | ----- | -------------------------------- | -------------------------------- | -------------------------------- |
       |      | Member.id | Source.id | Plain | Plain.text                       | `False`       | `False`                |
-      |      | Member.id | Source.id | Quote | [Quote.senderId, Quote.targetId] | `False` | `False` |
-      |      | Member.id | Source.id | At    | At.target                        | `False`                 | `False`                 |
-      |      | Member.id | Source.id | AtAll | `None` | `False` | `False` |
-      |      | Member.id | Source.id | Face | Face.faceId | `False` | `False` |
-      |      | Member.id | Source.id | Image | Image.imageId | `False` | `False` |
+      |      | Member.id | Source.id | Quote    | [Quote.senderId, Quote.targetId] | `False` | `False` |
+      |      | Member.id | Source.id | At       | At.target                        | `False`                 | `False`                 |
+      |      | Member.id | Source.id | AtAll    | `None` | `False` | `False` |
+      |      | Member.id | Source.id | Face     | Face.faceId | `False` | `False` |
+      |      | Member.id | Source.id | Image    | Image.imageId | `False` | `False` |
       |      | Member.id | Source.id | FlashImage | FlashImage.imageId | `False` | `False` |
-      |      | Member.id | Source.id | Voice | Voice.voiceId | `False` | `False` |
-      |      | Member.id | Source.id | Xml | Xml.xml | `False` | `False` |
-  | | Member.id | Source.id | Json | Json.Json | `False` | `False` |
-      | | Member.id | Source.id | App | App.content | `False` | `False` |
-      | | Member.id | Source.id | Poke | Poke.PokeMethods | `False` | `False` |
+      |      | Member.id | Source.id | Voice      | Voice.voiceId | `False` | `False` |
+      |      | Member.id | Source.id | Xml        | Xml.xml | `False` | `False` |
+      |      | Member.id | Source.id | Json | Json.Json | `False` | `False` |
+      |      | Member.id | Source.id | App | App.content | `False` | `False` |
+      |      | Member.id | Source.id | Poke | Poke.PokeMethods | `False` | `False` |
     
   - Multimedia
     - ImageInGroupMessage
