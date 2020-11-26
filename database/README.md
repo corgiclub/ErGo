@@ -14,7 +14,7 @@
   - GroupChat
     - [group_id]
       - user_id `int`
-      - type `str` $\in$ [text, picture, audio, ...]
+      - type `str` <img src="http://chart.googleapis.com/chart?cht=tx&chl=\in" style="border:none;"> [text, picture, audio, ...]
       - content `str`
       - is_instruction `bool`
       - is_bot `bool`
