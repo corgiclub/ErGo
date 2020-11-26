@@ -22,11 +22,11 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 #### Bot 功能
 
-- [ ] pixiv 搜图
+- [ ] pixiv 搜图 ← 工作中
 - [ ] 推特相关功能
 - [ ] 备忘录，自动提醒
 - [ ] 视频详细信息（小程序支持）
-- [ ] 聊天记录保存至数据库
+- [ ] 聊天记录保存至数据库 ← 工作中
 - [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋）
 - [ ] 画一个logo
 
