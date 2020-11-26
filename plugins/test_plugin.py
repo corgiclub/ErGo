@@ -18,8 +18,9 @@ bcc = Get.bcc()
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
-async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    pass
+async def test(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
+    print(message)
+    print()
 
 
 
