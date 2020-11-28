@@ -19,7 +19,7 @@ gpt = hub.load(process_relpath('cpm-lm-tf2_v2/'))
 
 def sample(sentence, tokenizer=tokenizer, gpt=gpt, number=1, length=20, top_p=0.9, temperature=0.9):
     """
-    numbert: 输出句子个数
+    number: 输出句子个数
     length: 输出最大长度
     top_p: token的概率排在这以上才有效
     temperature: 温度
