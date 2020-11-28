@@ -1,4 +1,4 @@
-torch==1.6.0
+torch
 nltk>=3.4
 numpy>=1.15.4
 pandas>=0.24.0
