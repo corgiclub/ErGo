@@ -5,7 +5,7 @@ requests~=2.25.0
 regex~=2020.11.13
 sentencepiece
 jieba
-tensorflow>=2.0.0
+tensorflow
 tensorflow-hub
 linux-metrics
 Flask

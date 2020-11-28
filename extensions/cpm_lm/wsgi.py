@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, redirect, request, url_for
 from datetime import datetime
+import time
 from sample import sample
 
 app = Flask(__name__)
 
 
 @app.route('/api/inference', methods=['POST'])
-def create_todo():
+def inference():
     data = request.get_json()
-
     args = {}
-    if 'output_length_limit' in data:
-        args['length'] = data['output_length_limit']
-    query = data['content']
+    if 'length' in data:
+        args['length'] = data['length']
+    query = data['query']
     answer = sample(query, **args)[0]
     return jsonify({
         'code': 200,
@@ -23,4 +23,4 @@ def create_todo():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=6666)
+    app.run(debug=False, host='0.0.0.0', port=6666)

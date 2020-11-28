@@ -22,7 +22,7 @@ if __name__ == '__main__':
         account=config.account,
         websocket=True,
         debug_flag=True
-        )
+    )
     )
     core.load_plugins(Path('plugins'), active_groups=config.active_groups)
     app = core.Get.app()
