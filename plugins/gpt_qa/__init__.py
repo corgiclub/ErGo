@@ -41,7 +41,7 @@ def _draw_multiple_line_text(image, text, font, text_color, text_start_height, w
 
 
 def text_to_img(text):
-
+    MIN_HEIGHT = 300
     # Image fixed-width
     width = 600
     fontsize = 40  # starting font size
@@ -50,7 +50,7 @@ def text_to_img(text):
     # Adaptive height
     n_lines = (n_character // n_character_per_line) + 1
     text_start_height = 10  # 0
-    height = n_lines * fontsize + text_start_height * 2
+    height = max(n_lines * fontsize + text_start_height * 2, MIN_HEIGHT)
 
     image = Image.new('RGB', (width, height), color=(255, 255, 255))
     font = ImageFont.truetype(
