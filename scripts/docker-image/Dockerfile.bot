@@ -1,0 +1,13 @@
+FROM python:3.8
+
+# Change source
+RUN rm -f /etc/apt/sources.list
+COPY sources.list /etc/apt/sources.list
+COPY requirements-bot.txt .
+
+# Install screen
+RUN apt-get update
+RUN apt-get install screen -y
+
+# Python Packages
+RUN pip install -r requirements-bot.txt -i https://mirrors.aliyun.com/pypi/simple/
