@@ -6,6 +6,16 @@ A qq-bot named 二狗, powered by mirai / Garia.
 >
 > 我思，故我在。
 
+## Bot 功能
+
+所有功能均可定制及可选开启
+
+- 💬 关键词回复
+- 🧠 AI 续写（基于 CPM-LM）
+- 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
+- 📃 聊天记录存储至数据库
+- 💾 系统信息 / 状态查询
+
 ## 运行方法
 
 build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
@@ -20,21 +30,20 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 ## Todo list
 
-#### Bot 功能
-
 - [ ] pixiv 搜图 ← 工作中
-- [ ] 推特相关功能
+- [ ] 推特搜图、记录相关功能
+- [ ] 每日要闻
 - [ ] 备忘录，自动提醒
-- [ ] 视频详细信息（小程序支持）
-- [ ] 聊天记录保存至数据库 ← 工作中
-- [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋）
+- [ ] 视频详细信息（小程序、直播间、youtube 支持）
+- [x] 聊天记录保存至数据库
+- [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋，赛马）
 - [ ] 画一个logo
 
-#### 现有待修复 BUG
+#### 待修复 BUG
 
 - 视频详细信息功能对短链接的支持存在判断问题
 - config 加载函数逻辑优化
-- 存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？
+- ~~存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？~~
 
 ## 依赖
 
