@@ -9,5 +9,19 @@ COPY requirements-bot.txt .
 RUN apt-get update
 RUN apt-get install screen -y
 
+# Install mongoDB
+RUN apt-get install libcurl4 openssl -y
+wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
+tar -zxvf mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
+mv mongodb-src-r4.2.8  /usr/local/mongodb4
+export PATH=/usr/local/mongodb4/bin:$PATH
+sudo mkdir -p /var/lib/mongo
+sudo mkdir -p /var/log/mongodb
+sudo chown `whoami` /var/lib/mongo     # 设置权限
+sudo chown `whoami` /var/log/mongodb   # 设置权限
+mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork
+
+# All paths above can be change, username must be change.
+
 # Python Packages
 RUN pip install -r requirements-bot.txt -i https://mirrors.aliyun.com/pypi/simple/
