@@ -30,7 +30,7 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 ## Todo list
 
-- [ ] pixiv 搜图 ← 工作中
+- [ ] 🔜 pixiv 搜图
 - [ ] 推特搜图、记录相关功能
 - [ ] 每日要闻
 - [ ] 备忘录，自动提醒
