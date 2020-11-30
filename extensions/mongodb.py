@@ -98,7 +98,7 @@ def log_message(message: MessageChain, group, member):
         message_list.append(line_dict)
         # print(message_list)
 
-    if message_list != []:
+    if message_list:
         col.insert_many(message_list)
 
 
