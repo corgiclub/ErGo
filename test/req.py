@@ -1,5 +1,8 @@
 import requests
 import re
+import io
+import PIL.Image as Img
+import imghdr
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -9,15 +12,17 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
        'Connection': 'keep-alive'}
 
 
-req = requests.get(url='https://b23.tv/123456', headers=hdr)
+req = requests.get(url='http://gchat.qpic.cn/gchatpic_new/634493876/600302544-2365113437-473F03C6C09E53D498B5BFD18D1E51A9/0?term=2',
+                   # headers=hdr
+                   )
 
-print(req.text)
+print(req.content)
 print(req.status_code)
-# print(res.read().decode('utf8'))
+_img_bytes = req.content
+_img = Img.open(io.BytesIO(_img_bytes))
+_img_type = imghdr.what(file=None, h=_img_bytes)
+_img.save('tete' + '.' + _img_type)
+print(_img_type)
 
-pat_aid = 'av[1-9][0-9]{0,8}'
-
-g = re.search(pat_aid, req.text, flags=re.I)
-
-print(g.group())
-
+with open('tes33.' + _img_type, 'wb') as f:
+    f.write(_img_bytes)
