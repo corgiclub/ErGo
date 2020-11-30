@@ -96,8 +96,10 @@ def log_message(message: MessageChain, group, member):
             line_dict['type'] = 'Poke'
             line_dict['content'] = mes.name
         message_list.append(line_dict)
+        # print(message_list)
 
-    col.insert_many(message_list)
+    if message_list != []:
+        col.insert_many(message_list)
 
 
 def log_image(db_name, id_, url):
