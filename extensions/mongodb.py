@@ -130,9 +130,7 @@ def is_pron():
 
 
 def log_debug():
-    db = client['InteractionObjects']
-    groups_col = db['groups']
-    users_col = db['users']
 
-    print([x for x in groups_col.find()])
-    print([x for x in users_col.find()])
+    col = client['GroupChats']['600302544']
+
+    return str(col.aggregate({ '$sample': { 'size': 1 } }))
