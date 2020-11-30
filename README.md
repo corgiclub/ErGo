@@ -8,13 +8,17 @@ A qq-bot named 二狗, powered by mirai / Garia.
 
 ## Bot 功能
 
-所有功能均可定制及可选开启
+###### 所有功能均可定制 / 可选开启
 
-- 💬 关键词回复
-- 🧠 AI 续写（基于 CPM-LM）
-- 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
-- 📃 聊天记录存储至数据库
-- 💾 系统信息 / 状态查询
+💬 关键词回复
+
+🧠 AI 续写（基于 CPM-LM ）
+
+🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
+
+📃 聊天记录存储至数据库
+
+💾 系统信息 / 状态查询
 
 ## 运行方法
 
