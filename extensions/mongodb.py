@@ -117,7 +117,7 @@ def log_image(db_name, id_, url):
 
 def is_instruction(text: str):
     start_set = (
-        '二狗', 'av', 'bv', 'AV', 'BV', 'http://', '氦', '系统状态', '来张图'
+        '二狗', 'av', 'bv', 'AV', 'BV', 'http://', '氦', '系统状态', '来张图', '数据库测试'
     )
     for pat in start_set:
         if text.startswith(pat):
@@ -129,8 +129,8 @@ def is_pron():
     return None
 
 
-def log_debug():
+def log_debug(group):
 
-    col = client['GroupChats']['600302544']
+    col = client['GroupChats'][str(group.id)]
 
-    return str(col.aggregate({ '$sample': { 'size': 1 } }))
+    return str(next(col.aggregate([{ '$sample': { 'size': 1 } }])))

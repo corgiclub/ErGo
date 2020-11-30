@@ -23,5 +23,5 @@ async def log_to_database(app: GraiaMiraiApplication, group: Group, message: Mes
     log_message(message, group, member)
     if message.asDisplay().startswith('数据库测试'):
         await app.sendGroupMessage(group, MessageChain.create([
-            Plain(log_debug()),
+            Plain(log_debug(group)),
         ]))
