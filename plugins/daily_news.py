@@ -24,7 +24,7 @@ async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageC
     mes = message.asDisplay()
     if mes in ['今日要闻', '昨日要闻', '早上好二狗', 'おはよ', 'morning~']:
 
-        if mes in ['早上好二狗', 'おはよ', 'morning~']:
+        if mes in ['早上好二狗', 'おはよう', 'morning~']:
             mes = '今日要闻'
 
         r = requests.get(url='https://mp.sohu.com/profile?xpt=OTk3YTMwMWYtOGNmZS00MzMxLWEzYjktOGE4MjdjZjgwMGI0&_f='
