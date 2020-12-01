@@ -22,7 +22,7 @@ bcc = Get.bcc()
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     mes = message.asDisplay()
-    if mes in ['今日要闻', '昨日要闻', '早上好二狗', 'おはよ', 'morning~']:
+    if mes in ['今日要闻', '昨日要闻', '早上好二狗', 'おはよう', 'morning~']:
 
         if mes in ['早上好二狗', 'おはよう', 'morning~']:
             mes = '今日要闻'
