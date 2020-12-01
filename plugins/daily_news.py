@@ -61,10 +61,10 @@ async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageC
 
 
 def get_day(day='today'):
-    time_ls = datetime.datetime.now()
+    time_bjt = datetime.datetime.now() + datetime.timedelta(hours=8)
     # if day == 'yesterday':
     #     time_ls -= datetime.timedelta(days=1)
-    time_str = time_ls.strftime("%m月%d日")
+    time_str = time_bjt.strftime("%m月%d日")
     if time_str[-3] == '0':
         time_str = time_str[:-3] + time_str[-2:]
     return time_str
