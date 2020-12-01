@@ -1,6 +1,6 @@
 import pymongo
 import requests
-from load_config import load_config
+from extensions.load_config import load_config
 from graia.application.message.elements.internal import *
 from graia.application.message.chain import MessageChain
 
