@@ -39,6 +39,7 @@ async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageC
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain('今日要闻未更新！可输入“昨日要闻”查看昨日要闻。'),
             ]))
+            return
 
         url = ''
         if (today_ready and message.asDisplay() == '今日要闻') or (not today_ready and message.asDisplay() == '昨日要闻'):
@@ -48,7 +49,7 @@ async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageC
 
         article = requests.get(url)
         article_soup = BeautifulSoup(article.text, 'lxml')
-        article_formated = '.\n'.join([p.text for p in article_soup.article.find_all('p')[2:-2]])
+        article_formated = '\n'.join([p.text[:-1] for p in article_soup.article.find_all('p')[2:-2]])
         await app.sendGroupMessage(group, MessageChain.create([
             Plain(article_formated),
         ]))
