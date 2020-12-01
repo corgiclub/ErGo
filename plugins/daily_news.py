@@ -21,7 +21,12 @@ bcc = Get.bcc()
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    if message.asDisplay() in ['今日要闻', '昨日要闻']:
+    mes = message.asDisplay()
+    if mes in ['今日要闻', '昨日要闻', '早上好二狗', 'おはよ']:
+
+        if mes in ['早上好二狗', 'おはよ']:
+            mes = '今日要闻'
+
         r = requests.get(url='https://mp.sohu.com/profile?xpt=OTk3YTMwMWYtOGNmZS00MzMxLWEzYjktOGE4MjdjZjgwMGI0&_f='
                              'index_pagemp_1&spm=smpc.content.author.2.1606837412545xZ4rTlY')
 
@@ -35,16 +40,16 @@ async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageC
         titles = titles_soup.find_all(class_='feed-title')
         today_ready = get_day() in titles[0].a.get_text()
 
-        if not today_ready and message.asDisplay() == '今日要闻':
+        if not today_ready and mes == '今日要闻':
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain('今日要闻未更新！可输入“昨日要闻”查看昨日要闻。'),
             ]))
             return
 
         url = ''
-        if (today_ready and message.asDisplay() == '今日要闻') or (not today_ready and message.asDisplay() == '昨日要闻'):
+        if (today_ready and mes == '今日要闻') or (not today_ready and mes == '昨日要闻'):
             url = 'http:' + titles[0].a['href']
-        elif today_ready and message.asDisplay() == '昨日要闻':
+        elif today_ready and mes == '昨日要闻':
             url = 'http:' + titles[1].a['href']
 
         article = requests.get(url)
