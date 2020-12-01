@@ -53,4 +53,5 @@ typing-extensions==3.7.4.2
 urllib3==1.26.2
 Werkzeug==1.0.1
 wsproto==0.15.0
-yarl==1.6.3\
+yarl==1.6.3
+linux_metrics

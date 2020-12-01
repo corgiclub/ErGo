@@ -6,20 +6,18 @@ COPY sources.list /etc/apt/sources.list
 COPY requirements-bot.txt .
 
 # Install screen
+RUN chmod 1777 /tmp
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
 RUN apt-get update
 RUN apt-get install screen -y
 
 # Install mongoDB
 RUN apt-get install libcurl4 openssl -y
-wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
-tar -zxvf mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
-mv mongodb-src-r4.2.8  /usr/local/mongodb4
-export PATH=/usr/local/mongodb4/bin:$PATH
-sudo mkdir -p /var/lib/mongo
-sudo mkdir -p /var/log/mongodb
-sudo chown `whoami` /var/lib/mongo     # 设置权限
-sudo chown `whoami` /var/log/mongodb   # 设置权限
-mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork
+# wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
+COPY mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz .
+RUN tar -zxvf mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
+RUN mv mongodb-linux-x86_64-ubuntu1804-4.4.2 /usr/local/mongodb4
+ENV PATH=/usr/local/mongodb4/bin:$PATH
 
 # All paths above can be change, username must be change.
 
