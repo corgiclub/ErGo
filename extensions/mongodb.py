@@ -40,7 +40,7 @@ def log_info(group, member):
         users_col.insert_one(user_dict)
 
 
-def log_message(message: MessageChain, group, member):
+def log_message(message: MessageChain, group, member, is_bot=False):
     db = client['GroupChats']
     col = db[str(group.id)]
 
@@ -49,7 +49,7 @@ def log_message(message: MessageChain, group, member):
         'user_id': member.id,
         'source': message.get(Source)[0].id,
         'is_instruction': is_instruction(message.asDisplay()),
-        'is_bot': False
+        'is_bot': is_bot
         }
 
     for mes in message.__root__:
@@ -57,7 +57,7 @@ def log_message(message: MessageChain, group, member):
         if isinstance(mes, Source):
             continue
         if isinstance(mes, Plain):
-            if mes.text != ' ':
+            if not mes.text.isspace():
                 line_dict['type'] = 'Plain'
                 line_dict['content'] = mes.text
             else:
@@ -135,4 +135,4 @@ def log_debug(group):
 
     col = client['GroupChats'][str(group.id)]
 
-    return str(next(col.aggregate([{ '$sample': { 'size': 1 } }])))
+    return str(next(col.aggregate([{'$sample': {'size': 1}}])))
