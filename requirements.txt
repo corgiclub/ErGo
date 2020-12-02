@@ -1,5 +1,11 @@
 aiohttp~=3.7.3
 graia-application-mirai==0.10.4
 Pillow~=8.0.1
+PixivPy==3.5.10
+PixivPy-Async==1.2.11
 requests~=2.25.0
 regex~=2020.11.13
+beautifulsoup4
+pymongo==3.5.1
+lxml
+translators
