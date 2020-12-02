@@ -18,7 +18,7 @@ bcc = Get.bcc()
 async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     if message.asDisplay().startswith('*添加'):
         msg = message.asDisplay()[1:]
-        cfg = json.load(open('keywords.json', 'r'))
+        cfg = json.load(open('../config/keywords.json', 'r'))
         await app.sendGroupMessage(group, MessageChain.create([
             Plain(cfg[msg]),
         ]))
