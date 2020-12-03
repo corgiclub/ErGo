@@ -5,7 +5,6 @@ from pixivpy_async import *
 async def main():
     async with PixivClient() as client:
         aapi = AppPixivAPI(client=client)
-        await aapi.login("user_mpfv2437", "zhaoyinzhi?..")
         p = await aapi.illust_detail(59580629)
         print(p)
 
