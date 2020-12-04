@@ -10,11 +10,11 @@ from mirai_core import Get
 import re
 import time
 import os
-from PIL import Image, ImageDraw, ImageFont
 import textwrap
 import uuid
-import requests
 import json
+import aiohttp
+from PIL import Image, ImageDraw, ImageFont
 
 __plugin_name__ = '二狗QA'
 __plugin_description__ = '召唤bot使用模型推理'
@@ -75,19 +75,20 @@ def cut_by_symbol(sentence):
         return sentence[:cut_idx], cutted_segment
 
 
-def sample(query, length=None):
+async def sample(query, length=None):
     payload = {"query": query}
     if length:
         payload["length"] = 100
     headers = {'Content-type': 'application/json'}
     try:
-        r = requests.post(INFERENCE_URL, data=json.dumps(
-            payload), headers=headers, timeout=TIMEOUT)
-        return r.json()["answer"]
-    except requests.Timeout:
-        return "二狗连接推理服务器超时(100s)"
-    except requests.ConnectionError:
-        return "二狗连接推理服务器错误"
+        # r = requests.post(INFERENCE_URL, data=json.dumps(
+        # payload), headers=headers, timeout=TIMEOUT)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(INFERENCE_URL, data=json.dumps(payload),
+                                    headers=headers) as response:
+                return response.json()["answer"]
+    except Exception as e:
+        return "二狗连接推理服务器错误: " + str(e)
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
@@ -102,7 +103,7 @@ async def gpt_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain
 
             # 推理
             _begin_time = time.time()
-            answer = sample(query, length=100)
+            answer = await sample(query, length=100)
             _original_len = len(answer)
 
             # 截断最后一个符号
