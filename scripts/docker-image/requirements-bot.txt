@@ -5,7 +5,7 @@ aiofiles==0.5.0
 aiohttp==3.7.3
 async-timeout==3.0.1
 attrs==20.3.0
-beautifulsoup==4.9.3
+beautifulsoup4==4.9.3
 blinker==1.4
 brotlipy==0.7.0
 cchardet==2.1.7
@@ -57,5 +57,5 @@ Werkzeug==1.0.1
 wsproto==0.15.0
 yarl==1.6.3
 linux_metrics
-beautifulsoup4 
 lxml
+translators
