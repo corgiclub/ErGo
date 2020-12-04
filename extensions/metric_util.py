@@ -10,8 +10,8 @@ def get_metric() -> str:
     # ret += 'load average: %.2f%%' % (lm.cpu_stat.load_avg()) + '\n'
     # disk
     ret += 'disk busy: %s%%' % lm.disk_stat.disk_busy(
-        'sdb', sample_duration=1) + '\n'
-    r, w = lm.disk_stat.disk_reads_writes('sdb')
+        'sda', sample_duration=1) + '\n'
+    r, w = lm.disk_stat.disk_reads_writes('sda')
     ret += 'disk reads: %s' % r + '\n'
 
     ret += 'disk writes: %s' % w + '\n'
