@@ -80,7 +80,7 @@ async def sample(query, length=None):
     if length:
         payload["length"] = length
     headers = {'Content-type': 'application/json'}
-    timeout = aiohttp.ClientTimeout(total=60)
+    timeout = aiohttp.ClientTimeout(total=5*60)
     try:
         # r = requests.post(INFERENCE_URL, data=json.dumps(
         # payload), headers=headers, timeout=TIMEOUT)
