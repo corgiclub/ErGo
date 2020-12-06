@@ -87,7 +87,7 @@ async def sample(query, length=None):
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.post(INFERENCE_URL, data=json.dumps(payload),
                                     headers=headers) as response:
-                return await response.json()["answer"]
+                return (await response.json())['answer']
     except Exception as e:
         return "二狗连接推理服务器错误: " + str(e)
 
@@ -104,7 +104,7 @@ async def gpt_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain
 
             # 推理
             _begin_time = time.time()
-            answer = sample(query, length=100)
+            answer = await sample(query, length=100)
             _original_len = len(answer)
 
             # 截断最后一个符号

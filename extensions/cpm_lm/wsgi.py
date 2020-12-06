@@ -15,6 +15,7 @@ def inference():
         args['length'] = data['length']
     query = data['query']
     answer = sample(query, **args)[0]
+    # answer = "DEBUG测试"
     return jsonify({
         'code': 200,
         'message': 'ok',
@@ -24,3 +25,4 @@ def inference():
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=6666)
+    # app.run(debug=True, host='0.0.0.0', port=6666)
