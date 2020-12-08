@@ -54,7 +54,7 @@ def text_to_img(text):
 
     image = Image.new('RGB', (width, height), color=(255, 255, 255))
     font = ImageFont.truetype(
-        "/ErGo/plugins/gpt_qa/ChaoZiSheGuoFengRanSongJian-2.ttf", fontsize)
+        "/ErGo/extensions/data/XiaolaiSC-Regular.ttf", fontsize)
     text_color = (0, 0, 0)
     _draw_multiple_line_text(
         image, text, font, text_color, text_start_height, width=n_character_per_line // 1)
