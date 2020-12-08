@@ -52,9 +52,12 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 ### CPM-LM-TF2 中文预训练 GPT 模型
 
-源码: https://github.com/qhduan/CPM-LM-TF2
+清源 CPM TensorFlow 版本 [github repo](https://github.com/qhduan/CPM-LM-TF2)
 
-模型下载链接: https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ 密码: n0nt
+模型下载链接 [百度云](https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ) 密码: n0nt or [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
 
-or GDrive：https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing
+### 小赖字体 / 小賴字體 / シャオライ / Xiaolai Font
 
+A Chinese Font derived from SetoFont / Naikai Font / cjkFonts-AllSeto. 
+
+一款衍生于濑户字体 / 内海字体 / cjkFonts 全濑体的中文字体。[github repo](https://github.com/lxgw/kose-font)
