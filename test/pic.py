@@ -11,8 +11,8 @@ sys.dont_write_bytecode = True
 
 
 # change _USERNAME,_PASSWORD first!
-_USERNAME = "lune_z@foxmail.com"
-_PASSWORD = "zhaoyinzhi?.."
+_USERNAME = ""
+_PASSWORD = ""
 _TEST_WRITE = False
 
 # If a special network environment is meet, please configure requests as you need.
