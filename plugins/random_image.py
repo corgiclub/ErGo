@@ -13,8 +13,8 @@ from PIL.ExifTags import TAGS
 IMG_PATH = "/ErGo/plugins/log_to_database/pic_cache"
 
 
-__plugin_name__ = '随机发图'
-__plugin_description__ = '随机发送指定目录下的一张图片附其EXIF信息'
+__plugin_name__ = '来图'
+__plugin_description__ = '随机发一张图'
 __plugin_usage__ = '发送"来张图"'
 
 bcc = Get.bcc()

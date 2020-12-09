@@ -10,8 +10,8 @@ import requests
 from bs4 import BeautifulSoup
 from extensions.load_config import load_config
 
-__plugin_name__ = '查询梯子状态'
-__plugin_description__ = '查询梯子状态，包括剩余流量、通道数等信息。'
+__plugin_name__ = '梯子'
+__plugin_description__ = '查询梯子状态'
 __plugin_usage__ = '发送"氦"'
 
 bcc = Get.bcc()

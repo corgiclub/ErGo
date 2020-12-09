@@ -16,8 +16,8 @@ import json
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
 
-__plugin_name__ = '二狗QA'
-__plugin_description__ = '召唤bot使用模型推理'
+__plugin_name__ = 'QA'
+__plugin_description__ = '召唤bot回复消息'
 __plugin_usage__ = '发送“二狗 ...”'
 
 INFERENCE_URL = "http://0.0.0.0:6666/api/inference"

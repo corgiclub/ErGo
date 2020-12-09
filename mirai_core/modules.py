@@ -8,12 +8,13 @@ plugin_dir_setting = set()
 
 
 class Plugin:
-    __slots__ = ('module', 'name', 'usage')
+    __slots__ = ('module', 'name', 'usage', 'description')
 
-    def __init__(self, module, name=None, usage=None):
+    def __init__(self, module, name=None, usage=None, description=None):
         self.module = module
         self.name = name
         self.usage = usage
+        self.description = description
 
 
 def load_plugin(module_name: Path) -> bool:
@@ -21,7 +22,8 @@ def load_plugin(module_name: Path) -> bool:
         module = importlib.import_module(module_name)
         name = getattr(module, '__plugin_name__', None)
         usage = getattr(module, '__plugin_usage__', None)
-        loaded_plugins.add(Plugin(module, name, usage))
+        description = getattr(module, '__plugin_description__', None)
+        loaded_plugins.add(Plugin(module, name, usage, description))
         LoggingLogger().info(f'成功导入 "{module_name}"')
         return True
     except Exception as e:

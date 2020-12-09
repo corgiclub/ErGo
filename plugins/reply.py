@@ -8,8 +8,9 @@ from mirai_core import Get
 
 import json
 
-__plugin_name__ = '键值响应'
-__plugin_usage__ = '根据键值对回复'
+__plugin_name__ = '回复'
+__plugin_description__ = '根据键值对回复'
+__plugin_usage__ = '发送关键词'
 
 bcc = Get.bcc()
 

@@ -11,8 +11,8 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-__plugin_name__ = '氦'
-__plugin_description__ = '呼唤bot'
+__plugin_name__ = '要闻'
+__plugin_description__ = '查看今日要闻'
 __plugin_usage__ = '发送"氦"'
 
 bcc = Get.bcc()

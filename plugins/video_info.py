@@ -10,8 +10,8 @@ import re
 import aiohttp
 import requests
 
-__plugin_name__ = 'B站视频信息查看'
-__plugin_description__ = '获取B站视频信息'
+__plugin_name__ = '视频'
+__plugin_description__ = '查看B站/油管视频详细信息'
 __plugin_usage__ = '发送任意av/BV号，或分享链接、小程序，获取视频信息'
 
 bcc = Get.bcc()

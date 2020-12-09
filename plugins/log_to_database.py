@@ -9,8 +9,8 @@ from mirai_core import Get
 from extensions.mongodb import *
 from extensions.load_config import load_config
 
-__plugin_name__ = '数据库存储'
-__plugin_description__ = '存储群聊相关数据'
+__plugin_name__ = '数据库'
+__plugin_description__ = '存储至数据库'
 __plugin_usage__ = ''
 
 bcc = Get.bcc()

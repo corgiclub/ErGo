@@ -8,8 +8,8 @@ from mirai_core import Get
 
 from extensions.metric_util import get_metric
 
-__plugin_name__ = '系统状态汇报'
-__plugin_description__ = '用于汇报状态数据'
+__plugin_name__ = '系统'
+__plugin_description__ = '汇报系统运行状态'
 __plugin_usage__ = '发送"系统状态"'
 
 bcc = Get.bcc()

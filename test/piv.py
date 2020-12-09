@@ -1,3 +1,5 @@
-import asyncio
-from pixivpy_async import *
 
+__plugin__ = 'AAA'
+
+def foo():
+    return 'bart'
