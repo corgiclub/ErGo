@@ -19,6 +19,7 @@ from PIL import Image, ImageDraw, ImageFont
 __plugin_name__ = 'QA'
 __plugin_description__ = '召唤bot回复消息'
 __plugin_usage__ = '发送“二狗 ...”'
+__plugin_pattern__ = '二狗+'
 
 INFERENCE_URL = "http://0.0.0.0:6666/api/inference"
 TIMEOUT = 100

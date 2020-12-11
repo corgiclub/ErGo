@@ -1,8 +1,10 @@
+import re
 import pymongo
 import requests
 from extensions.load_config import load_config
 from graia.application.message.elements.internal import *
 from graia.application.message.chain import MessageChain
+from mirai_core import loaded_plugins
 
 config = load_config('log_to_database')
 client = pymongo.MongoClient(config.db_host)
@@ -118,11 +120,9 @@ def log_image(db_name, id_, url):
 
 
 def is_instruction(text: str):
-    start_set = (
-        '二狗', 'av', 'bv', 'AV', 'BV', 'http://', '氦', '系统状态', '来张图', '数据库测试'
-    )
-    for pat in start_set:
-        if text.startswith(pat):
+
+    for plugin in loaded_plugins:
+        if re.match(plugin.pattern, text):
             return True
     return False
 

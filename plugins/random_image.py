@@ -15,7 +15,8 @@ IMG_PATH = "/ErGo/plugins/log_to_database/pic_cache"
 
 __plugin_name__ = '来图'
 __plugin_description__ = '随机发一张图'
-__plugin_usage__ = '发送"来张图"'
+__plugin_usage__ = '发送 来张图 获得一张缓存的图片'
+__plugin_pattern__ = '来张图'
 
 bcc = Get.bcc()
 

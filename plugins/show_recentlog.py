@@ -14,6 +14,7 @@ import subprocess
 __plugin_name__ = '日志'
 __plugin_description__ = '显示最近日志'
 __plugin_usage__ = '发送“日志”'
+__plugin_pattern__ = '日志'
 
 bcc = Get.bcc()
 
@@ -26,5 +27,5 @@ async def show_log(app: GraiaMiraiApplication, group: Group, message: MessageCha
             "tail -n 100 logs/bot.log", stdout=subprocess.PIPE, shell=True)
         stdout = process.communicate()[0].strip()
         await app.sendGroupMessage(group, MessageChain.create([
-            Plain(stdout)
+            Plain(str(stdout))
         ]))

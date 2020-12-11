@@ -11,6 +11,7 @@ from extensions.metric_util import get_metric
 __plugin_name__ = '系统'
 __plugin_description__ = '汇报系统运行状态'
 __plugin_usage__ = '发送"系统状态"'
+__plugin_pattern__ = '系统状态'
 
 bcc = Get.bcc()
 

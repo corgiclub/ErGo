@@ -12,7 +12,8 @@ from extensions.load_config import load_config
 
 __plugin_name__ = '梯子'
 __plugin_description__ = '查询梯子状态'
-__plugin_usage__ = '发送"梯子"'
+__plugin_usage__ = '发送 梯子 '
+__plugin_pattern__ = '梯子'
 
 bcc = Get.bcc()
 cfg = load_config()

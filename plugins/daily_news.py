@@ -6,23 +6,25 @@ from graia.application.group import Group, Member
 from mirai_core import judge
 from mirai_core import Get
 
-import time
+import re
 import datetime
 import requests
 from bs4 import BeautifulSoup
 
 __plugin_name__ = '要闻'
 __plugin_description__ = '查看今日要闻'
-__plugin_usage__ = '发送"氦"'
+__plugin_usage__ = '发送 今日要闻 / morning / おはよう / 早上好二狗获取今日要闻，发送 昨日要闻 获取昨日要闻'
+__plugin_pattern__ = '今日要闻|昨日要闻|早上好二狗|おはよう|morning'
 
 bcc = Get.bcc()
 
 # todo 通过 threading 实现每日自动发送
 
+
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def daily_news(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     mes = message.asDisplay()
-    if mes in ['今日要闻', '昨日要闻', '早上好二狗', 'おはよう', 'morning~']:
+    if re.match(__plugin_pattern__, mes):
 
         if mes in ['早上好二狗', 'おはよう', 'morning~']:
             mes = '今日要闻'

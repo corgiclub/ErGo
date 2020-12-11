@@ -6,14 +6,13 @@ from graia.application.group import Group, Member
 from mirai_core import judge
 from mirai_core import Get
 
-from mirai_core import loaded_plugins
-from time import sleep
-
+import re
 from random import random
 
 __plugin_name__ = '复读机'
 __plugin_description__ = '随机复读句子'
 __plugin_usage__ = '发送“复读概率x”将复读概率设为x'
+__plugin_pattern__ = '复读概率+'
 
 bcc = Get.bcc()
 
@@ -24,7 +23,7 @@ echo_freq = 0.1
 async def echo(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     global echo_freq
     mes = message.asDisplay()
-    if mes.startswith('复读概率'):
+    if re.match(__plugin_pattern__, mes):
         try:
             freq = float(mes[4:])
             if not (freq >= 0 and freq <= 1):
@@ -38,6 +37,4 @@ async def echo(app: GraiaMiraiApplication, group: Group, message: MessageChain, 
                 Plain(f"复读概率设置失败:{e}")
             ]))
     if random() < echo_freq:
-        await app.sendGroupMessage(group, MessageChain.create([
-            Plain(mes)
-        ]))
+        await app.sendGroupMessage(group, message)

@@ -13,6 +13,7 @@ import requests
 __plugin_name__ = '视频'
 __plugin_description__ = '查看B站/油管视频详细信息'
 __plugin_usage__ = '发送任意av/BV号，或分享链接、小程序，获取视频信息'
+__plugin_pattern__ = 'av[1-9][0-9]{0,8}|bv[0-9a-z]{10}|https://b23.tv/[0-9a-zA-z]{6}'
 
 bcc = Get.bcc()
 
@@ -20,9 +21,8 @@ bcc = Get.bcc()
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     msg = message.asDisplay()
-    id_type, num = detect_vid(msg)
-
-    if id_type != '':
+    if re.match(__plugin_pattern__, msg):
+        id_type, num = detect_vid(msg)
         url = f'https://api.bilibili.com/x/web-interface/view?{id_type}={num}'
         async with aiohttp.request("GET", url) as r:
             get = await r.json()
@@ -36,9 +36,6 @@ async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageC
                 Image.fromNetworkAddress(get['data']['pic']),
                 Plain(f"\n标题:{data['title']}"),
                 Plain(f"\nUp主:{data['owner']['name']}"),
-                # Plain(f"\n视频时长:{during}"),
-                # Plain(f"\nav号:{data['aid']}"),
-                # Plain(f"\nbv号:{data['bvid']}"),
                 Plain(f"\n链接:https://bilibili.com/video/av{data['aid']}")
             ]))
         else:
