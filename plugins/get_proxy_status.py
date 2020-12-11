@@ -12,7 +12,7 @@ from extensions.load_config import load_config
 
 __plugin_name__ = '梯子'
 __plugin_description__ = '查询梯子状态'
-__plugin_usage__ = '发送"氦"'
+__plugin_usage__ = '发送"梯子"'
 
 bcc = Get.bcc()
 cfg = load_config()
@@ -29,5 +29,3 @@ async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageC
         await app.sendGroupMessage(group, MessageChain.create([
             Plain('剩余流量 {}GB，当前在线 {}/3'.format(data[1], data[2])),
         ]))
-
-
