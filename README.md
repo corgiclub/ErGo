@@ -15,7 +15,9 @@ A qq-bot named 二狗, 基于 mirai / mirai-http / Garia.
 - 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
 - 📰 今日要闻
 - 📃 聊天记录存储至数据库
-- 💾 系统信息 / 状态查询
+- 💾 系统信息 / 状态 / 日志查询
+- 🐔 复读鸡
+- 🕹️ 其他 debug 用功能
 
 ## 运行方法
 
@@ -48,7 +50,7 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 - 部分 request 请求速度较慢
 - ~~存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？~~
 
-## 依赖
+## 其他依赖
 
 ### CPM-LM-TF2 中文预训练 GPT 模型
 
