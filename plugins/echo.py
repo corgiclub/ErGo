@@ -37,4 +37,4 @@ async def echo(app: GraiaMiraiApplication, group: Group, message: MessageChain, 
                 Plain(f"复读概率设置失败:{e}")
             ]))
     if random() < echo_freq:
-        await app.sendGroupMessage(group, message)
+        await app.sendGroupMessage(group, message.asSendable())

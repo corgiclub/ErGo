@@ -11,6 +11,7 @@ from pixivpy_async import *
 __plugin_name__ = 'pixiv'
 __plugin_description__ = '使用 pixiv 的相关功能'
 __plugin_usage__ = '搜索：p [关键词/pid]\n搜图：p [图片]\n查找流行瑟图：se图\n'
+__plugin_pattern__ = 'pixiv*'
 
 bcc = Get.bcc()
 

@@ -122,6 +122,7 @@ def log_image(db_name, id_, url):
 def is_instruction(text: str):
 
     for plugin in loaded_plugins:
+        # print(plugin.pattern)
         if re.match(plugin.pattern, text):
             return True
     return False
@@ -136,3 +137,10 @@ def log_debug(group):
     col = client['GroupChats'][str(group.id)]
 
     return str(next(col.aggregate([{'$sample': {'size': 1}}])))
+
+
+def most_frequently_pic(group):
+
+    col = client['Images']['ImagesInGroupMessage']
+
+    return next(col.find().sort('mentioned_times', pymongo.DESCENDING))['content']

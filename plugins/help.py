@@ -23,7 +23,8 @@ async def help_(app: GraiaMiraiApplication, group: Group, message: MessageChain,
     if re.match(__plugin_pattern__, mes):
         text = ''
         if mes == 'help':
-            text += '插件名\n' + '\n'.join([p.name for p in loaded_plugins]) + '\n\n输入"help 插件名"查询插件用法'
+            text += '插件名\n' + '\n'.join([p.name + ' - ' + p.description for p in loaded_plugins]) \
+                    + '\n\n输入"help 插件名"查询插件用法'
         else:
             mes = mes[4:].strip()
             for p in loaded_plugins:

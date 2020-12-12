@@ -13,7 +13,7 @@ from extensions.load_config import load_config
 __plugin_name__ = '数据库'
 __plugin_description__ = '存储至数据库'
 __plugin_usage__ = '【需要管理员权限】\n发送 数据库测试 可以随机返回一条当前群数据。'
-__plugin_pattern__ = '数据库测试'
+__plugin_pattern__ = '数据库测试*'
 
 bcc = Get.bcc()
 config = load_config()
@@ -23,7 +23,13 @@ config = load_config()
 async def log_to_database(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     log_info(group, member)
     log_message(message, group, member)
-    if re.match(__plugin_pattern__, message.asDisplay()):
-        await app.sendGroupMessage(group, MessageChain.create([
-            Plain(log_debug(group)),
-        ]))
+    mes = message.asDisplay()
+    if re.match(__plugin_pattern__, mes):
+        if mes == '数据库测试':
+            await app.sendGroupMessage(group, MessageChain.create([
+                Plain(log_debug(group)),
+            ]))
+        elif mes == '数据库测试图':
+            await app.sendGroupMessage(group, MessageChain.create([
+                Image.fromUnsafeBytes(most_frequently_pic(group))
+            ]))
