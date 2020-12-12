@@ -141,6 +141,6 @@ def log_debug(group):
 
 def most_frequently_pic():
 
-    col = client['Images']['ImagesInGroupMessage']
+    pic = next(client['Images']['ImagesInGroupMessage'].find().sort('mentioned_times', pymongo.DESCENDING))
 
-    return next(col.find().sort('mentioned_times', pymongo.DESCENDING))['content']
+    return pic['content'], pic['mentioned_times']
