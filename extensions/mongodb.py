@@ -149,5 +149,9 @@ def most_frequently_pic():
     for pic in pics:
         content.append(pic['content'])
         times.append(pic['mentioned_times'])
+        if i >= 3:
+            break
+        else:
+            i += 1
 
     return content, times
