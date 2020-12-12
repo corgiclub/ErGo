@@ -31,7 +31,8 @@ async def log_to_database(app: GraiaMiraiApplication, group: Group, message: Mes
             ]))
         if mes == '数据库测试图':
             pic_byte, pic_times = most_frequently_pic()
-            await app.sendGroupMessage(group, MessageChain.create([
-                Image.fromUnsafeBytes(pic_byte),
-                Plain(f'发送次数：{pic_times}'),
-            ]))
+            mes_list = []
+            for x in range(len(pic_times)):
+                mes_list.append(Image.fromUnsafeBytes(pic_byte[x]))
+                mes_list.append(Plain(f'发送次数：{pic_times[x]}'))
+            await app.sendGroupMessage(group, MessageChain.create(mes_list))
