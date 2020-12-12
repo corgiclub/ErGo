@@ -30,13 +30,6 @@ async def log_to_database(app: GraiaMiraiApplication, group: Group, message: Mes
                 Plain(log_debug(group)),
             ]))
         if mes == '数据库测试图':
-            try:
-                print(most_frequently_pic(group))
-            except Exception as e:
-                print(e)
-                await app.sendGroupMessage(group, MessageChain.create([
-                    Plain(str(e)),
-                ]))
             await app.sendGroupMessage(group, MessageChain.create([
-                Image.fromUnsafeBytes(most_frequently_pic(group)),
+                Image.fromUnsafeBytes(most_frequently_pic()),
             ]))

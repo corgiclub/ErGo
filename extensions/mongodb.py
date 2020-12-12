@@ -139,7 +139,7 @@ def log_debug(group):
     return str(next(col.aggregate([{'$sample': {'size': 1}}])))
 
 
-def most_frequently_pic(group):
+def most_frequently_pic():
 
     col = client['Images']['ImagesInGroupMessage']
 
