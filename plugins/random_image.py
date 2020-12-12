@@ -5,9 +5,10 @@ from graia.application.message.chain import MessageChain
 from graia.application.group import Group, Member
 from mirai_core import judge
 from mirai_core import Get
-
+from moviepy.editor import VideoFileClip
 import os
 import random
+import uuid
 from PIL import Image as PILImage
 from PIL.ExifTags import TAGS
 IMG_PATH = "/ErGo/plugins/log_to_database/pic_cache"
@@ -60,12 +61,14 @@ async def random_image(app: GraiaMiraiApplication, group: Group, message: Messag
     elif msg == '来张动图':
         # 选择随机图片
         random_img_path = os.path.join(GIF_PATH, random.choice(GIFS)) + '.mp4'
-        await app.sendGroupMessage(group, MessageChain.create([
-            Plain(f"GIF PATH: {random_img_path}"),
-        ]))
+        tmp_gif = str(uuid.uuid4()) + '.gif'
+        clip = (VideoFileClip(random_img_path))
+        clip.write_gif(tmp_gif)
+
         # 返回信息
         await app.sendGroupMessage(group, MessageChain.create([
-            Image.fromLocalFile(random_img_path),
-            Plain("\n"),
-            Plain(f"GIF PATH: {random_img_path}"),
+            Image.fromLocalFile(tmp_gif),
+            Plain(f"\nGIF PATH: {random_img_path}"),
         ]))
+
+        os.remove(tmp_gif)
