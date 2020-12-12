@@ -20,7 +20,7 @@ with open(os.path.join(GIF_PATH, 'gif-list.txt')) as f:
 __plugin_name__ = '来图'
 __plugin_description__ = '随机发一张图'
 __plugin_usage__ = '发送 来张图 获得一张缓存的图片'
-__plugin_pattern__ = '来张图'
+__plugin_pattern__ = '来张[动]图'
 
 bcc = Get.bcc()
 
