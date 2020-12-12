@@ -27,5 +27,5 @@ async def show_log(app: GraiaMiraiApplication, group: Group, message: MessageCha
             "tail -n 100 logs/bot.log", stdout=subprocess.PIPE, shell=True)
         stdout = process.communicate()[0].strip()
         await app.sendGroupMessage(group, MessageChain.create([
-            Plain(str(stdout))
+            Plain(str(stdout.decode()))
         ]))
