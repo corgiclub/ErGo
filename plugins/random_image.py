@@ -76,4 +76,4 @@ async def random_image(app: GraiaMiraiApplication, group: Group, message: Messag
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain(f"发图异常: {e}"),
             ]))
-            os.remove(tmp_gif)
+        os.remove(tmp_gif)
