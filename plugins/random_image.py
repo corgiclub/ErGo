@@ -20,7 +20,7 @@ with open(os.path.join(GIF_PATH, 'gif-list.txt')) as f:
 __plugin_name__ = '来图'
 __plugin_description__ = '随机发一张图'
 __plugin_usage__ = '发送 来张图 获得一张缓存的图片'
-__plugin_pattern__ = '来张[动]图'
+__plugin_pattern__ = '来张[动]?图'
 
 bcc = Get.bcc()
 
@@ -59,16 +59,21 @@ async def random_image(app: GraiaMiraiApplication, group: Group, message: Messag
         except ValueError:
             return
     elif msg == '来张动图':
-        # 选择随机图片
-        random_img_path = os.path.join(GIF_PATH, random.choice(GIFS)) + '.mp4'
-        tmp_gif = str(uuid.uuid4()) + '.gif'
-        clip = (VideoFileClip(random_img_path))
-        clip.write_gif(tmp_gif)
+        try:
+            # 选择随机图片
+            random_img_path = os.path.join(
+                GIF_PATH, random.choice(GIFS)) + '.mp4'
+            tmp_gif = str(uuid.uuid4()) + '.gif'
+            clip = (VideoFileClip(random_img_path))
+            clip.write_gif(tmp_gif)
 
-        # 返回信息
-        await app.sendGroupMessage(group, MessageChain.create([
-            Image.fromLocalFile(tmp_gif),
-            Plain(f"\nGIF PATH: {random_img_path}"),
-        ]))
-
-        os.remove(tmp_gif)
+            # 返回信息
+            await app.sendGroupMessage(group, MessageChain.create([
+                Image.fromLocalFile(tmp_gif),
+                Plain(f"\nGIF PATH: {random_img_path}"),
+            ]))
+        except Exception as e:
+            await app.sendGroupMessage(group, MessageChain.create([
+                Plain(f"发图异常: {e}"),
+            ]))
+            os.remove(tmp_gif)
