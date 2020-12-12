@@ -11,6 +11,9 @@ import random
 from PIL import Image as PILImage
 from PIL.ExifTags import TAGS
 IMG_PATH = "/ErGo/plugins/log_to_database/pic_cache"
+GIF_PATH = "/gifs"
+with open(os.path.join(GIF_PATH, 'gif-list.txt')) as f:
+    GIFS = f.read().splitlines()
 
 
 __plugin_name__ = '来图'
@@ -23,7 +26,8 @@ bcc = Get.bcc()
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def random_image(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    if message.asDisplay() == '来张图':
+    msg = message.asDisplay()
+    if msg == '来张图':
         try:
             files = os.listdir(IMG_PATH)
             filepaths = list(map(lambda filename: os.path.join(
@@ -53,3 +57,15 @@ async def random_image(app: GraiaMiraiApplication, group: Group, message: Messag
             ]))
         except ValueError:
             return
+    elif msg == '来张动图':
+        # 选择随机图片
+        random_img_path = os.path.join(GIF_PATH, random.choice(GIFS)) + '.mp4'
+        await app.sendGroupMessage(group, MessageChain.create([
+            Plain(f"GIF PATH: {random_img_path}"),
+        ]))
+        # 返回信息
+        await app.sendGroupMessage(group, MessageChain.create([
+            Image.fromLocalFile(random_img_path),
+            Plain("\n"),
+            Plain(f"GIF PATH: {random_img_path}"),
+        ]))
