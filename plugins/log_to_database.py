@@ -29,7 +29,14 @@ async def log_to_database(app: GraiaMiraiApplication, group: Group, message: Mes
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain(log_debug(group)),
             ]))
-        elif mes == '数据库测试图':
+        if mes == '数据库测试图':
+            try:
+                print(most_frequently_pic(group))
+            except Exception as e:
+                print(e)
+                await app.sendGroupMessage(group, MessageChain.create([
+                    Plain(str(e)),
+                ]))
             await app.sendGroupMessage(group, MessageChain.create([
-                Image.fromUnsafeBytes(most_frequently_pic(group))
+                Image.fromUnsafeBytes(most_frequently_pic(group)),
             ]))
