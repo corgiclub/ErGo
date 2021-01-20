@@ -16,7 +16,7 @@ __plugin_pattern__ = '复读概率+'
 
 bcc = Get.bcc()
 
-echo_freq = 0.1
+echo_freq = 0.001
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
