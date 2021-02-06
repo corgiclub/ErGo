@@ -21,7 +21,7 @@ A qq-bot named 二狗, 基于 mirai / mirai-http / Garia.
 
 ## 运行方法
 
-build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
+build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build-bot.sh`
 
 运行 bot 容器并启动 bot: `sh scripts/docker-start-bot.sh`
 
