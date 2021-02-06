@@ -1,5 +1,8 @@
+#!/bin/bash
+
 # 推理API默认已经启动
-ERGO_PROJECT_DIR=$1
+ERGO_PROJECT_DIR=$( dirname "$(readlink -f -- "$0")" )
+ERGO_PROJECT_DIR="${ERGO_PROJECT_DIR}/.."
 echo "Using Project Dir: "$ERGO_PROJECT_DIR
 # 启动docker容器并启动bot
 docker container stop ergo-bot-container
