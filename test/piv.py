@@ -1,5 +1,4 @@
+a = ['1', '', '2']
+b = 'bbb'
 
-__plugin__ = 'AAA'
-
-def foo():
-    return 'bart'
+print(b.join(a))
