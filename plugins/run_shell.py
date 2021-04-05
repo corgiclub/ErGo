@@ -1,4 +1,4 @@
-import requests
+import aiohttp
 from graia.application import GraiaMiraiApplication
 from graia.application.event.messages import GroupMessage
 from graia.application.message.elements.internal import Plain
@@ -19,10 +19,19 @@ cfg = load_config()
 bcc = Get.bcc()
 
 
+async def request_server():
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(cfg.url) as r:
+                return f"zerotier 重启好了，你再试试, {r.json()}"
+    except Exception as e:
+        return str(e)
+
+
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def restart_zerotier(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     if re.match(__plugin_pattern__, message.asDisplay()):
-        r = requests.get(cfg.url)
+        msg = await request_server()
         await app.sendGroupMessage(group, MessageChain.create([
-            Plain(f"zerotier 重启好了，你再试试, {r.json()}"),
+            Plain(msg),
         ]))
