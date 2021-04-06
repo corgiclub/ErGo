@@ -19,23 +19,21 @@ cfg = load_config()
 bcc = Get.bcc()
 
 
-async def request_server():
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get("http://tech.corgi.plus:9100/api/v1/ergo/zerotier/restart") as r:
-                resp = await r.json()
-                return f"zerotier 重启好了，你再试试, {resp}"
-    except Exception as e:
-        return str(e)
+# async def request_server():
+#     try:
+#         async with aiohttp.ClientSession() as session:
+#             async with session.get("http://tech.corgi.plus:9100/api/v1/ergo/zerotier/restart") as r:
+#                 resp = await r.json()
+#                 return f"zerotier 重启好了，你再试试, {resp}"
+#     except Exception as e:
+#         return str(e)
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def restart_zerotier(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     if re.match(__plugin_pattern__, message.asDisplay()):
-        msg = await request_server()
+        # msg = await request_server()
+        msg = 'test'
         await app.sendGroupMessage(group, MessageChain.create([
             Plain(msg),
         ]))
-
-if __name__ == '__main__':
-    print(request_server())
