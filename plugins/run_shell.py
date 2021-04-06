@@ -13,9 +13,9 @@ import re
 __plugin_name__ = 'shell'
 __plugin_description__ = '跑服务器脚本'
 __plugin_usage__ = '发送"重启vpn"'
-__plugin_pattern__ = '重启vpn'
+__plugin_pattern__ = '重启测试'
 
-cfg = load_config()
+# cfg = load_config()
 bcc = Get.bcc()
 
 
