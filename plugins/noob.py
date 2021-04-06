@@ -10,7 +10,7 @@ import re
 __plugin_name__ = '嘴臭'
 __plugin_description__ = '嘴臭bot'
 __plugin_usage__ = '发送"我叼你妈的"'
-__plugin_pattern__ = '重启vpn'
+__plugin_pattern__ = '我.*你妈的'
 
 bcc = Get.bcc()
 

@@ -15,25 +15,24 @@ __plugin_description__ = '跑服务器脚本'
 __plugin_usage__ = '发送"重启vpn"'
 __plugin_pattern__ = '重启测试'
 
-# cfg = load_config()
+cfg = load_config()
 bcc = Get.bcc()
 
 
-# async def request_server():
-#     try:
-#         async with aiohttp.ClientSession() as session:
-#             async with session.get("http://tech.corgi.plus:9100/api/v1/ergo/zerotier/restart") as r:
-#                 resp = await r.json()
-#                 return f"zerotier 重启好了，你再试试, {resp}"
-#     except Exception as e:
-#         return str(e)
+async def request_server():
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(cfg.url) as r:
+                resp = await r.json()
+                return f"zerotier 重启好了，你再试试, {resp}"
+    except Exception as e:
+        return str(e)
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
 async def restart_zerotier(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
     if re.match(__plugin_pattern__, message.asDisplay()):
-        # msg = await request_server()
-        msg = 'test'
+        msg = await request_server()
         await app.sendGroupMessage(group, MessageChain.create([
             Plain(msg),
         ]))
