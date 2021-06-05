@@ -1,8 +1,0 @@
-{
-    "host": "http://localhost:6666",
-    "authKey": "EXAMPLEAUTHKEY",
-    "account": 12345678,
-    "active_groups": [
-        12345678
-    ]
-}
