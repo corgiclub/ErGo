@@ -1,12 +1,14 @@
 # ErGo
 
-A qq-bot named 二狗, 基于 mirai / mirai-http / Garia.
+A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / [nonebot2](https://github.com/nonebot/nonebot2)
+
+绝赞重构中！
 
 > Cogito, **ergo** sum.
 >
 > 我思，故我在。
 
-## Bot 功能
+## Bot 功能（重构中，已过时）
 
 ###### 所有功能均可定制 / 可选开启
 
@@ -19,7 +21,7 @@ A qq-bot named 二狗, 基于 mirai / mirai-http / Garia.
 - 🐔 复读鸡
 - 🕹️ 其他 debug 用功能
 
-## 运行方法
+## 运行方法（重构中，已过时）
 
 build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
