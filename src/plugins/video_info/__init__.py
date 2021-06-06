@@ -1,5 +1,5 @@
 import re
-from .analysis_bilibili import b23_extract, bili_keyword
+from .bilibili import b23_extract, bili_keyword
 from nonebot import on_regex
 from nonebot.adapters import Bot, Event
 
@@ -12,15 +12,13 @@ analysis_bili = on_regex("(b23.tv)|(www.bilibili.com/video)|(www.bilibili.com/ba
 @analysis_bili.handle()
 async def analysis_main(bot: Bot, event: Event, state: dict):
     text = str(event.get_message()).strip()
+
     if "b23.tv" in text:
         # 提前处理短链接，避免解析到其他的
         text = await b23_extract(text)
-    try:
-        group_id = event.group_id
-        print(group_id)
-    except:
-        group_id = "1"
-    msg = await bili_keyword(group_id, text)
+        print(text)
+
+    msg = await bili_keyword(text)
     print(msg)
     if msg:
         try:
