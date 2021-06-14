@@ -1,11 +1,15 @@
-import re, json, aiohttp, asyncio
-import lxml.html
+import aiohttp
+import asyncio
+import re
+import traceback
 import urllib.parse
+
+import lxml.html
 from bilibili_api import video
+from bilibili_api.exceptions import ResponseCodeException
 
 
 async def bili_keyword(text):
-
     try:
         # 提取url
         vid, vtype = await extract(text)
@@ -24,6 +28,9 @@ async def bili_keyword(text):
                     break
                 i += 1
 
+        if not vid:
+            msg = '暂不支持的格式'
+            return msg
         # 获取视频详细信息
         msg = await video_detail(vid, vtype)
 
@@ -69,9 +76,9 @@ async def search_bili_by_title(title: str):
     except asyncio.TimeoutError:
         return None
 
-    for video in content.xpath('//li[@class="video-item matrix"]/a[@class="img-anchor"]'):
-        if title == ''.join(video.xpath('./attribute::title')):
-            url = ''.join(video.xpath('./attribute::href'))
+    for video_ in content.xpath('//li[@class="video-item matrix"]/a[@class="img-anchor"]'):
+        if title == ''.join(video_.xpath('./attribute::title')):
+            url = ''.join(video_.xpath('./attribute::href'))
             break
     else:
         url = None
@@ -83,7 +90,7 @@ async def video_detail(id_, type_):
         if type_ == 'bv':
             v = video.Video(bvid=id_)
         else:
-            v = video.Video(aid=id_)
+            v = video.Video(aid=int(id_))
         info = await v.get_info()
         msg = [
             {
@@ -95,14 +102,20 @@ async def video_detail(id_, type_):
             {
                 "type": "text",
                 "data": {
-                    "text": f'《{info["title"]}》\n' +\
-                            f'Up主: {info["owner"]["name"]}\n' +\
+                    "text": f'《{info["title"]}》\n'
+                            f'Up主: {info["owner"]["name"]}\n'
                             f'URL: https://bilibili.com/video/av{info["aid"]}'
                 }
             }
         ]
 
         return msg
+    except ResponseCodeException:
+        msg = '没有找到视频信息'
+        return msg
+
     except Exception as e:
-        msg = "解析出错--Error: {}".format(type(e))
+
+        msg = "解析出错--Error: {}\n".format(type(e))
+        msg += traceback.format_exc()
         return msg
