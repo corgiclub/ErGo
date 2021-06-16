@@ -98,7 +98,7 @@ async def lover_qa(app: GraiaMiraiApplication, group: Group, message: MessageCha
     if message.asDisplay().startswith(('藏头诗')):
         try:
             msg = message.asDisplay()
-            query = msg[2:]
+            query = msg[3:].strip()
             await app.sendGroupMessage(group, MessageChain.create([
                 Plain("稍等 让我想想"),
             ]))
