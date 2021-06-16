@@ -90,12 +90,12 @@ async def sample(query):
                                     headers=headers) as response:
                 return (await response.json())['results'][0][0]
     except Exception as e:
-        return "二狗连接推理服务器错误: " + str(e)
+        return "爱狗连接推理服务器错误: " + str(e)
 
 
 @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
-async def gpt_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
-    if message.asDisplay().startswith(('二狗')):
+async def lover_qa(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
+    if message.asDisplay().startswith(('爱狗')):
         try:
             msg = message.asDisplay()
             query = msg[2:]
