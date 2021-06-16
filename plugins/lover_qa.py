@@ -105,7 +105,7 @@ async def lover_qa(app: GraiaMiraiApplication, group: Group, message: MessageCha
 
             # 推理
             _begin_time = time.time()
-            answer = await sample(query, length=100)
+            answer = await sample(query)
             _original_len = len(answer)
 
             # 截断最后一个符号
