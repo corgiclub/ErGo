@@ -9,3 +9,4 @@ nonebot.load_plugins("src/plugins")
 
 if __name__ == "__main__":
     nonebot.run()
+

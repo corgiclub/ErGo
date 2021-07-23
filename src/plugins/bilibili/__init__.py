@@ -1,5 +1,5 @@
 import re
-from .bilibili import b23_extract, bili_keyword
+from .bilibili_video import b23_extract, bili_keyword
 from nonebot import on_regex
 from nonebot.adapters import Bot, Event
 

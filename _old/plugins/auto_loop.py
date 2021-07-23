@@ -30,7 +30,7 @@
 #
 #
 # @bcc.receiver(GroupMessage, headless_decoraters=[judge.group_check(__name__)])
-# async def video_info(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
+# async def bilibili(app: GraiaMiraiApplication, group: Group, message: MessageChain, member: Member):
 #     if re.match(__plugin_pattern__, message.asDisplay()):
 #         mes, war = get_loop_20()
 #         war = '<无>' if war == '' else war
