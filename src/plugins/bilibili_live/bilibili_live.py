@@ -12,7 +12,6 @@ from bilibili_api import live
 from bilibili_api.exceptions import ResponseCodeException
 
 
-
 async def get_live_info(room_id: int):
     room = live.LiveRoom(room_id)
     info = await room.get_room_info()
