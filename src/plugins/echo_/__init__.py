@@ -5,8 +5,8 @@ from nonebot.rule import to_me
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 
-global_config = nonebot.get_driver().config
-plugin_config = Config(**global_config.dict())
+# global_config = nonebot.get_driver().config
+# plugin_config = Config(**global_config.dict())
 
 weather = on_command("天气", rule=to_me(), priority=5)
 

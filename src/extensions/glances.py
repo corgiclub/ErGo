@@ -2,30 +2,31 @@ import httpx
 from pprint import pprint
 from enum import Enum
 import os
-from .config import Config
+from scheduals.config import Config
 
 cfg = Config().Glances()
+GB = 1073741824
 
 
 def gb(x):
-    return f'{x // 1073741824:d}'
+    return float(x) / GB
 
 
-def get_load(api):
+async def get_load(api) -> str:
     r = httpx.get(api + 'load')
     if r.status_code == 200:
         dic = r.json()
-        msg = f'负载: {dic["min1"]} {dic["min5"]} {dic["min15"]} / {dic["cpucore"]} 核'
+        msg = f'负载:\n┗{dic["min1"]} {dic["min5"]} {dic["min15"]} / {dic["cpucore"]}'
         return msg
     else:
         return f'❌ 负载: 读取失败 {r.status_code}'
 
 
-def get_mem(api):
+async def get_mem(api) -> str:
     r = httpx.get(api + 'mem')
     if r.status_code == 200:
         dic = r.json()
-        msg = f'内存: {gb(dic["available"])} / {gb(dic["total"])} GB'
+        msg = f'内存:\n┗{gb(dic["used"]):.2f} / {gb(dic["total"]):.2f} GB'
         if dic['percent'] > cfg.memory_warning:
             msg = '⚠️' + msg
         return msg
@@ -33,36 +34,40 @@ def get_mem(api):
         return f'❌内存: 读取失败'
 
 
-def get_gpu(api):
+async def get_gpu(api) -> str:
     r = httpx.get(api + 'gpu')
     if r.status_code == 200:
         dic = r.json()
+        # pprint(dic)
         if dic == list():
             t = os.popen('nvidia-smi').read().split('\n')
             if len(t) <= 2:
-                return '⚠️显卡: 读取为空，无显卡 / 需要检查驱动状态'
+                return '⚠️显卡: 无显卡 / 需要检查驱动状态'
             else:
                 return f'❌显卡: 读取失败，错误未知'
         else:
             msg = f'显卡: \n' + \
-                  f'{dic[0]["name"]}: {dic[0]["proc"]:>3d}% {dic[0]["mem"] * 24}/24GB {dic[0]["temperature"]}℃\n' + \
-                  f'{dic[1]["name"]}: {dic[1]["proc"]:>3d}% {dic[1]["mem"] * 24}/24GB {dic[1]["temperature"]}℃'
-            if dic[0]["temperature"] > cfg.gpu_warning_temp or dic[0]["temperature"] > cfg.gpu_warning_temp:
+                  '\n'.join([f'┃{d["gpu_id"]} {d["name"]}\n┗{d["proc"]:>2d}% {d["mem"] * 0.24:.1f}/24GB'
+                             f' {d["temperature"]}℃' for d in dic])
+
+            if max(d['temperature'] for d in dic) > cfg.gpu_warning_temp:
                 msg = '⚠️' + msg
             return msg
     else:
-        return f'显卡: 读取失败 {r.status_code}'
+        return f'❌显卡: 读取失败 {r.status_code}'
 
 
-def get_file_sys(api):
+async def get_file_sys(api) -> str:
     r = httpx.get(api + 'fs')
     if r.status_code == 200:
         dic = r.json()
-        pprint(dic)
+        dic = [d for d in dic if d["size"] > 128 * GB]
         if api == cfg.corgitech_api:
             msg = f'硬盘:\n' + \
-                  f'{dic[0]["device_name"]} {gb(dic[0]["used"])} / {gb(dic[0]["used"])} GB\n' + \
-                  f'{dic[10]["device_name"]} {gb(dic[10]["used"])} / {gb(dic[10]["size"])} GB'
+                  '\n'.join([f'┃{d["mnt_point"]}\n┗{gb(d["used"]):.2f} / {gb(d["size"]):.2f} GB' for d in dic]) + \
+                  '\n' + \
+                  '\n'.join([f'┃{d.split()[-1]}\n┗{gb(d.split()[2]):.2f} / {gb(d.split()[1]):.2f} TB'
+                             for d in os.popen('df | grep 192').read().split('\n')[:-1]])
         else:
             # todo nas硬盘
             msg = '🐛硬盘: 开发中'
@@ -74,4 +79,6 @@ def get_file_sys(api):
         return f'❌硬盘: 读取失败'
 
 
-print(get_file_sys(cfg.corgitech_api))
+async def get_info(api=cfg.corgitech_api):
+    msg = '\n'.join((await get_load(api), await get_mem(api), await get_gpu(api), await get_file_sys(api)))
+    return msg
