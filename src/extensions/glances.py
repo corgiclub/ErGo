@@ -2,9 +2,9 @@ import httpx
 from pprint import pprint
 from enum import Enum
 import os
-from .config import Config
+from .config import Glances
 
-cfg = Config().Glances()
+cfg = Glances()
 GB = 1073741824
 
 

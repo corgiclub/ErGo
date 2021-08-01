@@ -88,7 +88,7 @@ async def search_bili_by_title(title: str):
 async def video_detail(id_, type_):
     try:
         if type_ == 'bv':
-            v = video.Video(bvid=id_.upper())
+            v = video.Video(bvid=id_)
         else:
             v = video.Video(aid=int(id_))
         info = await v.get_info()

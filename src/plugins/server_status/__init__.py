@@ -1,25 +1,20 @@
-import os
-import re
-# from .config import Config
-from nonebot import on_regex
+import nonebot
+
+from nonebot import on_command
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
+from nonebot.permission import SUPERUSER
+from extensions.glances import get_info
+
+from .config import Config
+
+cfg = Config()
+
+sta = on_command('系统状态', permission=SUPERUSER)
 
 
-status = on_regex("状态")
+@sta.handle()
+async def _(bot: Bot, event: Event, state: T_State):
+    msg = await get_info()
+    await sta.send(msg)
 
-
-@status.handle()
-async def func(bot: Bot, event: Event, state: T_State):
-
-    msg = await get_status()
-    await status.send(msg)
-
-
-async def get_status():
-    gpu_list = os.popen('nvidia-smi').read().split('\n')
-    gpu0_info = re.findall('[a-zA-Z0-9]+', gpu_list[9].split('|')[1])
-    gpu1_info = re.findall('[a-zA-Z0-9]+', gpu_list[13].split('|')[1])
-
-
-    return ''.join(gpu0_info)
