@@ -1,17 +1,14 @@
 from pydantic import BaseSettings
+from extensions.utils import regex_equal
 
 
 class Config(BaseSettings):
 
-    # plugin custom config
-    # plugin_setting: str = "default"
-
     keywords: list = [
         '氦',
-        'Hi',
-        '嗨',
-        'はい'
+        'hi',
+        'おはよ'
     ]
 
-    test_word: str = '测试'
+    regex: str = regex_equal(keywords)
 
