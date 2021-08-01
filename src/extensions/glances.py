@@ -2,7 +2,7 @@ import httpx
 from pprint import pprint
 from enum import Enum
 import os
-from scheduals.config import Config
+from .config import Config
 
 cfg = Config().Glances()
 GB = 1073741824
@@ -16,10 +16,10 @@ async def get_load(api) -> str:
     r = httpx.get(api + 'load')
     if r.status_code == 200:
         dic = r.json()
-        msg = f'负载:\n┗{dic["min1"]} {dic["min5"]} {dic["min15"]} / {dic["cpucore"]}'
+        msg = f'处理器负载:\n┃Intel Core i9 - 7960X\n┗{dic["min1"]} {dic["min5"]} {dic["min15"]} / {dic["cpucore"]}'
         return msg
     else:
-        return f'❌ 负载: 读取失败 {r.status_code}'
+        return f'❌ 处理器: 读取失败 {r.status_code}'
 
 
 async def get_mem(api) -> str:

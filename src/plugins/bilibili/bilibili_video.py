@@ -88,7 +88,7 @@ async def search_bili_by_title(title: str):
 async def video_detail(id_, type_):
     try:
         if type_ == 'bv':
-            v = video.Video(bvid=id_)
+            v = video.Video(bvid=id_.upper())
         else:
             v = video.Video(aid=int(id_))
         info = await v.get_info()
@@ -117,5 +117,5 @@ async def video_detail(id_, type_):
     except Exception as e:
 
         msg = "解析出错--Error: {}\n".format(type(e))
-        msg += traceback.format_exc()
+        # msg += traceback.format_exc()
         return msg

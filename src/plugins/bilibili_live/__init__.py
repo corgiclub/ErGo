@@ -1,20 +1,20 @@
-import asyncio
-from pprint import pprint
-from bilibili_api import live
-from nonebot import on_regex
-import nonebot
-from nonebot.adapters import Bot, Event
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-# from apscheduler.schedulers.background import BackgroundScheduler
-
-from .config import Config
-
-# global_config = nonebot.get_driver().config
-config = Config()
-# bot = nonebot.get_bots()
-
-print(config)
-print(config.plugin_setting)
+# import asyncio
+# from pprint import pprint
+# from bilibili_api import live
+# from nonebot import on_regex
+# import nonebot
+# from nonebot.adapters import Bot, Event
+# from apscheduler.schedulers.asyncio import AsyncIOScheduler
+# # from apscheduler.schedulers.background import BackgroundScheduler
+#
+# from .config import Config
+#
+# # global_config = nonebot.get_driver().config
+# config = Config()
+# # bot = nonebot.get_bots()
+#
+# print(config)
+# print(config.plugin_setting)
 
 #
 # async def track_rooms():

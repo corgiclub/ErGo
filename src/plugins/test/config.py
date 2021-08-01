@@ -7,4 +7,3 @@ class Config(BaseSettings):
     # plugin_setting: str = "default"
 
     test_word: str = '测试'
-

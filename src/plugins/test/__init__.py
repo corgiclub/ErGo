@@ -14,7 +14,7 @@ te = on_regex(cfg.test_word, permission=SUPERUSER)
 
 
 @te.handle()
-async def hai(bot: Bot, event: Event, state: T_State):
+async def _(bot: Bot, event: Event, state: T_State):
     await test_func()
 
 
