@@ -4,7 +4,7 @@ from nonebot import on_command
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.permission import SUPERUSER
-from extensions.glances import get_info
+from src.extensions.glances import get_info
 
 from .config import Config
 
