@@ -1,3 +1,5 @@
+本分支为旧版本，现已停止开发维护，稳定版本请切换至 main 分支，开发版本请切换至 dev 分支。
+
 # ErGo
 
 A qq-bot named 二狗, 基于 mirai / mirai-http / Garia.
