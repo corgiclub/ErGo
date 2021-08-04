@@ -9,7 +9,7 @@ from nonebot.permission import Permission, SUPERUSER
 from .config import Config
 
 cfg = Config()
-aha = on_regex(cfg.regex, permission=SUPERUSER)
+aha = on_regex(cfg.regex)
 
 
 @aha.handle()
