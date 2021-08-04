@@ -1,5 +1,5 @@
 from pydantic import BaseSettings
-from extensions.utils import regex_equal
+from src.extensions.utils import regex_equal
 
 
 class Config(BaseSettings):
