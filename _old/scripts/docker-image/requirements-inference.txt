@@ -1,7 +1,0 @@
-sentencepiece
-jieba
-tensorflow
-tensorflow-hub
-linux-metrics
-Flask
-regex
