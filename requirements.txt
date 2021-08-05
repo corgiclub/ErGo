@@ -1,0 +1,9 @@
+nb-cli~=0.5.0
+nonebot2~=2.0.0a14
+nonebot-adapter-cqhttp~=2.0.0a14
+pydantic~=1.8.2
+PyYAML~=5.4.1
+lxml~=4.6.3
+httpx~=0.18.2
+pymongo~=3.12.0
+
