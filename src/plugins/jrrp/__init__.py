@@ -19,26 +19,31 @@ jrrp = on_command('jrrp')
 
 @jrrp.handle()
 async def _(bot: Bot, event: Event, state: T_State):
-    yml_path = "src/plugins/jrrp/jrrp.yml"
+    yml_path = "src/shared_data/jrrp.yml"
 
     # if not event.is_tome():
     sender = event.get_user_id()
-
-    with open(yml_path, 'a+', encoding="utf-8") as fi:
-        jrrp_log = yaml.load(fi, Loader=yaml.FullLoader)
+    if os.path.exists(yml_path):
+        with open(yml_path, 'r', encoding="utf-8") as fi:
+            jrrp_log = yaml.load(fi, Loader=yaml.FullLoader)
 
         today = datetime.date.today()
-        if not jrrp_log or not jrrp_log['date'] == today:
+        if not jrrp_log['date'] == today:
             jrrp_log = {
                 'date': today
             }
+    else:
+        jrrp_log = {
+                    'date': datetime.date.today()
+                }
 
-        if sender in jrrp_log.keys():
-            rp = jrrp_log[sender]
-        else:
-            rp = await get_normal_random()
-            jrrp_log[sender] = rp
-            yaml.dump(jrrp_log, fi)
+    if sender in jrrp_log.keys():
+        rp = jrrp_log[sender]
+    else:
+        rp = await get_normal_random()
+        jrrp_log[sender] = rp
+        with open(yml_path, 'w', encoding="utf-8") as fi:
+            yaml.safe_dump(jrrp_log, fi, encoding='utf-8', allow_unicode=True)
 
     msg = [
         {
