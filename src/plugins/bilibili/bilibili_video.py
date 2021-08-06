@@ -1,4 +1,4 @@
-import aiohttp
+import httpx
 import asyncio
 import re
 import traceback
@@ -44,8 +44,8 @@ async def b23_extract(text):
     if not b23:
         b23 = re.compile(r'b23.tv/(\w+)').search(text)
     url = f'https://b23.tv/{b23[1]}'
-    async with aiohttp.request('GET', url, timeout=aiohttp.client.ClientTimeout(10)) as resp:
-        text_long = str(resp.url)
+    resp = httpx.get(url)
+    text_long = str(resp.url)
     return text_long
 
 
@@ -70,9 +70,9 @@ async def search_bili_by_title(title: str):
     search_url = f'https://search.bilibili.com/video?keyword={urllib.parse.quote(title_without_brackets)}'
 
     try:
-        async with aiohttp.request('GET', search_url, timeout=aiohttp.client.ClientTimeout(10)) as resp:
-            text = await resp.text(encoding='utf8')
-            content: lxml.html.HtmlElement = lxml.html.fromstring(text)
+        resp = httpx.get(search_url)
+        text = resp.text
+        content: lxml.html.HtmlElement = lxml.html.fromstring(text)
     except asyncio.TimeoutError:
         return None
 
