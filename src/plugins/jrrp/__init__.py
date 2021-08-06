@@ -21,19 +21,16 @@ jrrp = on_command('jrrp')
 async def _(bot: Bot, event: Event, state: T_State):
     yml_path = "src/plugins/jrrp/jrrp.yml"
 
-    if not event.is_tome():
-        sender = event.get_user_id()
-        if os.path.exists(yml_path):
-            with open(yml_path, 'r', encoding="utf-8") as f:
-                jrrp_log = yaml.load(f, Loader=yaml.FullLoader)
-            today = datetime.date.today()
-            if not jrrp_log['date'] == today:
-                jrrp_log = {
-                    'date': today
-                }
-        else:
+    # if not event.is_tome():
+    sender = event.get_user_id()
+
+    with open(yml_path, 'a+', encoding="utf-8") as fi:
+        jrrp_log = yaml.load(fi, Loader=yaml.FullLoader)
+
+        today = datetime.date.today()
+        if not jrrp_log or not jrrp_log['date'] == today:
             jrrp_log = {
-                'date': datetime.date.today()
+                'date': today
             }
 
         if sender in jrrp_log.keys():
@@ -41,24 +38,23 @@ async def _(bot: Bot, event: Event, state: T_State):
         else:
             rp = await get_normal_random()
             jrrp_log[sender] = rp
-            with open("src/plugins/jrrp/jrrp.yml", "w", encoding="utf-8") as f:
-                yaml.dump(jrrp_log, f)
+            yaml.dump(jrrp_log, fi)
 
-        msg = [
-            {
-                'type': 'at',
-                'data': {
-                    'qq': sender
-                }
-            },
-            {
-                'type': 'text',
-                'data': {
-                    'text': f'你今天的人品是 {rp}%'
-                }
+    msg = [
+        {
+            'type': 'at',
+            'data': {
+                'qq': sender
             }
-        ]
-        await jrrp.send(msg)
+        },
+        {
+            'type': 'text',
+            'data': {
+                'text': f'你今天的人品是 {rp}%'
+            }
+        }
+    ]
+    await jrrp.send(msg)
 
 
 async def get_normal_random(mu=50, sig=25, limit=(0, 100)):
