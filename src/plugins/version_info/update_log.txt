@@ -4,4 +4,6 @@ Ergo Bot version 2.0.1
 
 - 增加了更新日志，在每一次版本更新时后显示
 
+- 修复了缓存 bug
+
 Author：Corgiclub
