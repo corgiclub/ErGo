@@ -148,4 +148,6 @@ scripts/docker-image/mongodb-linux-x86_64-ubuntu1804-4.4.2.tgz
 database/mongo
 logs/
 src/plugins/changelog/version.txt
+client/
+src/plugins/jrrp/jrrp.yml
 
