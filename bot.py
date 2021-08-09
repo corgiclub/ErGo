@@ -8,5 +8,5 @@ nonebot.load_builtin_plugins()
 nonebot.load_plugins("src/plugins")
 
 if __name__ == "__main__":
-    nonebot.run()
+    nonebot.run(port=9080)
 
