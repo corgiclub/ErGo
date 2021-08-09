@@ -1,29 +1,45 @@
-from nonebot import on_command, on_keyword
+import httpx
+from nonebot import on_command, on_keyword, get_driver
 from nonebot.adapters import Bot, Event
 from nonebot.typing import T_State
 
-# from .config import Config
+driver = get_driver()
 
-# cfg = Config()
+BASE_URL = 'http://localhost:5000'
 
-nmsl = on_keyword({'nmsl', 'wdnmd'})
+keywords = set('狗东西')
+nmsl = on_keyword(keywords)
+
+
+@driver.on_bot_connect
+async def _(bot: Bot):
+    data = httpx.get(f'{BASE_URL}/words').json().get('data')
+    for k in data:
+        keywords.add(k)
+
+
+async def get_answer(q: str):
+    bot_api = f'http://localhost:5000'
+    res = httpx.get(bot_api, params={'q': q})
+    return res.json().get('data')
+
 
 @nmsl.handle()
 async def _(bot: Bot, event: Event, state: T_State):
-    if not event.is_tome():
-        sender = event.get_user_id()
-        msg = [
-            {
-                'type': 'at',
-                'data': {
-                    'qq': sender
-                }
-            },
-            {
-                'type': 'text',
-                'data': {
-                    'text': f'你妈才死了'
-                }
+    sender = event.get_user_id()
+    from_msg = str(event.get_message())
+    msg = [
+        {
+            'type': 'at',
+            'data': {
+                'qq': sender
             }
-        ]
-        await nmsl.send(msg)
+        },
+        {
+            'type': 'text',
+            'data': {
+                'text': await get_answer(from_msg)
+            }
+        }
+    ]
+    await nmsl.send(msg)
