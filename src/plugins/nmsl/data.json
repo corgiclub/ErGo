@@ -1,0 +1,28 @@
+{
+  "baseKeywords": ["nm","sb","你妈","哈批","弱智","睿智","啥b","鲨b","傻逼"],
+  "corpus": [
+    {"weight": 1, "keywords": [], "generic": true, "content": "我操你妈信不信我今晚就去你妈坟头蹦迪?"},
+    {"weight": 0.2, "keywords": ["狗东西"], "generic": false, "content": "狗东西骂谁？"},
+    {"weight": 0.2, "keywords": [], "generic": true, "content": "啥b"},
+    {"weight": 0.2, "keywords": [], "generic": true, "content": "nmsl"},
+    {"weight": 0.2, "keywords": [], "generic": true, "content": "cnm"},
+    {"weight": 0.2, "keywords": [], "generic": true, "content": "wsnd"},
+    {"weight": 0.3, "keywords": [], "generic": true, "content": "我叼你老母"},
+    {"weight": 0.3, "keywords": [], "generic": true, "content": "我日你妈个傻逼玩意"},
+    {"weight": 0.5, "keywords": [], "generic": true, "content": "废物话都说不清楚？"},
+    {"weight": 0.5, "keywords": [], "generic": true, "content": "啥b，纯纯的脑瘫"},
+    {"weight": 0.6, "keywords": [], "generic": true, "content": "啥b，是不是肠胃不好把脑子拉出去了?"},
+    {"weight": 0.6, "keywords": [], "generic": true, "content": "鲨b，你家户口本就一页吧？"},
+    {"weight": 0.6, "keywords": ["我是你"], "generic": false, "content": "是你妈了个逼的，狗东西"},
+    {"weight": 0.6, "keywords": [], "generic": true, "content": "就这？就这？就这？？给点力啊铁子"},
+    {"weight": 0.6, "keywords": [], "generic": true, "content": "骂人都不会，是不是要你爹教你怎么骂人？"},
+    {"weight": 0.6, "keywords": [], "generic": true, "content": "你翻开户口本就是全家福是吧 啥b"},
+    {"weight": 0.65, "keywords": ["你妈死了","nmsl"], "generic": false, "content": "你妈才死了，傻逼玩意"},
+    {"weight": 0.7, "keywords": [], "generic": true, "content": "不会骂别骂，傻逼玩意"},
+    {"weight": 0.7, "keywords": [], "generic": true, "content": "我看你真是老鹰打饱嗝，鸡儿吃多了"},
+    {"weight": 0.7, "keywords": [], "generic": true, "content": "啥b，纯纯的脑瘫，我在你妈坟头打麻将都能胡个清一色"},
+    {"weight": 0.75, "keywords": [], "generic": true, "content": "弱智能不能别说话？闭上你的狗嘴傻屌"},
+    {"weight": 0.8, "keywords": [], "generic": true, "content": "操你妈你个傻逼篮子狗东西"},
+    {"weight": 1, "keywords": ["傻屌"], "generic": false, "content": "我他妈就是用这根屌生的你这个崽种，弱智玩意吃屎去吧你"}
+  ]
+}

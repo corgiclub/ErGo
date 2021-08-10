@@ -1,3 +1,5 @@
+import random
+
 import httpx
 from nonebot import on_regex
 from nonebot.adapters import Bot, Event
@@ -13,6 +15,10 @@ async def _(bot: Bot, event: Event, state: T_State):
     verb = '想' if '想' in from_msg else '要'
     idx = from_msg.index(verb)
     verb2 = from_msg[idx + 1]
+
+    text = f'你{verb2}个🔨，就你还{verb2}'
+    if random.random() > 0.9:
+        text = '在测试我？你测试你妈呢傻逼东西'
     msg = [
         {
             'type': 'at',
@@ -23,7 +29,7 @@ async def _(bot: Bot, event: Event, state: T_State):
         {
             'type': 'text',
             'data': {
-                'text': f'你{verb2}个🔨，就你还{verb2}'
+                'text': text
             }
         }
     ]
