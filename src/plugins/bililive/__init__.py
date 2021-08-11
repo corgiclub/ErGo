@@ -66,7 +66,14 @@ async def send_config(bot: Bot, event: Event):
         data: dict = yaml.safe_load(fi)['rooms_data']
 
     group_id = int(event.get_session_id().split('_')[1])
-    room_id_list = [str(k) for k, v in data.items() if group_id in v]
-    msg = f"本群当前检测开播的直播间号有 {len(room_id_list)} 个：\n" + '\n'.join(room_id_list)
+    room_id_list = [k for k, v in data.items() if group_id in v]
+    room_uname_list = []
+
+    for room_id in room_id_list:
+        room = live.LiveRoom(int(room_id))
+        room_info = await room.get_room_info()
+        room_uname_list.append(f"{room_info['anchor_info']['base_info']['uname']} - {room_id}")
+
+    msg = f"本群当前检测开播的直播间有 {len(room_id_list)} 个：\n" + '\n'.join(room_uname_list)
 
     await bililive.send(msg)
