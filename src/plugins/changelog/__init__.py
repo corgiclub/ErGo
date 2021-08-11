@@ -15,7 +15,7 @@ driver = nonebot.get_driver()
 async def _(bot: Bot):
     version_now = driver.config.version
 
-    with open('src/plugins/changelog/version.txt', 'w+') as fi:
+    with open('src/plugins/changelog/version.txt', 'r+') as fi:
 
         version_last = fi.read()
         if not version_last == version_now:
@@ -24,6 +24,7 @@ async def _(bot: Bot):
                 msg = fj.read()
                 for group in group_list:
                     await bot.send_group_msg(group_id=group['group_id'], message=msg)
+            fi.seek(0)
             fi.write(version_now)
             fi.truncate()
 
