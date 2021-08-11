@@ -76,6 +76,6 @@ async def send_config(bot: Bot, event: Event):
         live_statu = "直播中" if room_info['room_info']['live_status'] else "未开播"
         room_uname_list.append(f"{room_info['anchor_info']['base_info']['uname']} - {room_id} - {live_statu}")
 
-    msg = f"本群当前检测开播的直播间有 {len(room_id_list)} 个：\n" + '\n'.join(room_uname_list)
+    msg = f"本群当前检测的直播间有 {len(room_id_list)} 个：\n" + '\n'.join(room_uname_list)
 
     await bililive.send(msg)
