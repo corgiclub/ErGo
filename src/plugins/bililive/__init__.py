@@ -1,14 +1,18 @@
 import nonebot
 import yaml
 from bilibili_api import live
-from nonebot.adapters.cqhttp import Bot, Message
+from nonebot import on_command
+from nonebot.adapters.cqhttp import Bot, Message, Event
+
+
+yaml_path = 'src/plugins/bililive/bilibili_live.yml'
 
 driver = nonebot.get_driver()
 
 
 @driver.on_startup
 async def startup():
-    with open('src/plugins/bililive/bilibili_live.yml', 'r') as fi:
+    with open(yaml_path, 'r') as fi:
         data: dict = yaml.safe_load(fi)['rooms_data']
     for room_id, target_id in data.items():
         await detect_living(room_id, target_id)
@@ -44,10 +48,25 @@ async def detect_living(roomid, groups):
         ])
         bot: Bot = nonebot.get_bot()
         for group in groups:
-            await bot.send_group_msg(group_id=group['group_id'], message=msg)
+            await bot.send_group_msg(group_id=group, message=msg)
         # pprint(event)
 
 
 async def set_config():
     pass
 
+
+bililive = on_command('bililive')
+
+
+@bililive.handle()
+async def send_config(bot: Bot, event: Event):
+
+    with open(yaml_path, 'r') as fi:
+        data: dict = yaml.safe_load(fi)['rooms_data']
+
+    group_id = int(event.get_session_id().split('_')[1])
+    room_id_list = [str(k) for k, v in data.items() if group_id in v]
+    msg = f"本群当前检测开播的直播间号有 {len(room_id_list)} 个：\n" + '\n'.join(room_id_list)
+
+    await bililive.send(msg)
