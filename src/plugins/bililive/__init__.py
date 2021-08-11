@@ -9,12 +9,12 @@ driver = nonebot.get_driver()
 @driver.on_startup
 async def startup():
     with open('src/plugins/bililive/bilibili_live.yml', 'r') as fi:
-        rooms = yaml.safe_load(fi)['rooms']
-    for r in rooms:
-        await detect_living(r)
+        data: dict = yaml.safe_load(fi)['rooms_data']
+    for room_id, target_id in data.items():
+        await detect_living(room_id, target_id)
 
 
-async def detect_living(roomid):
+async def detect_living(roomid, groups):
     room_living = live.LiveDanmaku(roomid)
 
     @driver.on_bot_connect
@@ -43,8 +43,11 @@ async def detect_living(roomid):
             }
         ])
         bot: Bot = nonebot.get_bot()
-        for group in await bot.get_group_list():
+        for group in groups:
             await bot.send_group_msg(group_id=group['group_id'], message=msg)
         # pprint(event)
 
+
+async def set_config():
+    pass
 
