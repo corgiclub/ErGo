@@ -1,5 +1,5 @@
 {
-  "baseKeywords": ["nm","sb","你妈","哈批","弱智","睿智","啥b","鲨b","傻逼"],
+  "baseKeywords": ["nm","sb","你妈","哈批","弱智","睿智","啥b","鲨b","傻逼","傻嗨","臭嗨","扑街","扑该"],
   "corpus": [
     {"weight": 1, "keywords": [], "generic": true, "content": "我操你妈信不信我今晚就去你妈坟头蹦迪?"},
     {"weight": 0.2, "keywords": ["狗东西"], "generic": false, "content": "狗东西骂谁？"},
