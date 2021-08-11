@@ -42,7 +42,7 @@ async def detect_living(roomid, groups):
                 "type": "text",
                 "data": {
                     "text": f"{room_info['anchor_info']['base_info']['uname']} 正在直播\n"
-                            f"{room_info['room_info']['title']}\n"
+                            f"【{room_info['room_info']['title']}】\n"
                             f"https://live.bilibili.com/{event['room_display_id']}"
                 }
             }
