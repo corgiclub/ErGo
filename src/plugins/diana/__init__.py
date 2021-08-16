@@ -18,7 +18,7 @@ async def _(bot: Bot, event: Event, state: T_State):
         {
             'type': 'text',
             'data': {
-                'text': '嘉然 bot 开发中'
+                'text': '这里是嘉然bot'
             }
         }
     ]
