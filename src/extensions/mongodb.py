@@ -16,4 +16,8 @@ def test():
     print(result)
 
 
+def get_table(db_name: str, table_name: str):
+    return client[db_name][table_name]
+
+
 test()
