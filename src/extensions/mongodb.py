@@ -12,12 +12,12 @@ def test():
     data = {
         'data': 'test'
     }
-    result = col.insert_one(data)
-    print(result)
+    return col.insert_one(data)
+    # print(result)
 
 
-def get_table(db_name: str, table_name: str):
-    return client[db_name][table_name]
+def get_collection(db_name: str, col_name: str):
+    return client[db_name][col_name]
 
 
-test()
+# test()

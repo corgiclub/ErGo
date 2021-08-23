@@ -4,32 +4,45 @@ from pprint import pprint
 from nonebot import on_command, on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
-from nonebot.permission import SUPERUSER
-from src.extensions.glances import get_info
+from src.extensions.message import CQ
+from src.extensions.mongodb import get_collection
 
 from .config import Config
 
 cfg = Config()
 
-record = on_message(priority=-1)
+record = on_message(priority=0, block=False)
 
 
 @record.handle()
 async def log2database(bot: Bot, event: Event, state: T_State):
+    # print(event.dict())
+    # print(event)
+    # print(event.get_event_description())
+    # print(event.get_event_name())
+    # print(event.get_log_string())
+    message_id = event.get_event_description().split()[1]
+    session_id = event.get_session_id().split("_")
+    self_id = bot.self_id
+    if session_id[0] == 'group':
+        group_id = session_id[1]
+        user_id = session_id[2]
+        col = get_collection('group_chat', group_id)
+    else:
+        group_id = ''
+        user_id = session_id[0]
+        col = get_collection('private_chat', self_id)
+
     msg: Message[MessageSegment] = event.get_message()
-    event.get_user_id()
-    print(event.self_id)
-    for mss in msg:
-        # print(mss.type)
-        # pprint(mss.data)
-        # print(mss.items())
-
-        # await sta.send(mss)
-
-        data = {
-            "sid": event.self_id,
-            "type": mss.type,
-            "data": mss.data
+    for m in msg:
+        line = {
+            "mid": message_id,
+            "uid": user_id,
+            "mtp": m.type,
+            **m.data,
         }
 
-        pprint(data)
+        col.insert_one(line)
+        pprint(line)
+
+
