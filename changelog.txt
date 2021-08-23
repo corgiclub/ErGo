@@ -1,0 +1,9 @@
+Ergo Bot version 2.0.2a
+
+- 新增了 bililive 插件，自动向群内推送主播开播信息
+  使用 /bililive 查询当前群内关注的主播
+  (暂时不开放普通用户添加关注的主播，仅开发者可添加)
+- 修复了若干 bug
+- 删除了未开发完毕的嘴臭功能
+
+Author：Corgiclub

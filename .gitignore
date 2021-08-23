@@ -141,8 +141,10 @@ mirai/
 .lastupdate
 
 #ignore config files
-config/*.json
-_old/config.zip
+
+
+
 
 logs/
-src/shared_data/*
+src/plugins/jrrp/jrrp.yml
+

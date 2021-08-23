@@ -6,51 +6,50 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 
 > Cogito, **ergo** sum.
 >
-> 我思，故我在。
+> 我思，**故**我在。
 
-## Bot 功能（重构中，已过时）
+## Bot 功能
 
-###### 所有功能均可定制 / 可选开启
+###### 所有功能均可定制 / 可选开启（划去的为重构计划迁移，但还暂时未实现的功能）
 
 - 💬 关键词回复
-- 🧠 AI 续写（基于 CPM-LM）
+- ~~🧠 AI 续写（基于 CPM-LM）~~
 - 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
-- 📰 今日要闻
-- 📃 聊天记录存储至数据库
-- 💾 系统信息 / 状态 / 日志查询
-- 🐔 复读鸡
+- ~~📰 今日要闻~~
+- ~~📃 聊天记录存储至数据库~~
+- 🧮 系统状态查询
+- ~~🐔 复读鸡~~
+- 🎈 今日人品
+- 📋 更新日志
 - 🕹️ 其他 debug 用功能
 
-## 运行方法（重构中，已过时）
+## 运行方法
 
-build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
+手动运行：
 
-运行 bot 容器并启动 bot: `sh scripts/docker-start-bot.sh`
+- 运行 go-cqhttp 服务
+- clone 本 repo
+- 安装 requirements
+- 运行  `nb run`
 
-仅运行 bot 容器环境(debug 使用): `sh scripts/docker-run.sh`
+Docker 运行（推荐）：
 
-接入正在运行的 bot 容器: `docker attach ergo-bot-container`
-
-退出正在运行的 bot 容器（不可直接 ctrl+c 或 ctrl+d）: ctrl+p ctrl+q
+- 开发中
 
 ## Todo list
 
-- [ ] 
-- [ ] 🔜 pixiv 搜图
-- [ ] 推特搜图、记录相关功能
+- [ ] 数据库功能
+- [ ] pixiv 搜图
+- [ ] 推特搜图
 - [ ] qq语音解码
 - [ ] 备忘录，自动提醒
-- [ ] 视频详细信息（小程序、直播间、youtube 支持）
-- [ ] 聊天记录保存至数据库
-- [ ] 🔜 小游戏（9路围棋，五子棋，黑白棋，象棋，赛马）
+- [ ] 直播提醒
+- [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋，赛马）
 - [ ] 画一个logo
 
 #### 待修复 BUG / issue
 
-- 视频详细信息功能对B站移动端短链接的支持存在判断问题
-- config 加载函数逻辑优化
-- 部分 request 请求速度较慢
-- ~~存储 gif 时帧率错误修复（疑似丢失了帧间隔信息？~~
+- 
 
 ## 其他依赖
 
@@ -58,7 +57,11 @@ build bot 所需 docker 镜像: `cd script/docker-image; sh docker-build.sh`
 
 清源 CPM TensorFlow 版本 [github repo](https://github.com/qhduan/CPM-LM-TF2)
 
-模型下载链接 [百度云](https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ) 密码: n0nt or [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
+模型下载链接
+
+- [百度云](https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ) 密码: n0nt
+
+-  [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
 
 ### 小赖字体 / 小賴字體 / シャオライ / Xiaolai Font
 
