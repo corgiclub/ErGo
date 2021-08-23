@@ -11,7 +11,8 @@ from .config import Config
 
 cfg = Config()
 
-record = on_message(priority=0, block=False)
+# fixme 在 main 分支中重新设计全部优先级
+record = on_message(priority=1, block=False)
 
 
 @record.handle()
