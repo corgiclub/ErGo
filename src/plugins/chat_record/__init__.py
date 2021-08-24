@@ -4,9 +4,8 @@ from pprint import pprint
 from nonebot import on_command, on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
-from src.extensions.message import CQ
-from src.extensions.mongodb import get_collection, log_picture
-from src.extensions.utils import PicSource
+from src.extensions.mongodb import get_collection, log_picture, log_audio
+from src.extensions.utils import PicSource, CQ
 
 from .config import Config
 
@@ -18,11 +17,7 @@ record = on_message(priority=1, block=False)
 
 @record.handle()
 async def log2database(bot: Bot, event: Event, state: T_State):
-    # print(event.dict())
-    # print(event)
-    # print(event.get_event_description())
-    # print(event.get_event_name())
-    # print(event.get_log_string())
+
     message_id = event.get_event_description().split()[1]
     session_id = event.get_session_id().split("_")
     self_id = bot.self_id
@@ -31,7 +26,7 @@ async def log2database(bot: Bot, event: Event, state: T_State):
         user_id = session_id[2]
         col = get_collection('group_chat', group_id)
     else:
-        group_id = ''
+        # group_id = ''
         user_id = session_id[0]
         col = get_collection('private_chat', self_id)
 
@@ -49,5 +44,6 @@ async def log2database(bot: Bot, event: Event, state: T_State):
         print(m.type, CQ.Image)
         if m.type == CQ.Image:
             await log_picture(**m.data, source=PicSource.Chat)
-
+        if m.type == CQ.Record:
+            await log_audio(**m.data)
 
