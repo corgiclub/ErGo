@@ -4,6 +4,7 @@ from src.extensions.utils import PicSource
 from src.extensions.imghdr_byte import what
 import httpx
 import os
+from typing import Optional
 
 
 cfg = MongoDB()
@@ -26,7 +27,7 @@ def get_collection(db_name: str, col_name: str):
 async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str = cfg.base_path + 'picture',
                       **kwargs):
     col = get_collection('picture', source)
-    print(0)
+    # print(0)
     if not col.find_one({"file": file}):
         line = {
             "file": file,
@@ -45,3 +46,49 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
             line["failure"] = True
 
         col.insert_one(line)
+
+
+async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg.base_path + 'audio',
+                    **kwargs):
+
+    col = get_collection('audio', source)
+
+    if not col.find_one({"file": file}):
+        line = {
+            "file": file,
+        }
+        res = httpx.get(url)
+        if res.status_code == 200:
+            aud = res.content
+            path = f"{base_pic_path}/{source}/"
+            if not os.path.exists(path):
+                os.makedirs(path)
+            with open(f"{path}{file}", 'wb') as fi:
+                fi.write(aud)
+        else:
+            line["failure"] = True
+
+        col.insert_one(line)
+
+
+# async def log_video(file: str, source='chat', base_pic_path: str = cfg.base_path + 'video',
+#                     **kwargs):
+#
+#     col = get_collection('video', source)
+#
+#     if not col.find_one({"file": file}):
+#         line = {
+#             "file": file,
+#         }
+#         res = httpx.get(file)
+#         if res.status_code == 200:
+#             vid = res.content
+#             path = f"{base_pic_path}/{source}/"
+#             if not os.path.exists(path):
+#                 os.makedirs(path)
+#             with open(f"{path}{file}", 'wb') as fi:
+#                 fi.write(vid)
+#         else:
+#             line["failure"] = True
+#
+#         col.insert_one(line)

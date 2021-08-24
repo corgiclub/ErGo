@@ -19,15 +19,9 @@ class CQ(str, Enum):
     Reply = 'reply'
     Xml = 'xml'
     Json = 'json'
-
-
-class CQNotImp(str, Enum):
-    """
-        还未进行数据库适配的CQ消息段类型
-    """
-    Music = 'music'     # 只发送，不做适配
-    Forward = 'forward' # 需要适配转发消息
-    Node = 'node'       # 格式复杂
+    Music = 'music'         # 只发送，不做适配
+    Forward = 'forward'     # 需要适配转发消息
+    Node = 'node'           # 格式复杂
 
 
 
