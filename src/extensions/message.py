@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CQ(Enum):
+class CQ(str, Enum):
     """
         已进行数据库适配的CQ消息段类型
     """
@@ -21,7 +21,7 @@ class CQ(Enum):
     Json = 'json'
 
 
-class CQNotImp(Enum):
+class CQNotImp(str, Enum):
     """
         还未进行数据库适配的CQ消息段类型
     """

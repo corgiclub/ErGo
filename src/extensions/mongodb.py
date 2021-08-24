@@ -23,8 +23,10 @@ def get_collection(db_name: str, col_name: str):
     return client[db_name][col_name]
 
 
-async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str = cfg.base_path + 'picture/'):
+async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str = cfg.base_path + 'picture',
+                      **kwargs):
     col = get_collection('picture', source)
+    print(0)
     if not col.find_one({"file": file}):
         line = {
             "file": file,
@@ -33,8 +35,10 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
         if res.status_code == 200:
             pic = res.content
             suffix = what(pic)
-            path = f"{base_pic_path}{source}/{file}.{suffix}"
-            with open(path, 'wb') as fi:
+            path = f"{base_pic_path}/{source}/"
+            if not os.path.exists(path):
+                os.makedirs(path)
+            with open(path+f"{file}.{suffix}", 'wb') as fi:
                 fi.write(pic)
             line["suffix"] = suffix
         else:

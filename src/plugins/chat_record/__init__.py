@@ -5,7 +5,8 @@ from nonebot import on_command, on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
 from src.extensions.message import CQ
-from src.extensions.mongodb import get_collection
+from src.extensions.mongodb import get_collection, log_picture
+from src.extensions.utils import PicSource
 
 from .config import Config
 
@@ -45,5 +46,8 @@ async def log2database(bot: Bot, event: Event, state: T_State):
 
         col.insert_one(line)
         pprint(line)
+        print(m.type, CQ.Image)
+        if m.type == CQ.Image:
+            await log_picture(**m.data, source=PicSource.Chat)
 
 
