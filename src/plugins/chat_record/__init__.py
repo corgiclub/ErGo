@@ -4,9 +4,8 @@ from pprint import pprint
 from nonebot import on_command, on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
-from src.extensions.message import CQ
 from src.extensions.mongodb import get_collection, log_picture, log_audio
-from src.extensions.utils import PicSource
+from src.extensions.utils import PicSource, CQ
 
 from .config import Config
 
