@@ -1,7 +1,6 @@
 import nonebot
 import yaml
 from bilibili_api import live
-from pprint import pprint
 from nonebot import on_command
 from nonebot.adapters.cqhttp import Bot, Message, Event
 
@@ -57,7 +56,7 @@ async def set_config():
     pass
 
 
-bililive = on_command('bililive')
+bililive = on_command('bililive', priority=10, block=False)
 
 
 @bililive.handle()

@@ -1,20 +1,13 @@
 import httpx
 import os
-import nonebot
 import math
-
 from nonebot import on_command
 from nonebot.typing import T_State
-from nonebot.adapters import Bot, Event, Message
-from random import randint
+from nonebot.adapters.cqhttp import Bot, Event, Message
 import yaml
 import datetime
 
-# from .config import Config
-
-# cfg = Config()
-
-jrrp = on_command('jrrp')
+jrrp = on_command('jrrp', priority=10, block=False)
 
 
 @jrrp.handle()
@@ -45,7 +38,7 @@ async def _(bot: Bot, event: Event, state: T_State):
         with open(yml_path, 'w', encoding="utf-8") as fi:
             yaml.safe_dump(jrrp_log, fi, encoding='utf-8', allow_unicode=True)
 
-    msg = [
+    msg = Message([
         {
             'type': 'at',
             'data': {
@@ -58,11 +51,11 @@ async def _(bot: Bot, event: Event, state: T_State):
                 'text': f'你今天的人品是 {rp}%'
             }
         }
-    ]
+    ])
     await jrrp.send(msg)
 
 
-async def get_normal_random(mu=50, sig=25, limit=(0, 100)):
+async def get_normal_random(mu=50, sig=50, limit=(0, 100)):
 
     data_type = 'uint16'
     data_one = 65536

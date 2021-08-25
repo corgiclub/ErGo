@@ -1,12 +1,5 @@
 import nonebot
-
-from nonebot import on_regex
-from nonebot.rule import to_me
-from nonebot.typing import T_State
-from nonebot.adapters.cqhttp import Bot, Event
-
-from typing import List
-
+from nonebot.adapters.cqhttp import Bot
 
 driver = nonebot.get_driver()
 
@@ -27,4 +20,3 @@ async def _(bot: Bot):
             fi.seek(0)
             fi.write(version_now)
             fi.truncate()
-
