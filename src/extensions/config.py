@@ -12,5 +12,7 @@ class Glances(BaseSettings):
     file_sys_warning = 90
 
 
-class Ergo(BaseSettings):
-    call = '二狗'
+class MongoDB(BaseSettings):
+    host = "mongodb://i.tech.corgi.plus:27017/"
+    base_path = ""
+

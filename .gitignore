@@ -131,13 +131,20 @@ dmypy.json
 
 
 # ignore plugins cache
+cpm-lm-tf2_v2/
+plugins/log_to_database/pic_cache/
+plugins/pixiv/cache/
+plugins/pixiv/log/
 
+# ignore local mirai
+mirai/
+.lastupdate
 
 #ignore config files
 
 
 
-database/mongo
+
 logs/
 src/plugins/jrrp/jrrp.yml
 
