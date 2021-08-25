@@ -4,6 +4,9 @@ from src.extensions.utils import PicSource
 from src.extensions.imghdr_byte import what
 import httpx
 import os
+import cv2
+from .utils import get_img_phash
+import numpy as np
 from typing import Optional
 
 
@@ -35,6 +38,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
         res = httpx.get(url)
         if res.status_code == 200:
             pic = res.content
+
             suffix = what(pic)
             path = f"{base_pic_path}/{source}/"
             if not os.path.exists(path):
@@ -42,6 +46,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
             with open(path+f"{file}.{suffix}", 'wb') as fi:
                 fi.write(pic)
             line["suffix"] = suffix
+            line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
         else:
             line["failure"] = True
 

@@ -31,19 +31,17 @@ async def log2database(bot: Bot, event: Event, state: T_State):
         col = get_collection('private_chat', self_id)
 
     msg: Message[MessageSegment] = event.get_message()
+    lines = []
     for m in msg:
-        line = {
+        lines.append({
             "mid": message_id,
             "uid": user_id,
             "mtp": m.type,
             **m.data,
-        }
-
-        col.insert_one(line)
-        pprint(line)
-        print(m.type, CQ.Image)
+        })
         if m.type == CQ.Image:
             await log_picture(**m.data, source=PicSource.Chat)
         if m.type == CQ.Record:
             await log_audio(**m.data)
-
+    if lines:
+        col.insert_many(lines)
