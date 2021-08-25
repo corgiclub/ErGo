@@ -31,7 +31,10 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                       **kwargs):
     col = get_collection('picture', source)
     # print(0)
-    if not col.find_one({"file": file}):
+    if col.find_one({"file": file}):
+        pass
+        # todo 为图片统计次数
+    else:
         line = {
             "file": file,
         }
@@ -47,6 +50,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                 fi.write(pic)
             line["suffix"] = suffix
             line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
+            line["count"] = 1
         else:
             line["failure"] = True
 
