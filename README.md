@@ -14,7 +14,8 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 
 - 💬 关键词回复
 - ~~🧠 AI 续写（基于 CPM-LM）~~
-- 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
+- 🎥 Bilibil 视频信息查询
+- 🔴 Bilibili 直播开播监控
 - ~~📰 今日要闻~~
 - 📃 聊天记录存储至数据库
 - 🧮 系统状态查询
@@ -38,12 +39,12 @@ Docker 运行（推荐）：
 
 ## Todo list
 
-- [ ] 数据库功能
+- [x] 数据库功能
 - [ ] pixiv 搜图
 - [ ] 推特搜图
-- [ ] qq语音解码
+- [x] qq语音解码
 - [ ] 备忘录，自动提醒
-- [ ] 直播提醒
+- [x] 直播提醒
 - [ ] 小游戏（9路围棋，五子棋，黑白棋，象棋，赛马）
 - [ ] 画一个logo
 

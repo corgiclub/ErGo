@@ -1,9 +1,17 @@
-Ergo Bot version 2.0.2a
+Ergo Bot version 2.0.3a
 
-- 新增了 bililive 插件，自动向群内推送主播开播信息
-  使用 /bililive 查询当前群内关注的主播
-  (暂时不开放普通用户添加关注的主播，仅开发者可添加)
+- 底层支持了 MongoDB 及图片 pHash 算法
+- jrrp 方差由 25 调整至 50
 - 修复了若干 bug
-- 删除了未开发完毕的嘴臭功能
+- 对插件执行顺序进行了规范化
+
+下版本计划更新：
+
+- SauceNAO 以图搜图
+- Pixiv 文字搜图 / 每日图片 / tag搜图
+- 支持主动存储图库
+- key: value 调教
+- 定时任务底层支持
+- 基于定时任务的各种插件
 
 Author：Corgiclub

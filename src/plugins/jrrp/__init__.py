@@ -55,7 +55,7 @@ async def _(bot: Bot, event: Event, state: T_State):
     await jrrp.send(msg)
 
 
-async def get_normal_random(mu=50, sig=25, limit=(0, 100)):
+async def get_normal_random(mu=50, sig=50, limit=(0, 100)):
 
     data_type = 'uint16'
     data_one = 65536
