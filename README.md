@@ -16,7 +16,7 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 - ~~🧠 AI 续写（基于 CPM-LM）~~
 - 🖇 视频信息查询（ ✅ Bilibili / ➖ youtube）
 - ~~📰 今日要闻~~
-- ~~📃 聊天记录存储至数据库~~
+- 📃 聊天记录存储至数据库
 - 🧮 系统状态查询
 - ~~🐔 复读鸡~~
 - 🎈 今日人品

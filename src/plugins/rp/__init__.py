@@ -2,8 +2,9 @@ from nonebot import on_command, on_keyword
 from nonebot.adapters import Bot, Event
 from nonebot.typing import T_State
 from datetime import datetime
+from nonebot.adapters.cqhttp import Message
 
-rp = on_command('rp')
+rp = on_command('rp', priority=10, block=False)
 
 
 def today_from_1970():
@@ -24,7 +25,7 @@ async def _(bot: Bot, event: Event, state: T_State):
     if not event.is_tome():
         sender = event.get_user_id()
         qq = int(sender)
-        msg = [
+        msg = Message([
             {
                 'type': 'at',
                 'data': {
@@ -37,5 +38,5 @@ async def _(bot: Bot, event: Event, state: T_State):
                     'text': f'(简单算法版)你今天的人品是 {get_rp(qq)}%'
                 }
             }
-        ]
+        ])
         await rp.send(msg)

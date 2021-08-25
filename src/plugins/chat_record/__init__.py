@@ -1,7 +1,4 @@
-import nonebot
-from pprint import pprint
-
-from nonebot import on_command, on_message
+from nonebot import on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
 from src.extensions.mongodb import get_collection, log_picture, log_audio
@@ -11,8 +8,8 @@ from .config import Config
 
 cfg = Config()
 
-# fixme 在 main 分支中重新设计全部优先级
-record = on_message(priority=1, block=False)
+
+record = on_message(priority=100, block=False)
 
 
 @record.handle()

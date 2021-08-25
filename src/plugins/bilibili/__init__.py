@@ -1,11 +1,10 @@
-import re
 from .bilibili_video import b23_extract, bili_keyword
 from nonebot import on_regex
 from nonebot.adapters import Bot, Event
 
 analysis_bili = on_regex(r"(b23.tv)|(www.bilibili.com/video)|(www.bilibili.com/bangumi)|(^(BV|bv)([0-9A-Za-z]{10}))|"
                          r"(^(av|AV)([0-9]+)(/.*|\\?.*|)$)|(\[\[QQ小程序\]哔哩哔哩\])|(QQ小程序&amp;#93;哔哩哔哩)|"
-                         r"(QQ小程序&#93;哔哩哔哩)")
+                         r"(QQ小程序&#93;哔哩哔哩)", priority=10, block=False)
 
 
 @analysis_bili.handle()
