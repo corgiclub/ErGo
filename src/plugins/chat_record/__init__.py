@@ -31,8 +31,8 @@ async def log2database(bot: Bot, event: Event, state: T_State):
     lines = []
     for m in msg:
         lines.append({
-            "mid": message_id,
-            "uid": user_id,
+            "mid": int(message_id),
+            "uid": int(user_id),
             "mtp": m.type,
             **m.data,
         })

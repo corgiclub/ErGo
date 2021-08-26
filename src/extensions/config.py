@@ -14,5 +14,5 @@ class Glances(BaseSettings):
 
 class MongoDB(BaseSettings):
     host = "mongodb://i.tech.corgi.plus:27017/"
-    base_path = ""
+    base_path = "/mnt/0/base/"
 
