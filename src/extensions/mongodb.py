@@ -5,7 +5,7 @@ from src.extensions.imghdr_byte import what
 import httpx
 import os
 import cv2
-from .utils import get_img_phash
+from src.extensions.utils import get_img_phash
 import numpy as np
 from typing import Optional
 
@@ -32,6 +32,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
     col = get_collection('picture', source)
     # print(0)
     if col.find_one({"file": file}):
+        col.update_one({"file": file}, {"$inc":  {"counts": 1}})
         pass
         # todo 为图片统计次数
     else:
@@ -50,7 +51,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                 fi.write(pic)
             line["suffix"] = suffix
             line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
-            line["count"] = 1
+            line["counts"] = 1
         else:
             line["failure"] = True
 
