@@ -30,11 +30,31 @@ def get_collection(db_name: str, col_name: str):
 async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str = cfg.base_path + 'picture',
                       **kwargs):
     col = get_collection('picture', source)
-    # print(0)
     if col.find_one({"file": file}):
-        col.update_one({"file": file}, {"$inc":  {"counts": 1}})
-        pass
-        # todo 为图片统计次数
+        if 'failure' in line_existed.keys():
+
+            res = httpx.get(url)
+            if res.status_code == 200:
+                pic = res.content
+                suffix = what(pic)
+                path = f"{base_pic_path}/{source}/"
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                with open(path + f"{file}.{suffix}", 'wb') as fi:
+                    fi.write(pic)
+                col.update_one({"file": file},
+                               {
+                                   "$set": {
+                                       "suffix": suffix,
+                                       "phash": get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8),
+                                                                           cv2.IMREAD_COLOR))
+                                   },
+                                   "$inc": {
+                                       "counts": 1
+                                   }
+                               })
+            else:
+                col.update_one({"file": file}, {"$inc": {"counts": 1}})
     else:
         line = {
             "file": file,
@@ -49,7 +69,6 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
             with open(path+f"{file}.{suffix}", 'wb') as fi:
                 fi.write(pic)
             line["suffix"] = suffix
-            line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
             line["counts"] = 1
             if suffix in ('jpg', 'jpeg', 'png', 'bmp'):
                 line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
