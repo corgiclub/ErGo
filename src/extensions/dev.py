@@ -1,15 +1,21 @@
-# from src.extensions.imghdr_byte import what
-#
-# with open('original.png', 'rb') as fi:
-#     by = fi.read()
-#     print(type(what(by)))
-#     print(what(by))
-#
+
 import pymongo
 from mongodb import get_collection
 
 
-col = get_collection('picture', 'chat')
+col = get_collection('group_chat', '722077615')
 
-print(col.create_index([("file", pymongo.HASHED)]))
+for line in col.find():
+    try:
+        col.update_one(line,
+                       {
+                           '$set':
+                               {
+                                   'uid': str(line['uid'])
+                               }
+                       })
+    except:
+        continue
+
+# result = col.update_many({}, {'$set': {'counts': 1}})
 
