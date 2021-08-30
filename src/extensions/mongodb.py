@@ -53,8 +53,8 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                                        "counts": 1
                                    }
                                })
-            else:
-                col.update_one({"file": file}, {"$inc": {"counts": 1}})
+        else:
+            col.update_one({"file": file}, {"$inc": {"counts": 1}})
     else:
         line = {
             "file": file,
