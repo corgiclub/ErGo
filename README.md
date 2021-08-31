@@ -2,7 +2,7 @@
 
 A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / [nonebot2](https://github.com/nonebot/nonebot2)
 
-持续开发中。
+持续开发中，欢迎 star 本项目、提出 issue。
 
 > Cogito, **ergo** sum.
 >
@@ -28,6 +28,7 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 
 - 本项目有多个生产环境版本长期部署在稳定服务器上，可直接加入群中提供各种功能。
 - 插件权限和服务器压力问题解决后，会公布账号。
+- 若您觉得好用，劳烦在使用本项目时，动动小手，给本项目一个 **star** ~
 
 1. ### メテオラ<sup>Meteora</sup>
    
