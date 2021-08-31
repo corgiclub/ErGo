@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 ../.idea/
 
+.idea
+
 # C extensions
 *.so
 
@@ -151,3 +153,4 @@ src/plugins/changelog/version.txt
 client/
 src/plugins/jrrp/jrrp.yml
 
+/data
