@@ -29,13 +29,13 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 - 本项目有多个生产环境版本长期部署在稳定服务器上，可直接加入群中提供各种功能。
 - 插件权限和服务器压力问题解决后，会公布账号。
 
-1. #### メテオラ<sup>Meteora</sup>
+1. ### メテオラ<sup>Meteora</sup>
    
    - 账号：
    - 功能：全部
    - 当前版本：v2.0.3b
    
-2. #### 臭狗
+2. ### 臭狗
 
    - 账号：
    - 功能：脏话对骂
@@ -87,7 +87,7 @@ Bot 在运行过程中，（有选择地）使用了以下列出的免费开放�
 
 以下资源在部分 branch 中作为插件的依赖项使用，使用 docker 运行时将默认包含所需的依赖。若手动运行时出现报错，可检查是否存在以下资源缺失。
 
-#### CPM-LM-TF2 中文预训练 GPT 模型
+### CPM-LM-TF2 中文预训练 GPT 模型
 
 ###### （仅 legacy branch 使用）
 
@@ -99,7 +99,7 @@ Bot 在运行过程中，（有选择地）使用了以下列出的免费开放�
 
 -  [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
 
-#### 小赖字体 / 小賴字體 / シャオライ / Xiaolai Font
+### 小赖字体 / 小賴字體 / シャオライ / Xiaolai Font
 
 ###### （仅 legacy branch 使用）
 
