@@ -47,7 +47,8 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                                    "$set": {
                                        "suffix": suffix,
                                        "phash": get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8),
-                                                                           cv2.IMREAD_COLOR))
+                                                                           cv2.IMREAD_COLOR)),
+                                       "failure": None
                                    },
                                    "$inc": {
                                        "counts": 1
@@ -72,7 +73,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
                 fi.write(pic)
             line["suffix"] = suffix
             line["counts"] = 1
-            if suffix in ('jpg', 'jpeg', 'png', 'bmp'):
+            if suffix in ('jpg', 'jpeg', 'png', 'bmp', None):
                 line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
         else:
             line["failure"] = True
@@ -80,7 +81,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
         col.insert_one(line)
 
 
-async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg.base_path + 'audio',
+async def log_audio(file: str, url: str, source='chat', base_audio_path: str = cfg.base_path + 'audio',
                     **kwargs):
 
     col = get_collection('audio', source)
@@ -92,7 +93,7 @@ async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg
         res = httpx.get(url)
         if res.status_code == 200:
             aud = res.content
-            path = f"{base_pic_path}/{source}/"
+            path = f"{base_audio_path}/{source}/"
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(f"{path}{file}", 'wb') as fi:
