@@ -18,7 +18,12 @@ def test():
     db = client['test']
     col = db['test_table']
     data = {
-        'data': 'test'
+        'data_dict': {
+            'key': 'value',
+            'data': {
+                'sub_key': 0
+            }
+        }
     }
     return col.insert_one(data)
 
@@ -125,3 +130,6 @@ async def log_audio(file: str, url: str, source='chat', base_audio_path: str = c
 #             line["failure"] = True
 #
 #         col.insert_one(line)
+
+if __name__ == '__main__':
+    test()
