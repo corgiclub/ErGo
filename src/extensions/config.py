@@ -16,6 +16,6 @@ class MongoDB(BaseSettings):
     host = "mongodb://i.tech.corgi.plus:27017/"
     base_path = "/mnt/0/base/"
 
-    retry_times = 10
-    wait_time = 10
+    retry_times = 3
+    wait_time = 0.5
 
