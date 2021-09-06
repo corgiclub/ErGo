@@ -10,3 +10,4 @@ bilibili-api~=6.1.2
 
 opencv-python~=4.5.3.56
 numpy~=1.21.2
+motor~=2.5.1

@@ -2,6 +2,7 @@ from nonebot import on_message
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
 from src.extensions.mongodb import get_collection, log_picture, log_audio
+from src.extensions.motordb import log_chat
 from src.extensions.utils import PicSource, CQ
 
 from .config import Config
@@ -28,6 +29,8 @@ async def log2database(bot: Bot, event: Event, state: T_State):
         col = get_collection('private_chat', self_id)
 
     msg: Message[MessageSegment] = event.get_message()
+    await log_chat(msg, user_id, message_id, col)
+
     lines = []
     for m in msg:
         lines.append({

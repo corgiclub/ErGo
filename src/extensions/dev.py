@@ -17,5 +17,9 @@ for line in col.find():
     except:
         continue
 
-# result = col.update_many({}, {'$set': {'counts': 1}})
+result = col.update_many({}, {'$set': {'counts': 1}})
 
+
+# import imghdr
+#
+# print(imghdr.what('6984c8a9b73ae28f93eba45adc1fa6d5.image.None'))

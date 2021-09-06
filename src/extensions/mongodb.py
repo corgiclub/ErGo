@@ -18,7 +18,12 @@ def test():
     db = client['test']
     col = db['test_table']
     data = {
-        'data': 'test'
+        'data_dict': {
+            'key': 'value',
+            'data': {
+                'sub_key': 0
+            }
+        }
     }
     return col.insert_one(data)
 
@@ -30,11 +35,34 @@ def get_collection(db_name: str, col_name: str):
 async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str = cfg.base_path + 'picture',
                       **kwargs):
     col = get_collection('picture', source)
-    # print(0)
-    if col.find_one({"file": file}):
-        col.update_one({"file": file}, {"$inc":  {"counts": 1}})
-        pass
-        # todo 为图片统计次数
+    line_existed = col.find_one({"file": file})
+    if line_existed:
+        if 'failure' in line_existed.keys():
+            res = httpx.get(url)
+            if res.status_code == 200:
+                pic = res.content
+                suffix = what(pic)
+                path = f"{base_pic_path}/{source}/"
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                with open(path + f"{file}.{suffix}", 'wb') as fi:
+                    fi.write(pic)
+                col.update_one({"file": file},
+                               {
+                                   "$set": {
+                                       "suffix": suffix,
+                                       "phash": get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8),
+                                                                           cv2.IMREAD_COLOR)),
+                                       "failure": None
+                                   },
+                                   "$inc": {
+                                       "counts": 1
+                                   }
+                               })
+            else:
+                col.update_one({"file": file}, {"$inc": {"counts": 1}})
+        else:
+            col.update_one({"file": file}, {"$inc": {"counts": 1}})
     else:
         line = {
             "file": file,
@@ -49,9 +77,8 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
             with open(path+f"{file}.{suffix}", 'wb') as fi:
                 fi.write(pic)
             line["suffix"] = suffix
-            line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
             line["counts"] = 1
-            if suffix in ('jpg', 'jpeg', 'png', 'bmp'):
+            if suffix in ('jpg', 'jpeg', 'png', 'bmp', None):
                 line["phash"] = get_img_phash(cv2.imdecode(np.frombuffer(pic, np.uint8), cv2.IMREAD_COLOR))
         else:
             line["failure"] = True
@@ -59,7 +86,7 @@ async def log_picture(file: str, url: str, source: PicSource, base_pic_path: str
         col.insert_one(line)
 
 
-async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg.base_path + 'audio',
+async def log_audio(file: str, url: str, source='chat', base_audio_path: str = cfg.base_path + 'audio',
                     **kwargs):
 
     col = get_collection('audio', source)
@@ -71,7 +98,7 @@ async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg
         res = httpx.get(url)
         if res.status_code == 200:
             aud = res.content
-            path = f"{base_pic_path}/{source}/"
+            path = f"{base_audio_path}/{source}/"
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(f"{path}{file}", 'wb') as fi:
@@ -103,3 +130,6 @@ async def log_audio(file: str, url: str, source='chat', base_pic_path: str = cfg
 #             line["failure"] = True
 #
 #         col.insert_one(line)
+
+if __name__ == '__main__':
+    test()
