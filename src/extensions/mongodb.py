@@ -45,7 +45,8 @@ class MongoChat:
             col = get_collection('group_chat', group_id)
         else:
             col = get_collection('private_chat', self_id)
-        col.insert_many([await self.process_line(m, user_id, message_id, group_id) for m in messages])
+        if messages:
+            col.insert_many([await self.process_line(m, user_id, message_id, group_id) for m in messages])
 
     async def log_picture(self, file: str, url: str, group_id: str, sub_path: str, base_pic_path=None,
                           **kwargs):
