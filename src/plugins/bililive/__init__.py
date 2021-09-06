@@ -1,13 +1,17 @@
 import nonebot
 import yaml
+import datetime
 from bilibili_api import live
 from nonebot import on_command
 from nonebot.adapters.cqhttp import Bot, Message, Event
+
+from src.extensions.mongodb import get_collection
 
 
 yaml_path = 'src/plugins/bililive/bilibili_live.yml'
 
 driver = nonebot.get_driver()
+col = get_collection('ergo', 'bililive')
 
 
 @driver.on_startup
@@ -27,6 +31,15 @@ async def detect_living(roomid, groups):
 
     @room_living.on('LIVE')
     async def on_(event):
+
+        line = {
+            "room_id": roomid,
+            "time": datetime.datetime.utcnow()
+        }
+        if col.find_one({"room_id": roomid}):
+            return
+
+        col.insert_one(line)
         room = live.LiveRoom(roomid)
         room_info = await room.get_room_info()
 
