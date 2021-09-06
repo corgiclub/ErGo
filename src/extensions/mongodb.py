@@ -59,7 +59,7 @@ class MongoChat:
             os.makedirs(path)
 
         if line_existed:
-            if 'failure' in line_existed.keys():
+            if 'failed_url' in line_existed.keys():
                 pic, suffix, phash = await self.async_get_pic(url)
                 if pic:
                     with open(path + f"{file}.{suffix}", 'wb') as fi:
@@ -69,14 +69,14 @@ class MongoChat:
                                        "$set": {
                                            "suffix": suffix,
                                            "phash": phash,
-                                           "failure": None
+                                           "failed_url": None
                                        },
                                        "$inc": {
                                            "counts": 1
                                        }
                                    })
                 else:
-                    col.update_one({"file": file}, {"$inc": {"counts": 1}})
+                    col.update_one({"file": file}, {"$inc": {"counts": 1}, "$set": {"failed_url": url}})
             else:
                 col.update_one({"file": file}, {"$inc": {"counts": 1}})
         else:
@@ -116,7 +116,7 @@ class MongoChat:
                 with open(f"{path}{file}", 'wb') as fi:
                     fi.write(aud)
             else:
-                line["failure"] = True
+                line["failed_url"] = True
 
             col.insert_one(line)
 
