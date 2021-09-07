@@ -67,7 +67,7 @@ async def get_file_sys(api) -> str:
                   '\n'.join([f'┃{d["mnt_point"]}\n┗{gb(d["used"]):.2f} / {gb(d["size"]):.2f} GB' for d in dic]) + \
                   '\n' + \
                   '\n'.join([f'┃{d.split()[-1]}\n┗{gb(d.split()[2]):.2f} / {gb(d.split()[1]):.2f} TB'
-                             for d in os.popen('df | grep 192:').read().split('\n')[:-1]])
+                             for d in os.popen('df | grep 192.168').read().split('\n')[:-1]])
         else:
             # todo nas硬盘
             msg = '🐛硬盘: 开发中'
