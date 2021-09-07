@@ -14,9 +14,8 @@ A qq-bot named 二狗, 基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) / 
 
 - 💬 关键词回复
 - ~~🧠 AI 续写（基于 CPM-LM）~~
-- 🎥 Bilibil 视频信息查询
+- 🎥 Bilibili 视频信息查询
 - 🔴 Bilibili 直播开播监控
-- ~~📰 今日要闻~~
 - 📃 聊天记录存储至数据库
 - 🧮 系统状态查询
 - ~~🐔 复读鸡~~
@@ -73,11 +72,12 @@ Docker 运行（推荐）：
 
 ## 参考项目及插件
 
-Bot 在编写过程中，参考 / 学习 / 使用了以下项目，在此列出并感谢这些项目作者的工作。
+Bot 在编写过程中，参考 / 学习 / 使用了大量其他项目，在此列出部分帮助最大的项目并感谢这些项目作者的工作。
 
 - [bilibili-api](https://github.com/MoyuScript/bilibili-api)
+- [glances](https://github.com/nicolargo/glances)
 
-Bot 在编写过程中，参考学习了以下插件的源码。为使用更为简洁的项目环境管理方法，并使对应功能在本 bot 环境下更好地工作，本项目未直接引用其他插件，而是将参考的 nonebot 插件在其源代码的基础上进行了一定的修改重构，并集成进本 repo 的项目文件中。
+Bot 在编写过程中，参考学习了以下 nonebot 插件的源码。为使用更为简洁的项目环境管理方法，并使对应功能在本 bot 环境下更好地工作，本项目未直接引用其他插件，而是将参考的 nonebot 插件在其源代码的基础上进行了一定的修改重构，并集成进本 repo 的项目文件中。
 
 - [NoneBot Plugin APScheduler](https://github.com/nonebot/plugin-apscheduler)
 - [nonebot_plugin_analysis_bilibili](https://github.com/mengshouer/nonebot_plugin_analysis_bilibili)
@@ -87,6 +87,12 @@ Bot 在编写过程中，参考学习了以下插件的源码。为使用更为�
 Bot 在运行过程中，（有选择地）使用了以下列出的免费开放资源。
 
 以下资源在部分 branch 中作为插件的依赖项使用，使用 docker 运行时将默认包含所需的依赖。若手动运行时出现报错，可检查是否存在以下资源缺失。
+
+### The ANU Quantum Random Number Generator
+
+为本 BOT 的 ~~玄学~~ 插件提供了基于测量真空量子涨落的真随机数
+
+[ANU QRNG](https://qrng.anu.edu.au/)
 
 ### CPM-LM-TF2 中文预训练 GPT 模型
 
@@ -98,7 +104,7 @@ Bot 在运行过程中，（有选择地）使用了以下列出的免费开放�
 
 - [百度云](https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ) 密码: n0nt
 
--  [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
+- [GDrive](https://drive.google.com/drive/folders/1b2sF5sBuR_9zsT8UUijdsAcmFaMZJlpX?usp=sharing)
 
 ### 小赖字体 / 小賴字體 / シャオライ / Xiaolai Font
 
@@ -106,4 +112,6 @@ Bot 在运行过程中，（有选择地）使用了以下列出的免费开放�
 
 A Chinese Font derived from SetoFont / Naikai Font / cjkFonts-AllSeto. 
 
-一款衍生于濑户字体 / 内海字体 / cjkFonts 全濑体的中文字体。[github repo](https://github.com/lxgw/kose-font)
+一款衍生于濑户字体 / 内海字体 / cjkFonts 全濑体的中文字体。
+
+[github repo](https://github.com/lxgw/kose-font)
