@@ -107,9 +107,9 @@ This website offers true random numbers to anyone on the internet.
 
 ###### （仅 legacy branch 使用）
 
-清源 CPM TensorFlow 版本，自然语言对话模块使用。[github](https://github.com/qhduan/CPM-LM-TF2)
+清源 CPM TensorFlow 版本，自然语言对话模块使用。
 
-模型下载链接
+[github](https://github.com/qhduan/CPM-LM-TF2) 模型下载链接
 
 - [百度云](https://pan.baidu.com/s/1tjbWty2hkbmtCrvV9Qh_SQ) 密码: n0nt
 
