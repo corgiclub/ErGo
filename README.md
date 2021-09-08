@@ -72,25 +72,34 @@ Docker 运行（推荐）：
 
 ## 参考项目及插件
 
-Bot 在编写过程中，参考 / 学习 / 使用了大量其他项目，在此列出部分帮助最大的项目并感谢这些项目作者的工作。
+Bot 在编写过程中，参考 / 学习 / 使用了大量其他项目，在此感谢所有项目作者的工作并列出部分帮助最大的项目。
 
 - [bilibili-api](https://github.com/MoyuScript/bilibili-api)
-- [glances](https://github.com/nicolargo/glances)
 
 Bot 在编写过程中，参考学习了以下 nonebot 插件的源码。为使用更为简洁的项目环境管理方法，并使对应功能在本 bot 环境下更好地工作，本项目未直接引用其他插件，而是将参考的 nonebot 插件在其源代码的基础上进行了一定的修改重构，并集成进本 repo 的项目文件中。
 
 - [NoneBot Plugin APScheduler](https://github.com/nonebot/plugin-apscheduler)
 - [nonebot_plugin_analysis_bilibili](https://github.com/mengshouer/nonebot_plugin_analysis_bilibili)
 
-## 其他资源
+## 其他项目资源
 
-Bot 在运行过程中，（有选择地）使用了以下列出的免费开放资源。
+Bot 在运行过程中，（有选择地）使用了以下列出的免费开放项目。
 
-以下资源在部分 branch 中作为插件的依赖项使用，使用 docker 运行时将默认包含所需的依赖。若手动运行时出现报错，可检查是否存在以下资源缺失。
+以下项目在部分 branch 中作为插件的依赖项使用，使用 docker 运行时将默认包含所需的依赖。若手动运行时出现报错，可检查是否存在以下资源缺失。
+
+### Glances
+
+Glances an Eye on your system. A top/htop alternative for GNU/Linux, BSD, Mac OS and Windows operating systems.
+
+BOT 系统性能监控功能所依赖的项目。
+
+[github](https://github.com/nicolargo/glances)
 
 ### The ANU Quantum Random Number Generator
 
-为本 BOT 的 ~~玄学~~ 插件提供了基于测量真空量子涨落的真随机数
+This website offers true random numbers to anyone on the internet. 
+
+为本 BOT 的 ~~玄学~~ 插件提供了基于测量真空量子涨落的真随机数。
 
 [ANU QRNG](https://qrng.anu.edu.au/)
 
@@ -98,7 +107,7 @@ Bot 在运行过程中，（有选择地）使用了以下列出的免费开放�
 
 ###### （仅 legacy branch 使用）
 
-清源 CPM TensorFlow 版本 [github repo](https://github.com/qhduan/CPM-LM-TF2)
+清源 CPM TensorFlow 版本，自然语言对话模块使用。[github](https://github.com/qhduan/CPM-LM-TF2)
 
 模型下载链接
 
