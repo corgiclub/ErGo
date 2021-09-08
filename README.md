@@ -115,3 +115,7 @@ A Chinese Font derived from SetoFont / Naikai Font / cjkFonts-AllSeto.
 一款衍生于濑户字体 / 内海字体 / cjkFonts 全濑体的中文字体。
 
 [github repo](https://github.com/lxgw/kose-font)
+
+## 鸣谢
+
+本项目的开发得到了 JetBrains 开源开发许可证的支持。[Licenses for Open Source Development -  JetBrains](https://www.jetbrains.com/community/opensource/#support)
