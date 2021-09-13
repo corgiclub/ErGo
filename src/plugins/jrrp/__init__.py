@@ -64,7 +64,7 @@ async def get_normal_random(mu=50, sig=50, limit=(0, 100), qq: int = 0):
     anu_api_url = f'https://qrng.anu.edu.au/API/jsonI.php?length={array_length}&type={data_type}'
     resp = httpx.get(anu_api_url)
 
-    x1 = resp.json()['data']    # x_1, x_2 \in U(0, 65536)
+    x1 = resp.json()['data'][0]    # x_1, x_2 \in U(0, 65536)
     x2 = get_rp(qq)
     x1 /= data_one
     x2 /= data_one
