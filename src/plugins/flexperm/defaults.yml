@@ -14,5 +14,4 @@ group_owner:
 
 superuser:
   permissions:
-#    - p_test.zuoai
     - flexperm.*
