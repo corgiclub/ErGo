@@ -1,11 +1,13 @@
 from typing import Tuple, Union
 
 from nonebot import CommandGroup
+from nonebot.plugin import plugins
 from nonebot.adapters import Bot, Event
 from nonebot.adapters.cqhttp import MessageEvent, GroupMessageEvent
 
 from . import core
 from .plugin import register
+
 
 P = register('flexperm')
 
@@ -20,6 +22,15 @@ def plaintext(_b, e, _s):
     return all(seg.is_text() for seg in e.get_message())
 
 
+@h(cg.command('help', permission=P('edit.perm.group')))
+async def _(bot: Bot, event: Event):
+    help_msg = f"添加权限：/flexperm.add 权限描述\n" \
+               f"移除权限：/flexperm.remove 权限描述\n" \
+               f"可设置权限的插件列表：\n"
+    help_msg += '\n'.join(plugins.keys())
+    await bot.send(event, help_msg)
+
+
 @h(cg.command('reload', permission=P('reload')))
 async def _(bot: Bot, event: Event):
     core.reload()
@@ -32,8 +43,43 @@ async def _(bot: Bot, event: MessageEvent):
     await bot.send(event, '已保存权限配置')
 
 
-@h(cg.command('add', rule=plaintext, permission=P('edit.perm'), state={'add': True}))
-@h(cg.command('remove', rule=plaintext, permission=P('edit.perm'), state={'add': False}))
+@h(cg.command('add', rule=plaintext, permission=P('edit.perm.group'), state={'add': True}))
+@h(cg.command('remove', rule=plaintext, permission=P('edit.perm.group'), state={'add': False}))
+async def _(bot: Bot, event: MessageEvent, state: dict):
+    args = str(event.message).split()
+
+    # 一个参数，编辑当前会话的权限
+    if len(args) == 1:
+        item = args[0]
+        namespace, group = get_group_for_event(event)
+    # 参数数量错误
+    else:
+        usage = '用法：{} 权限描述'
+        return await bot.send(event, usage.format(state["_prefix"]["raw_command"]))
+
+    # 阻止修饰
+    if item.startswith('-'):
+        item = '-/' + item[1:]
+    else:
+        item = '/' + item
+
+    try:
+        if state['add']:
+            P.add_item(namespace, group, item)
+        else:
+            P.remove_item(namespace, group, item)
+    except TypeError:
+        await bot.send(event, '权限组不可修改')
+    except KeyError:
+        await bot.send(event, '权限组不存在')
+    except ValueError:
+        await bot.send(event, '权限组中{}指定描述'.format('已有' if state['add'] else '没有'))
+    else:
+        await bot.send(event, '已修改权限组')
+
+
+@h(cg.command('add_', rule=plaintext, permission=P('edit.perm'), state={'add': True}))
+@h(cg.command('remove_', rule=plaintext, permission=P('edit.perm'), state={'add': False}))
 async def _(bot: Bot, event: MessageEvent, state: dict):
     args = str(event.message).split()
 

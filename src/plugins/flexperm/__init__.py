@@ -1,4 +1,4 @@
-from nonebot import export
+from nonebot.plugin.export import export
 
 from . import cmds
 from .plugin import register

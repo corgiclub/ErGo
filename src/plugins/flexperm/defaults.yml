@@ -4,7 +4,9 @@ private: {}
 
 group: {}
 
-group_admin: {}
+group_admin:
+  permissions:
+    - flexperm.edit.perm.group
 
 group_owner:
   inherits:
@@ -12,4 +14,5 @@ group_owner:
 
 superuser:
   permissions:
+#    - p_test.zuoai
     - flexperm.*
