@@ -1,9 +1,8 @@
-import httpx
 import asyncio
 import re
-import traceback
 import urllib.parse
 
+import httpx
 import lxml.html
 from bilibili_api import video
 from bilibili_api.exceptions import ResponseCodeException

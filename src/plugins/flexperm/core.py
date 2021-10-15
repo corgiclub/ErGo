@@ -60,6 +60,7 @@ def reload():
 
     # 默认权限组
     global_ = get_namespace('global', False)
+    # xxx 修改了默认位置
     defaults = Namespace('global', True, Path(__file__).parent / 'defaults.yml', False)
     for k, v in defaults.config.items():
         global_.config.setdefault(k, v)

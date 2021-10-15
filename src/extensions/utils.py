@@ -1,6 +1,22 @@
 from enum import Enum
 import cv2
 import numpy as np
+import yaml
+import nonebot
+import os
+from pathlib import Path
+
+
+def get_config(plugin_path, yaml_path='config.yml'):
+    plugin_path = Path(plugin_path)
+    cfg_path = plugin_path.with_name(yaml_path)
+    if os.path.exists(cfg_path):
+        with open(cfg_path, 'r') as fi:
+            return yaml.safe_load(fi)
+    else:
+        os.makedirs(plugin_path.parent)
+        return {}
+
 
 
 def regex_equal(keywords) -> str:

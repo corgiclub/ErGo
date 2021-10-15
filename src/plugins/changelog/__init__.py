@@ -1,7 +1,17 @@
 import nonebot
 from nonebot.adapters.cqhttp import Bot
+from nonebot.plugin.export import export
+
+from src.extensions.utils import get_config
+
+
+async def reload():
+    cfg.update(get_config(__file__))
+
 
 driver = nonebot.get_driver()
+cfg = get_config(__file__)
+export().reload = reload
 
 
 @driver.on_bot_connect
