@@ -2,21 +2,24 @@ from enum import Enum
 import cv2
 import numpy as np
 import yaml
-import nonebot
+from nonebot.log import logger
 import os
 from pathlib import Path
 
 
-def get_config(plugin_path, yaml_path='config.yml'):
+def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.example'):
     plugin_path = Path(plugin_path)
-    cfg_path = plugin_path.with_name(yaml_path)
+    cfg_path = plugin_path.with_name(yaml_name)
     if os.path.exists(cfg_path):
         with open(cfg_path, 'r') as fi:
             return yaml.safe_load(fi)
     else:
-        os.makedirs(plugin_path.parent)
-        return {}
-
+        exp_path = plugin_path.with_name(default_name)
+        if os.path.exists(exp_path):
+            os.rename(exp_path, cfg_path)
+            logger.warning(f'存在未配置的新插件 {plugin_path.parent}，自动加载配置中，自定义配置请至 web 管理页面修改')
+            with open(cfg_path, 'r') as fi:
+                return yaml.safe_load(fi)
 
 
 def regex_equal(keywords) -> str:
