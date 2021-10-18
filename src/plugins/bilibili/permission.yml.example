@@ -1,0 +1,13 @@
+anyone:
+  - video
+  - app
+
+private: {}
+
+group: {}
+
+group_admin: {}
+
+group_owner: {}
+
+superuser: {}
