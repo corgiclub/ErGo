@@ -1,0 +1,18 @@
+meta:
+  name: B站直播监控
+  description: 监控本群指定直播间开播情况，开播时自动向群内推送
+  help:
+    - 当有人开播时，自动向本群推送
+    - /bililive.list 查询本群监控的全部直播间状态
+    - /bililive.add 添加监控的直播间（管理员权限）
+    - /bililive.remove 删除监控的直播间（管理员权限）
+  commands:
+    - /bililive.list
+    - /bililive.add
+    - /bililive.remove
+  permissions:
+    - .list
+    - .add
+    - .remove
+config:
+  max_connections: 16

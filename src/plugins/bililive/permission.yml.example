@@ -1,14 +1,16 @@
 anyone:
   permissions:
-    - video
-    - app
+    - list
     - help
 
 private: {}
 
 group: {}
 
-group_admin: {}
+group_admin:
+  permissions:
+    - add
+    - remove
 
 group_owner: {}
 

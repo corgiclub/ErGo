@@ -1,0 +1,11 @@
+meta:
+  name: 查看版本信息
+  description: 查看 bot 版本信息及更新内容
+  help:
+    - 当版本更新时，自动推送 bot 版本信息
+    - /changelog 查询 bot 版本更新信息
+  commands:
+    - /changelog
+  permissions:
+    - .changelog
+config: {}

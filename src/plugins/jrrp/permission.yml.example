@@ -1,7 +1,6 @@
 anyone:
   permissions:
-    - video
-    - app
+    - changelog
     - help
 
 private: {}
