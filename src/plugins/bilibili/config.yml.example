@@ -1,0 +1,10 @@
+meta:
+  name: B站视频信息
+  description: 群聊发送B站视频号/小程序，自动解析为链接和详细信息发送至群中
+  help:
+    - 发送 av/BV号 视频链接 小程序，自动识别
+  commands: []
+  permissions:
+    - .video
+    - .app
+config: {}

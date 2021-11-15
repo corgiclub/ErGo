@@ -1,0 +1,16 @@
+anyone:
+  permissions:
+    - test
+    - test_perm
+#    - repeat
+    - reload
+
+private: {}
+
+group: {}
+
+group_admin: {}
+
+group_owner: {}
+
+superuser: {}
