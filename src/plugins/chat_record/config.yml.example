@@ -1,7 +1,0 @@
-meta:
-  name: 聊天记录
-  description: 自动记录所处群聊和私聊的聊天内容
-  help: {}
-  commands: {}
-  permissions: {}
-config: {}

@@ -11,14 +11,14 @@ def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.exa
     plugin_path = Path(plugin_path)
     cfg_path = plugin_path.with_name(yaml_name)
     if os.path.exists(cfg_path):
-        with open(cfg_path, 'r') as fi:
+        with open(cfg_path, 'r', encoding='utf-8') as fi:
             return yaml.safe_load(fi)
     else:
         exp_path = plugin_path.with_name(default_name)
         if os.path.exists(exp_path):
             os.rename(exp_path, cfg_path)
             logger.warning(f'存在未配置的新插件 {plugin_path.parent}，自动加载配置中，自定义配置请至 web 管理页面修改')
-            with open(cfg_path, 'r') as fi:
+            with open(cfg_path, 'r', encoding='utf-8') as fi:
                 return yaml.safe_load(fi)
 
 
