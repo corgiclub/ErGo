@@ -5,6 +5,7 @@ import yaml
 from nonebot.log import logger
 import os
 from pathlib import Path
+from nonebot import require
 
 
 def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.example'):
@@ -20,6 +21,23 @@ def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.exa
             logger.warning(f'存在未配置的新插件 {plugin_path.parent}，自动加载配置中，自定义配置请至 web 管理页面修改')
             with open(cfg_path, 'r', encoding='utf-8') as fi:
                 return yaml.safe_load(fi)
+        else:
+            raise FileNotFoundError('缺少 config.yml.example，请重新拉取 repo')
+
+
+def get_permissions(plugin_path, permission_name='permissions.yml', default_name='permissions.yml.example'):
+    plugin_path = Path(plugin_path)
+    permission_path = plugin_path.wit_name(permission_name)
+    if os.path.exists(permission_path):
+        return require('flexperm').register('test_plugin').preset(permission_path)
+    else:
+        exp_path = plugin_path.with_name(default_name)
+        if os.path.exists(exp_path):
+            os.rename(exp_path, permission_path)
+            logger.warning(f'存在未配置的新插件 {plugin_path.parent}，自动加载权限中，自定义配置请至 web 管理页面修改')
+            return require('flexperm').register('test_plugin').preset(permission_path)
+        else:
+            raise FileNotFoundError('缺少 permissions.yml.example，请重新拉取 repo')
 
 
 def regex_equal(keywords) -> str:
