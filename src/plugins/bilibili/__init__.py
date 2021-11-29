@@ -1,12 +1,16 @@
-from nonebot.plugin.export import export
+from nonebot import get_driver, export, require
 
-from src.extensions.utils import get_config
+from src.extensions.utils import get_config, get_permissions
 from . import cmds
 
 
+@export()
 async def reload():
-    cfg.update(get_config(__file__))
+    global cfg
+    global P
+    cfg = get_config(__file__)
+    P = get_permissions(__file__)
 
 
 cfg = get_config(__file__)
-export().reload = reload
+P = get_permissions(__file__)
