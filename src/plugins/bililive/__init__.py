@@ -5,6 +5,7 @@ from src.extensions.utils import get_config, get_permissions
 from .core import detect_living
 
 
+@export()
 async def reload():
     global cfg
     global P
@@ -14,7 +15,6 @@ async def reload():
 
 cfg = get_config(__file__)
 P = get_permissions(__file__)
-export().reload = reload
 
 detecting = []
 driver = nonebot.get_driver()

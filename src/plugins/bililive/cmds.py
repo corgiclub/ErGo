@@ -3,10 +3,10 @@ from nonebot import on_command
 from nonebot.adapters.cqhttp import Bot, Event
 
 from src.extensions.mongodb import get_collection
-from . import cfg
+from . import cfg, P
 
 col = get_collection('ergo', 'bililive')
-bililive = on_command('bililive', priority=10, block=False)
+bililive = on_command('bililive', priority=10, block=False, permission=P('list'))
 
 
 @bililive.handle()

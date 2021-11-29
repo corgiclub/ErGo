@@ -1,7 +1,7 @@
 anyone:
   permissions:
-    - list
-    - help
+    - bililive.list
+    - bililive.help
 
 private: {}
 
