@@ -27,7 +27,7 @@ def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.exa
 
 def get_permissions(plugin_path, permission_name='permissions.yml', default_name='permissions.yml.example'):
     plugin_path = Path(plugin_path)
-    permission_path = plugin_path.wit_name(permission_name)
+    permission_path = plugin_path.with_name(permission_name)
     if os.path.exists(permission_path):
         return require('flexperm').register('test_plugin').preset(permission_path)
     else:
