@@ -1,8 +1,9 @@
 anyone:
   permissions:
-    - video
-    - app
-    - help
+    - bilibili.video
+    - bilibili.app
+    - bilibili.help
+    - bilibili.detail
 
 private: {}
 

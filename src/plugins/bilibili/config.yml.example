@@ -4,7 +4,4 @@ meta:
   help:
     - 发送 av/BV号 视频链接 小程序，自动识别
   commands: []
-  permissions:
-    - .video
-    - .app
 config: {}
