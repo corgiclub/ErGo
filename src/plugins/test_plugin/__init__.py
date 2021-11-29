@@ -22,6 +22,8 @@ async def reload():
 cfg = get_config(__file__)
 P = get_permissions(__file__)
 export().reload = reload
+
+
 cg = CommandGroup('测试', priority=10, block=False)
 
 
