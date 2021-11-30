@@ -9,8 +9,8 @@ group: {}
 
 group_admin:
   permissions:
-    - add
-    - remove
+    - bililive.add
+    - bililive.remove
 
 group_owner: {}
 

@@ -3,8 +3,10 @@ meta:
   description: 监控对应直播间，在直播开始时进行推送 \n 查询本群监控列表的开播情况
   help:
     - 发送 /bililive 查询本群监控列表的开播情况
+    - 发送 /bililive.[直播间号] 查询对应主播开播情况
   commands:
     - /bililive
+    - /bililive.[直播间号]
 config:
   rooms_data:
     1139799: []
