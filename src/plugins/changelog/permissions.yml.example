@@ -1,0 +1,12 @@
+anyone:
+  changelog.help
+
+private: {}
+
+group: {}
+
+group_admin: {}
+
+group_owner: {}
+
+superuser: {}
