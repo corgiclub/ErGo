@@ -5,15 +5,20 @@ from nonebot.plugin.export import export
 from nonebot.typing import T_State
 
 from src.extensions.mongodb import MongoChat
-from src.extensions.utils import get_config
+from src.extensions.utils import get_config, get_permissions
 
 
+@export()
 async def reload():
+    global cfg
+    global P
     cfg.update(get_config(__file__))
+    P = get_permissions(__file__)
 
 
 cfg = get_config(__file__)
-export().reload = reload
+P = get_permissions(__file__)
+
 db = MongoChat()
 
 record = on_message(priority=100, block=False)
