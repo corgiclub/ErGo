@@ -10,4 +10,4 @@ group_owner: {}
 
 superuser:
   permissions:
-    - help
+    - chat_record.help
