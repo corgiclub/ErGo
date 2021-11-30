@@ -148,3 +148,14 @@ mirai/
 logs/
 src/plugins/jrrp/jrrp.yml
 
+bot/.idea/
+bot/logs/
+bot/venv/
+
+client/logs
+client/data
+client/config.yml
+client/session.token
+client/device.json
+
+bot-monitor-web/node_modules
