@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  client:
+    image: xzsk2/gocqhttp-docker:latest
+    volumes:
+      - ./client:/data:delegated
+    tty: true
+    stdin_open: true
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    depends_on:
+      - bot
+
+#  bot-monitor-web:
+#    build: ./bot-monitor-web
+#    ports:
+#      - "9301:80"
+#    environment:
+#      - TZ=Asia/Shanghai
+#    depends_on:
+#      - bot
+
+  bot:
+    build: ./bot
+    expose:
+      - "9080"
+    environment:
+      - TZ=Asia/Shanghai
+
+networks:
+  default:
+    name: workspace-default
