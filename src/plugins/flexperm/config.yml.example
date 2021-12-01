@@ -1,7 +1,8 @@
 meta:
-  name: 聊天记录
-  description: 自动记录所处群聊和私聊的聊天内容
-  help: {}
-  commands: {}
-  permissions: {}
+  name: 权限核心
+  description: 权限插件的核心部分
+  help:
+    - 无
+  commands:
+    - 本插件权限全部对用户关闭。
 config: {}

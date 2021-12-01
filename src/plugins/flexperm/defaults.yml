@@ -4,13 +4,9 @@ private: {}
 
 group: {}
 
-group_admin:
-  permissions:
-    - flexperm.edit.perm.group
+group_admin: {}
 
-group_owner:
-  inherits:
-    - global:group_admin
+group_owner: {}
 
 #superuser:
 #  permissions:

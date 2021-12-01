@@ -11,6 +11,7 @@ async def reload():
     global P
     cfg.update(get_config(__file__))
     P = get_permissions(__file__)
+    await load_monitors()
 
 
 cfg = get_config(__file__)
