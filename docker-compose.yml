@@ -28,7 +28,3 @@ services:
       - "9080"
     environment:
       - TZ=Asia/Shanghai
-
-networks:
-  default:
-    name: workspace-default
