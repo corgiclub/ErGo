@@ -1,7 +1,6 @@
 anyone:
   permissions:
-    - changelog
-    - help
+    - server_status.quire
 
 private: {}
 

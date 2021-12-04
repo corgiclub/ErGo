@@ -1,9 +1,0 @@
-meta:
-  name: 今日人品
-  description: 使用一个随机数测算你今日的人品！\n 每日 0 时更新，随机种子来源于 ANU 提供的量子随机数 \n 使用 Box–Muller 变换获得
-  N(50, 50) 的随机值并裁剪取整得到。
-  help:
-    - 发送 /jrrp 查询今日人品！
-  commands:
-    - /jrrp
-config: {}
