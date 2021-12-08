@@ -1,11 +1,24 @@
 from nonebot import on_message
+from nonebot.adapters.cqhttp import Bot
+from nonebot.adapters.cqhttp import Event, Message, MessageSegment
+from nonebot.plugin.export import export
 from nonebot.typing import T_State
-from nonebot.adapters.cqhttp import Bot, Event, Message, MessageSegment
+
 from src.extensions.mongodb import MongoChat
+from src.extensions.utils import get_config, get_permissions
 
-from .config import Config
 
-cfg = Config()
+@export()
+async def reload():
+    global cfg
+    global P
+    cfg.update(get_config(__file__))
+    P = get_permissions(__file__)
+
+
+cfg = get_config(__file__)
+P = get_permissions(__file__)
+
 db = MongoChat()
 
 record = on_message(priority=100, block=False)
@@ -13,7 +26,6 @@ record = on_message(priority=100, block=False)
 
 @record.handle()
 async def log2database(bot: Bot, event: Event, state: T_State):
-
     message_id = event.get_event_description().split()[1]
     session_id = event.get_session_id().split("_")
 
@@ -29,4 +41,3 @@ async def log2database(bot: Bot, event: Event, state: T_State):
         msg: Message[MessageSegment] = event.get_message()
 
     await db.log_chat(msg, user_id, message_id, group_id, self_id)
-

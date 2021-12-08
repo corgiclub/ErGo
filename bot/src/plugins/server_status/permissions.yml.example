@@ -1,4 +1,6 @@
-anyone: {}
+anyone:
+  permissions:
+    - server_status.quire
 
 private: {}
 
@@ -7,9 +9,5 @@ group: {}
 group_admin: {}
 
 group_owner: {}
-
-#superuser:
-#  permissions:
-#    - "*"
 
 superuser: {}

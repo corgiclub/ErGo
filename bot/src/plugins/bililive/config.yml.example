@@ -1,0 +1,18 @@
+meta:
+  name: B站直播推送
+  description: 监控对应直播间，在直播开始时进行推送 \n 查询本群监控列表的开播情况
+  help:
+    - 发送 /bililive 查询本群监控列表的开播情况
+    - 发送 /bililive [直播间号] 查询对应主播开播情况
+    - 发送 /bililive.add [直播间号] 增加本群监控的直播间（群管理权限）
+    - 发送 /bililive.remove [直播间号] 删除本群监控的直播间（群管理权限）
+  commands:
+    - /bililive
+    - /bililive [直播间号]
+    - /bililive.add [直播间号]
+    - /bililive.remove [直播间号]
+config:
+  rooms_max: 10
+  rooms_max_all: 64
+  rooms_data:
+    1139799: []

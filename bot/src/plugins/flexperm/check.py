@@ -11,7 +11,7 @@ from .core import get, CheckResult, PermissionGroup
 def check(bot: Bot, event: Event, perm: str) -> bool:
     if c.flexperm_debug_check:
         logger.debug('Checking {}', perm)
-    for group in iterate_groups(bot, event):
+    for group in iterate_groups(bot, event, perm):
         r = group.check(perm)
         if c.flexperm_debug_check:
             logger.debug('Got {} from {}', r, group)
@@ -21,7 +21,7 @@ def check(bot: Bot, event: Event, perm: str) -> bool:
     return False
 
 
-def iterate_groups(bot: Bot, event: Event) -> Iterable[PermissionGroup]:
+def iterate_groups(bot: Bot, event: Event, perm: str) -> Iterable[PermissionGroup]:
     # 特定用户
     user = getattr(event, 'user_id', None) or event.get_user_id()
     group, _ = get('user', user)
@@ -54,7 +54,25 @@ def iterate_groups(bot: Bot, event: Event) -> Iterable[PermissionGroup]:
         group, _ = get('global', 'group')
         yield group
 
+    # 插件内权限
+    plugin = perm.split('.')[0]
+
+    group, _ = get(plugin, 'anyone')
+    yield group
+
+    # 用户在群组内的身份
+    if isinstance(event, GroupMessageEvent):
+        if event.sender.role == 'admin':
+            group, _ = get(plugin, 'group_admin')
+            yield group
+        elif event.sender.role == 'owner':
+            group, _ = get(plugin, 'group_owner')
+            yield group
+
     # 私聊
     if isinstance(event, PrivateMessageEvent):
         group, _ = get('global', 'private')
+        yield group
+
+        group, _ = get(plugin, 'private')
         yield group

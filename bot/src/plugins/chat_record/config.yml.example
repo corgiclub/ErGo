@@ -1,0 +1,7 @@
+meta:
+  name: 聊天记录
+  description: 自动记录所在群聊天内容
+  help:
+    - 自动插件，无帮助
+  commands: []
+config: {}

@@ -1,0 +1,16 @@
+anyone:
+  permissions:
+    - server_status.quire
+
+private: {}
+
+group: {}
+
+group_admin:
+  permissions:
+    - perm.ban
+    - perm.unban
+
+group_owner: {}
+
+superuser: {}

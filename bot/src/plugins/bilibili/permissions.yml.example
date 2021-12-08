@@ -1,0 +1,16 @@
+anyone:
+  permissions:
+    - bilibili.video
+    - bilibili.app
+    - bilibili.help
+    - bilibili.detail
+
+private: {}
+
+group: {}
+
+group_admin: {}
+
+group_owner: {}
+
+superuser: {}
