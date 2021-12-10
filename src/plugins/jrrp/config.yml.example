@@ -1,0 +1,9 @@
+meta:
+  name: 今日人品
+  description: 查询今日人品 ~ 使用来源于量子涨落的真随机数，对每个用户每日更新一次（00:00 UTC+8）
+  help:
+    - 发送 /jrrp 查询今日人品
+  commands:
+    - /jrrp
+config:
+  {}

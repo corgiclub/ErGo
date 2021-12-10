@@ -1,0 +1,17 @@
+anyone:
+  permissions:
+    - bililive.list
+    - bililive.help
+
+private: {}
+
+group: {}
+
+group_admin:
+  permissions:
+    - bililive.add
+    - bililive.remove
+
+group_owner: {}
+
+superuser: {}
