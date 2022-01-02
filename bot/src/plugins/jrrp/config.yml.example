@@ -1,0 +1,9 @@
+meta:
+  name: 今日人品
+  description: 使用了 ANU 所提供的量子随机数的的随机每日人品算法
+  help:
+    - 输入 /jrrp 获得每日人品
+    - 另见 rp 插件
+  commands:
+    - /jrrp
+config: {}

@@ -32,7 +32,7 @@ async def _(bot: Bot, event: Event):
 
 
 @h(cg.command('reload', permission=P('reload')))
-async def _(bot: Bot, event: Event):
+async def reload(bot: Bot, event: Event):
     core.reload()
     await bot.send(event, '重新加载权限配置')
 

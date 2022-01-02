@@ -1,5 +1,20 @@
 import nonebot
 from nonebot.adapters.cqhttp import Bot
+from nonebot.plugin.export import export
+
+from src.extensions.utils import get_config, get_permissions
+
+
+@export()
+async def reload():
+    global cfg
+    global P
+    cfg.update(get_config(__file__))
+    P = get_permissions(__file__)
+
+
+cfg = get_config(__file__)
+P = get_permissions(__file__)
 
 driver = nonebot.get_driver()
 

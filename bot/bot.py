@@ -9,6 +9,6 @@ driver.register_adapter("cqhttp", CQHTTPBot)
 nonebot.load_plugins("src/plugins")
 
 if __name__ == "__main__":
-    nonebot.run()
+    nonebot.run(port=8080)
     logger.add("file_1.log", rotation="4096 MB")
 
