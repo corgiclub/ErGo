@@ -2,7 +2,10 @@ meta:
   name: 系统状态
   description: 查看服务器的运行状态——当然，服务器很卡的时候这个插件也可能罢工。
   help:
-    - 发送 /系统状态 查询今日人品！
+    - 发送 /系统状态 或 /server_statu 查询当前系统占用
+    - 发送 /ping 检查系统状态
   commands:
     - /系统状态
+    - /server_statu
+    - /ping
 config: {}

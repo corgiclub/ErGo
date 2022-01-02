@@ -1,7 +1,6 @@
 anyone:
   permissions:
-    - server_status.quire
-    - server_status.ping
+    - rp.rp
 
 private: {}
 

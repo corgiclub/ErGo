@@ -1,0 +1,9 @@
+meta:
+  name: 人品（简单算法版）
+  description: 高速的随机每日人品算法
+  help:
+    - 输入 /rp 获得简易的每日人品
+    - 另见 jrrp
+  commands:
+    - /rp
+config: {}
