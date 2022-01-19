@@ -2,12 +2,14 @@ import re
 
 from peewee import MySQLDatabase, Model, DateTimeField, IntegerField, BigAutoField
 
-settings = {
-    'host': '###',
-    'user': '###',
-    'password': '###',
-    'port': 3306
-}
+from settings import settings
+
+# settings = {
+#     'host': '',
+#     'user': '',
+#     'password': '',
+#     'port': 10003
+# }
 
 db = MySQLDatabase("ergo", **settings)
 

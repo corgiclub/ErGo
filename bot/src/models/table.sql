@@ -134,7 +134,9 @@ create table chat_contact
     contact_id  bigint     default 0                                             not null comment '被推荐人的 QQ 号 / 群号',
     add_time    datetime   default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime   default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
-    delete_time int        default 0                                             not null comment '删除时间'
+    delete_time int        default 0                                             not null comment '删除时间',
+    constraint table_name_pk
+            primary key (id)
 )
     comment 'chat_contact';
 
@@ -213,7 +215,9 @@ create table image
 
     add_time    datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
-    delete_time int          default 0                                             not null comment '删除时间'
+    delete_time int          default 0                                             not null comment '删除时间',
+    constraint table_name_pk
+            primary key (id)
 )
     comment 'image';
 
