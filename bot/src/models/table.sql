@@ -4,7 +4,7 @@ create table chat
     group_id    bigint      default 0                                             not null comment '群 id',
     user_id     bigint      default 0                                             not null comment '用户 qq',
     message_id  int         default 0                                             null comment 'nonebot 内部消息ID',
-    type        varchar(10) default ''                                            not null comment '消息段类型',
+    type        tinyint(4)  default ''                                            not null comment '消息段类型',
     add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
     delete_time int         default 0                                             not null comment '删除时间',
