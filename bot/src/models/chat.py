@@ -79,6 +79,11 @@ class ChatJson(ChatBaseModel):
     data = CharField(max_length=1023, default='')
 
 
+class ChatText(BaseModel):
+    chat_id = BigIntegerField(default=0, help_text='chat id')
+    text = CharField(max_length=1023, default='', help_text='纯文本内容')
+
+
 if __name__ == '__main__':
 
     c = Chat.get(group_id=1234567, user_id=634493876, message_id=101, type=10)
