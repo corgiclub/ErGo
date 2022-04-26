@@ -4,7 +4,7 @@ create table chat
     group_id    bigint      default 0                                             not null comment '群 id',
     user_id     bigint      default 0                                             not null comment '用户 qq',
     message_id  int         default 0                                             null comment 'nonebot 内部消息ID',
-    type        tinyint(4)  default 0                                            not null comment '消息段类型',
+    type_id        tinyint(4)  default 0                                            not null comment '消息段类型',
     add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
     delete_time int         default 0                                             not null comment '删除时间',
@@ -102,7 +102,7 @@ create table chat_poke
     id          bigint                                                            not null,
     chat_id     bigint      default 0                                             not null comment 'chat id',
     type        tinyint(4)  default 0                                             not null comment '戳一戳类型',
-    qq          bigint      default 0                                             not null comment '戳一戳动作 ID',
+    poke_id     bigint      default 0                                             not null comment '戳一戳动作 ID',
     name        varchar(10) default ''                                            not null comment '戳一戳表情名',
     add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
@@ -210,7 +210,9 @@ create table image
 (
     id          bigint                                                             not null,
     filename    varchar(255) default ''                                            not null comment '文件名',
-    suffix      tinyint(4)   default 0                                             not null comment '后缀名',
+    type_id     tinyint(4)   default 0                                             not null comment '来源类型',
+    suffix      varchar(4)   default ''                                            not null comment '后缀名',
+    file_existed  bool       default FALSE                                         not null comment '图片是否保存',
     p_hash      binary(32)   default 0                                             not null comment '图片 P 哈希',
 
     add_time    datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',

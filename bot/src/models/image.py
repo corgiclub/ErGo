@@ -1,17 +1,20 @@
-from peewee import BigIntegerField, BlobField, CharField, IntegerField, SmallIntegerField, FloatField
+from peewee import BigIntegerField, CharField, SmallIntegerField, BooleanField
 
-from src.models import db, BaseModel
+from src.models import BaseModel
 
 
 class Image(BaseModel):
     filename = CharField(max_length=255, default='')
-    suffix = SmallIntegerField(default=0)
-    p_hash = BigIntegerField()
+    type_id = SmallIntegerField(default=0)
+    suffix = CharField(max_length=4, default='')
+    file_existed = BooleanField(default=False)
+    p_hash = BigIntegerField(default=0)
 
 
 class ImageChat(BaseModel):
-    image_id = BigIntegerField(default=0)
+    # 所有 QQ 聊天中
 
+    image_id = BigIntegerField(default=0)
     qq_hash = CharField(max_length=32, default='')
     qq_count = BigIntegerField(default=0)
 

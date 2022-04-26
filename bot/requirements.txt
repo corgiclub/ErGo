@@ -10,5 +10,3 @@ bilibili-api~=8.3.1
 peewee==3.14.8
 pymysql==1.0.2
 APScheduler~=3.8.1
-opencv-python~=4.5.4.58
-numpy~=1.21.4

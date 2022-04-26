@@ -2,7 +2,7 @@ import re
 
 from peewee import MySQLDatabase, Model, DateTimeField, IntegerField, BigAutoField
 
-from settings import settings
+from src.models.settings import settings
 
 # settings = {
 #     'host': '',

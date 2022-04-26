@@ -1,13 +1,13 @@
 from peewee import BigIntegerField, CharField, IntegerField, SmallIntegerField, FloatField
 
-from src.models import db, BaseModel
+from src.models import BaseModel
 
 
 class Chat(BaseModel):
-    group_id = BigIntegerField()
-    user_id = BigIntegerField()
-    message_id = IntegerField()
-    type = SmallIntegerField()
+    group_id = BigIntegerField(default=0)
+    user_id = BigIntegerField(default=0)
+    message_id = IntegerField(default=0)
+    type_id = SmallIntegerField(default=0)
 
 
 class ChatBaseModel(BaseModel):
@@ -23,6 +23,8 @@ class ChatFace(ChatBaseModel):
 
 
 class ChatImage(ChatBaseModel):
+    # OneBot 格式的图片消息记录
+
     image_id = BigIntegerField(default=0)
     qq_hash = CharField(max_length=32, default='', help_text='QQ 返回的hash值')
     url = CharField(max_length=1023, default='', help_text='图片链接')
@@ -44,7 +46,7 @@ class ChatAt(ChatBaseModel):
 
 class ChatPoke(ChatBaseModel):
     type = SmallIntegerField(default=0)
-    qq = BigIntegerField(default=0)
+    poke_id = BigIntegerField(default=0)
     name = CharField(max_length=10, default='')
 
 
@@ -77,11 +79,6 @@ class ChatXml(ChatBaseModel):
 
 class ChatJson(ChatBaseModel):
     data = CharField(max_length=1023, default='')
-
-
-class ChatText(BaseModel):
-    chat_id = BigIntegerField(default=0, help_text='chat id')
-    text = CharField(max_length=1023, default='', help_text='纯文本内容')
 
 
 if __name__ == '__main__':

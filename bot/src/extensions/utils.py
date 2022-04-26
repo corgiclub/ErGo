@@ -1,12 +1,11 @@
-from enum import Enum
-import cv2
-import numpy as np
-import yaml
-from nonebot.log import logger
 import os
+from enum import Enum
 from pathlib import Path
-from nonebot import require, get_driver, export
 from shutil import copyfile
+
+import yaml
+from nonebot import require, export
+from nonebot.log import logger
 
 
 def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.example'):
@@ -61,46 +60,41 @@ class PicSource(str, Enum):
     SauceNAO = 'saucenao'
 
 
-class CQ(str, Enum):
+class CQ(Enum):
     """
         已进行数据库适配的CQ消息段类型
     """
-    Text = 'text'
-    Face = 'face'
-    Image = 'image'
-    Record = 'record'
-    Video = 'video'
-    At = 'at'
-    Poke = 'poke'
-    Anonymous = 'anonymous'
-    Share = 'share'
-    Contact = 'contact'
-    Location = 'location'
-    Reply = 'reply'
-    Xml = 'xml'
-    Json = 'json'
-    Music = 'music'         # 只发送，不做适配
-    Forward = 'forward'     # 需要适配转发消息
-    Node = 'node'           # 格式复杂
+    text = 1
+    face = 2
+    image = 3
+    record = 4
+    video = 5
+    at = 6
+    poke = 7
+    anonymous = 8
+    share = 9
+    contact = 9
+    location = 10
+    reply = 11
+    xml = 12
+    json = 13
+    music = 14      # 只发送，不做适配
+    forward = 15    # 需要适配转发消息
+    node = 16       # 格式复杂
+
+    @classmethod
+    def get_type(cls, msg_type):
+        for name, member in cls.__members__.items():
+            if msg_type == name:
+                return member.name, member.value
+        return KeyError, '无法找到该 CQ code 类型'
 
 
-def get_img_phash(img):
-    """
-        Get the pHash value of the image, pHash : Perceptual hash algorithm(感知哈希算法)
-        if Hamming_distance(pHashA, pHashB) <= 5, it means the two images is similar.
+class ImageType(Enum):
+    chat = 1
+    saucenao = 2
+    pixiv = 3
 
-        :param img
-        :return: pHash value
-    """
-
-    gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)                # 转为灰度图
-    resize_gray_img = cv2.resize(gray_img, (32, 32))                # 缩放
-    vis = cv2.dct(cv2.dct(resize_gray_img.astype(np.float32)))      # 二维离散余弦变换
-    vis = vis[:8, :8]                                               # 取 DCT 结果的左上角
-    vis: np.ndarray = (vis > vis.mean()) + 0                        # 大于均值的为1 小于均值的为0
-    p_hash_str = ''.join(vis.flatten().astype(str))                 # 展平并连成串
-    p_hash_byte = int(p_hash_str, 2)                                # 以二进制转化为数字
-    return p_hash_byte
 
 
 def ham_dist(a, b):
