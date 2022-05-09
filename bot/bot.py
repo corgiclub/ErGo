@@ -1,12 +1,12 @@
 import nonebot
-from nonebot.adapters.cqhttp import Bot as CQHTTPBot
+from nonebot.adapters.onebot.v11 import Adapter
 from nonebot.log import logger
 
 nonebot.init()
 driver = nonebot.get_driver()
-driver.register_adapter("cqhttp", CQHTTPBot)
+driver.register_adapter(Adapter)
 # nonebot.load_builtin_plugins()
-nonebot.load_plugins("src/plugins")
+nonebot.load_all_plugins(["src.plugins.test", "src.plugins.coolperm"], [])
 
 if __name__ == "__main__":
     nonebot.run(port=8080)
