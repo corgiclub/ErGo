@@ -1,0 +1,7 @@
+# 全局配置禁止设置 group / group_owner / group_admin / private / anyone
+# 否则会覆盖其他所有插件的设置
+
+global:
+  users:
+    634493876: 0
+  groups: {}

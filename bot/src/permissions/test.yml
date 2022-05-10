@@ -1,3 +1,7 @@
 test.test_perm:
-  140958485: 60
-  anyone: 10
+  private: 20
+  group_admin: 10
+
+global:
+  users: {}
+  groups: {}
