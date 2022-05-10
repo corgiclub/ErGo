@@ -1,6 +1,7 @@
 test.test_perm:
   private: 20
   group_admin: 10
+  group: 15
 
 global:
   users: {}

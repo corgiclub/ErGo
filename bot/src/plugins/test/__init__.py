@@ -36,10 +36,11 @@ from pprint import pformat
 test = on_keyword({'test'}, priority=1, block=False)
 
 
-@test.handle(parameterless=[coolperm(permission='test.test_perm', prompt_permission=True)])
+@test.handle(parameterless=[coolperm(permission_inner='test.test_perm', prompt_permission=True)])
 # @test.handle()
 async def _(bot: Bot, event: MessageEvent, state: T_State, matcher: Matcher):
     sender = event.get_user_id()
+    print(matcher.module, matcher.module_name, matcher.plugin_name)
     info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.user_id, no_cache=False)
     print(event)
     # print(foo)

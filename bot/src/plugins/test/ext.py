@@ -30,22 +30,24 @@ def combine_dict(da, db):
 
 def coolperm(
         permission: str = 'global',
-        cooldown_default: float = -1,
+        cooldown_spec: Optional[float] = None,
         *,
         prompt_cooldown: Optional[bool] = True,
         prompt_permission: Optional[bool] = False,
 ) -> None:
+
     debounced: Dict[str: float] = dict()
 
     async def dependency(bot: Bot, matcher: Matcher, event: Union[PrivateMessageEvent, GroupMessageEvent]):
 
-        cooldown = cooldown_default
+        cooldown = -1
         group_id = 0
         user_id = event.user_id
+        permission_inner = matcher.plugin_name + permission if permission.startswith('.') else permission
 
         # 权限判断
-        if permission in permissions_all:
-            permission_dic: Dict = combine_dict(permissions_all[permission], permissions_all['global'])
+        if permission_inner in permissions_all:
+            permission_dic: Dict = combine_dict(permissions_all[permission_inner], permissions_all['global'])
         else:
             permission_dic = permissions_all['global']
         permission_keys = list(permission_dic.keys())
@@ -80,16 +82,22 @@ def coolperm(
             cooldown = permission_dic['anyone']
 
         if cooldown == -1:
-            await matcher.finish(f'你没有 {permission} 权限！' if prompt_permission else None)
-        elif cooldown > 0:
+            await matcher.finish(f'你没有 {permission_inner} 权限！' if prompt_permission else None)
+            return
+
+        if cooldown_spec:
+            cooldown = cooldown_spec
+
+        if cooldown > 0:
             key = f'{group_id}_{user_id}'
             if key in debounced:
-                await matcher.finish(f'指令 {permission} 冷却中 ⌛ {cooldown - time() + debounced[key]:.2f}s'
+                await matcher.finish(f'指令 {permission_inner} 冷却中 ⌛ {cooldown - time() + debounced[key]:.2f}s'
                                      if prompt_cooldown else None)
             else:
                 debounced[key] = time()
                 loop = get_running_loop()
                 loop.call_later(cooldown, lambda: debounced.pop(key))
+
         return
 
     return Depends(dependency)
