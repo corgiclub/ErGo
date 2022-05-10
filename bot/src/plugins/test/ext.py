@@ -1,15 +1,14 @@
-from typing import Optional, Set, Dict, Tuple, Union
-from nonebot.params import Depends, EventMessage
-from nonebot.matcher import Matcher
 from asyncio import get_running_loop
-from enum import Enum
-from nonebot.adapters.onebot.v11 import Bot
-from nonebot.adapters.onebot.v11 import Message, PrivateMessageEvent, GroupMessageEvent
-from nonebot.params import Command
-import yaml
 from time import time
-from nonebot.permission import SUPERUSER
+from typing import Optional, Dict, Union
 
+import yaml
+from nonebot.adapters.onebot.v11 import Bot
+from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
+from nonebot.matcher import Matcher
+from nonebot.params import Depends
+
+# todo 配置读取 配置重载 配置修改 SUPERUSER
 
 permissions_all = yaml.safe_load(open('src/permissions/test.yml', 'r'))
 
@@ -30,13 +29,12 @@ def combine_dict(da, db):
 
 
 def coolperm(
-    permission: str = 'global',
-    cooldown_default: float = -1,
-    *,
-    prompt_cooldown: Optional[bool] = True,
-    prompt_permission: Optional[bool] = False,
+        permission: str = 'global',
+        cooldown_default: float = -1,
+        *,
+        prompt_cooldown: Optional[bool] = True,
+        prompt_permission: Optional[bool] = False,
 ) -> None:
-
     debounced: Dict[str: float] = dict()
 
     async def dependency(bot: Bot, matcher: Matcher, event: Union[PrivateMessageEvent, GroupMessageEvent]):
