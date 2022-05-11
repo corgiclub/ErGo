@@ -6,6 +6,7 @@ import httpx
 import lxml.html
 from bilibili_api import video
 from bilibili_api.exceptions import ResponseCodeException
+from nonebot.adapters.onebot.v11 import Message, MessageSegment
 
 
 async def bili_keyword(text):
@@ -28,13 +29,13 @@ async def bili_keyword(text):
                 i += 1
 
         if not vid:
-            msg = '暂不支持的格式'
-            return msg
+            return Message('暂不支持的格式')
         # 获取视频详细信息
         msg = await video_detail(vid, vtype)
 
     except Exception as e:
-        msg = "Error: {}".format(type(e))
+        msg = Message("Error: {}".format(type(e)))
+
     return msg
 
 
@@ -42,25 +43,18 @@ async def b23_extract(text):
     b23 = re.compile(r'b23.tv\\/(\w+)').search(text)
     if not b23:
         b23 = re.compile(r'b23.tv/(\w+)').search(text)
-    url = f'https://b23.tv/{b23[1]}'
-    resp = httpx.get(url)
+
+    resp = httpx.get(f'https://b23.tv/{b23[1]}')
     text_long = str(resp.url)
     return text_long
 
 
 async def extract(text: str):
-    aid = re.compile(r'(av|AV)\d+').search(text)
-    bvid = re.compile(r'(BV|bv)([a-zA-Z0-9])+').search(text)
-    if bvid:
-        id_ = bvid[0]
-        type_ = 'bv'
-    elif aid:
-        id_ = aid[0][2:]
-        type_ = 'av'
+    aid, bvid = re.compile(r'(av|AV)\d+').search(text), re.compile(r'(BV|bv)([a-zA-Z0-9])+').search(text)
+    if aid or bvid:
+        return bvid[0] if bvid else aid[0][2:], 'bv' if bvid else 'av'
     else:
-        id_ = None
-        type_ = None
-    return id_, type_
+        return None, None
 
 
 async def search_bili_by_title(title: str):
@@ -86,35 +80,18 @@ async def search_bili_by_title(title: str):
 
 async def video_detail(id_, type_):
     try:
-        if type_ == 'bv':
-            v = video.Video(bvid=id_)
-        else:
-            v = video.Video(aid=int(id_))
+        v = video.Video(bvid=id_) if type_ == 'bv' else video.Video(aid=int(id_))
         info = await v.get_info()
-        msg = [
-            {
-                "type": "image",
-                "data": {
-                    "file": info['pic']
-                }
-            },
-            {
-                "type": "text",
-                "data": {
-                    "text": f'《{info["title"]}》\n'
-                            f'Up主: {info["owner"]["name"]}\n'
-                            f'URL: https://bilibili.com/video/av{info["aid"]}'
-                }
-            }
-        ]
 
-        return msg
+        return Message([
+            MessageSegment.image(info['pic']),
+            MessageSegment.text(f'《{info["title"]}》\n'
+                                f'Up主: {info["owner"]["name"]}\n'
+                                f'URL: https://bilibili.com/video/av{info["aid"]}'),
+        ])
+
     except ResponseCodeException:
-        msg = '没有找到视频信息'
-        return msg
+        return Message('没有找到视频信息')
 
     except Exception as e:
-
-        msg = "解析出错--Error: {}\n".format(type(e))
-        # msg += traceback.format_exc()
-        return msg
+        return Message("解析出错--Error: {}\n".format(type(e)))
