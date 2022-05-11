@@ -1,4 +1,4 @@
-# 全局配置禁止设置 group / group_owner / group_admin / private / anyone
+# 全局配置禁止设置 group / group_owner / group_admin / private / anyone 关键字
 # 否则会覆盖其他所有插件的设置
 
 global:

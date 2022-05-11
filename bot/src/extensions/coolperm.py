@@ -1,4 +1,7 @@
+import os
 from asyncio import get_running_loop
+from functools import reduce
+from pathlib import Path
 from time import time
 from typing import Optional, Dict, Union
 
@@ -8,9 +11,30 @@ from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
 from nonebot.matcher import Matcher
 from nonebot.params import Depends
 
+
 # todo 配置读取 配置重载 配置修改 SUPERUSER
 
-permissions_all = yaml.safe_load(open('src/permissions/test.yml', 'r'))
+
+def load_all_permissions(path=Path('src/permissions/')):
+    return [yaml.safe_load(open(path / p, 'r', encoding='utf-8')) for p in os.listdir(path)]
+
+
+def add_permission():
+    pass
+
+
+def remove_permission():
+    pass
+
+
+permissions_all_list = load_all_permissions()
+permissions_all = reduce(lambda x, y: {**x, **y}, permissions_all_list)
+
+# 更为优化的写法
+# import itertools
+# dict(itertools.chain.from_iterable((d.items() for d in permissions_all_list)))
+
+print(f'读取了 {sum(len(i) for i in permissions_all.values())} 条权限')
 
 
 def combine_dict(da, db):
@@ -35,7 +59,6 @@ def coolperm(
         prompt_cooldown: Optional[bool] = True,
         prompt_permission: Optional[bool] = False,
 ) -> None:
-
     debounced: Dict[str: float] = dict()
 
     async def dependency(bot: Bot, matcher: Matcher, event: Union[PrivateMessageEvent, GroupMessageEvent]):

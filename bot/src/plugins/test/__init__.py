@@ -7,7 +7,7 @@ from datetime import datetime
 from nonebot.adapters.onebot.v11 import Bot, Message, MessageSegment, MessageEvent
 
 from nonebot.adapters.onebot.v11.helpers import Cooldown
-from .ext import coolperm
+from src.extensions import coolperm
 from nonebot.params import Command
 from nonebot.matcher import Matcher
 
@@ -36,7 +36,7 @@ from pprint import pformat
 test = on_keyword({'test'}, priority=1, block=False)
 
 
-@test.handle(parameterless=[coolperm(permission_inner='test.test_perm', prompt_permission=True)])
+@test.handle(parameterless=[coolperm(permission='test.test_perm', prompt_permission=True)])
 # @test.handle()
 async def _(bot: Bot, event: MessageEvent, state: T_State, matcher: Matcher):
     sender = event.get_user_id()
