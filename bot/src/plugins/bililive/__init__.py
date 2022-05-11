@@ -1,24 +1,9 @@
 import nonebot
-from nonebot.plugin.export import export
-
-from src.extensions.utils import get_config, get_permissions
 from .core import detect_living
-
-
-@export()
-async def reload():
-    global cfg
-    global P
-    cfg.update(get_config(__file__))
-    P = get_permissions(__file__)
-    await load_monitors()
-
-
-cfg = get_config(__file__)
-P = get_permissions(__file__)
 
 detecting = []
 driver = nonebot.get_driver()
+cfg = nonebot.get_bot().config['bililive']
 
 
 @driver.on_startup

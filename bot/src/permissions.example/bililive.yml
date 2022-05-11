@@ -1,0 +1,9 @@
+bililive.list:
+  group: 0
+  private: 10
+bililive.add:
+  group: 0
+  private: 10
+bililive.remove:
+  group: 0
+  private: 10
