@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class Config(BaseModel):
-    flexperm_base: Path = Path('../../permissions')
+    flexperm_base: Path = Path('../../permissions.example')
     flexperm_debug_check: bool = False
 
 
