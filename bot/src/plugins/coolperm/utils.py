@@ -8,7 +8,7 @@ from nonebot.adapters.onebot.v11 import Message, MessageEvent, GroupMessageEvent
 
 
 
-def cooldown(
+def Cooldown(
     cooldown: float = 5,
     *,
     prompt: Optional[str] = None,
@@ -49,3 +49,6 @@ def cooldown(
         return
 
     return Depends(dependency)
+
+
+
