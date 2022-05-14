@@ -1,6 +1,8 @@
 import asyncio
 import re
+import time
 import urllib.parse
+from nonebot.log import logger
 
 import httpx
 import lxml.html
@@ -86,7 +88,9 @@ async def video_detail(id_, type_):
         return Message([
             MessageSegment.image(info['pic']),
             MessageSegment.text(f'《{info["title"]}》\n'
-                                f'Up主: {info["owner"]["name"]}\n'
+                                f'up主: {info["owner"]["name"]}\n'
+                                f'投稿时间：{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(info["pubdate"]))}\n'
+                                f'播放量：{format_view(info["stat"]["view"])}\n'
                                 f'URL: https://bilibili.com/video/av{info["aid"]}'),
         ])
 
@@ -94,4 +98,9 @@ async def video_detail(id_, type_):
         return Message('没有找到视频信息')
 
     except Exception as e:
+        logger.error(e)
         return Message("解析出错--Error: {}\n".format(type(e)))
+
+
+def format_view(v):
+    return f'{v/10000:.2f} 万' if v > 10000 else v

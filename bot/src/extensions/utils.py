@@ -29,25 +29,6 @@ def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.exa
             raise FileNotFoundError(f'{plugin_path.parent} 缺少 config.yml.example，请重新拉取 repo')
 
 
-def get_permissions(plugin_path, permission_name='permissions.yml', default_name='permissions.yml.example'):
-    plugin_path = Path(plugin_path)
-    permission_path = plugin_path.with_name(permission_name)
-    if os.path.exists(permission_path):
-        permission = require('flexperm').register('test_plugin').preset(permission_path)
-        export()['permissions'] = permission
-        return permission
-    else:
-        exp_path = plugin_path.with_name(default_name)
-        if os.path.exists(exp_path):
-            copyfile(exp_path, permission_path)
-            logger.warning(f'存在未配置的新插件 {plugin_path.parent}，自动加载权限中，自定义配置请至 web 管理页面修改')
-            permission = require('flexperm').register('test_plugin').preset(permission_path)
-            export()['permissions'] = permission
-            return permission
-        else:
-            raise FileNotFoundError(f'{plugin_path.parent} 缺少 permissions.yml.example，请重新拉取 repo')
-
-
 def regex_equal(keywords) -> str:
     return '|'.join(('^'+k+'$' for k in keywords))
 

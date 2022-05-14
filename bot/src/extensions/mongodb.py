@@ -7,11 +7,11 @@ from typing import Tuple
 from pymongo import MongoClient
 
 from nonebot.log import logger
-from nonebot.adapters.cqhttp import Message, MessageSegment
+from nonebot.adapters.onebot.v11 import Message, MessageSegment
 
 from src.extensions.config import MongoDB
 from src.extensions.imghdr_byte import what
-from src.extensions.utils import CQ, get_img_phash
+# from src.extensions.utils import CQ, get_img_phash
 
 
 cfg = MongoDB()

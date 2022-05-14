@@ -1,8 +1,14 @@
 from nonebot import on_regex
 from nonebot.adapters.onebot.v11 import MessageEvent
+from nonebot.matcher import Matcher
+import nonebot
 
 from src.extensions import coolperm
 from .core import b23_extract, bili_keyword
+
+
+driver = nonebot.get_driver()
+
 
 analysis_bv = on_regex(r"(b23.tv)|(www.bilibili.com/video)|(www.bilibili.com/bangumi)|(^(BV|bv)([0-9A-Za-z]{10}))|"
                        r"(^(av|AV)([0-9]+)(/.*|\\?.*|)$)|(\[\[QQ小程序\]哔哩哔哩\])|(QQ小程序&amp;#93;哔哩哔哩)|"
@@ -11,6 +17,7 @@ analysis_bv = on_regex(r"(b23.tv)|(www.bilibili.com/video)|(www.bilibili.com/ban
 
 @analysis_bv.handle(parameterless=[coolperm('.analysis_bv')])
 async def analysis_main(event: MessageEvent):
+
     text = event.get_plaintext().strip()
 
     if "b23.tv" in text:
