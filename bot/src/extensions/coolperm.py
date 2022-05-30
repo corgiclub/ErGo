@@ -15,8 +15,17 @@ from nonebot.params import Depends
 # todo 配置读取 配置重载 配置修改 SUPERUSER
 
 
+debug = True
+
+
 def load_all_permissions(path=Path('src/permissions/')):
-    return [yaml.safe_load(open(path / p, 'r', encoding='utf-8')) for p in os.listdir(path)]
+    perm = [yaml.safe_load(open(path / p, 'r', encoding='utf-8')) for p in os.listdir(path)]
+
+    if debug:
+        return perm + [yaml.safe_load(open(Path('src/permissions.example/') / p, 'r', encoding='utf-8'))
+                       for p in os.listdir(Path('src/permissions.example/'))]
+
+    return perm
 
 
 def add_permission():

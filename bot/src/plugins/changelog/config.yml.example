@@ -1,9 +1,0 @@
-meta:
-  name: 版本信息
-  description: 在版本更新后第一次启动时，自动发送版本更新信息
-  help:
-    - 自动插件，无帮助
-  commands: []
-config:
-  rooms_data:
-    1139799: []

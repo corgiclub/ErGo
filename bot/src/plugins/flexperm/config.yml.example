@@ -1,8 +1,0 @@
-meta:
-  name: 权限核心
-  description: 权限插件的核心部分
-  help:
-    - 无
-  commands:
-    - 本插件权限全部对用户关闭。
-config: {}

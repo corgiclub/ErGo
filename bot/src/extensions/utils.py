@@ -2,10 +2,22 @@ import os
 from enum import Enum
 from pathlib import Path
 from shutil import copyfile
+from time import sleep
 
 import yaml
-from nonebot import require, export
+from nonebot import require, export, get_driver
 from nonebot.log import logger
+
+
+def get_config_late(cfg_key, sleep_time=2):
+    driver = get_driver()
+    while True:
+        try:
+            cfg = driver.config.__dict__[cfg_key]
+        except KeyError:
+            sleep(sleep_time)
+        else:
+            return cfg
 
 
 def get_config(plugin_path, yaml_name='config.yml', default_name='config.yml.example'):

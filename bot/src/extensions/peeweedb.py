@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 import httpx
-from nonebot.adapters.cqhttp import Message, MessageSegment
+from nonebot.adapters.onebot.v11 import Message, MessageSegment
 from nonebot.log import logger
 from peewee import *
 
@@ -31,6 +31,7 @@ async def process_line(self, msg: MessageSegment, user_id, message_id, group_id=
 
 
 async def log_chat(messages: Message, user_id, message_id, group_id):
+    # todo 改为真正的异步写法
     # 私聊消息 group_id == None
     if group_id is None:
         group_id = 0

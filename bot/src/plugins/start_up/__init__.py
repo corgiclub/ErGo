@@ -20,5 +20,9 @@ async def load_configs():
                            f'若希望使用自定义配置或写入隐私信息，请参照 {pe} 的内容在 {p} 编写自定义配置，'
                            f'希望使用默认配置可忽略该警告')
             p = pe
-        driver.config.__dict__.setdefault(n, yaml.safe_load(open(p, 'r', encoding='utf-8')))
-        logger.info(f'成功读取了配置文件 {p}')
+        try:
+            driver.config.__dict__.setdefault(n, yaml.safe_load(open(p, 'r', encoding='utf-8')))
+        except FileNotFoundError:
+            logger.warning(f'插件 {n} 的默认配置文件不存在，读取将被跳过，请开发者检查 {pe} 文件完整性')
+        else:
+            logger.info(f'成功读取了配置文件 {p}')

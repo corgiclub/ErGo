@@ -79,6 +79,6 @@ async def get_file_sys(api) -> str:
         return f'❌硬盘: 读取失败'
 
 
-async def get_info(api=cfg.corgitech_api):
+async def get_sys_info(api=cfg.corgitech_api):
     msg = '\n'.join((await get_load(api), await get_mem(api), await get_gpu(api), await get_file_sys(api)))
     return msg

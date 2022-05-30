@@ -1,7 +1,0 @@
-meta:
-  name: 测试插件
-  description: 进行各种功能测试的插件 \n 文件代码都是 debug 用 无实际用途
-  help: {}
-  commands: {}
-  permissions: {}
-config: {}
