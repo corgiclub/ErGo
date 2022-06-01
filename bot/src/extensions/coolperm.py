@@ -10,7 +10,7 @@ from nonebot.adapters.onebot.v11 import Bot
 from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
 from nonebot.matcher import Matcher
 from nonebot.params import Depends
-
+from pprint import pprint
 
 # todo 配置读取 配置重载 配置修改 SUPERUSER
 
@@ -22,6 +22,8 @@ def load_all_permissions(path=Path('src/permissions/')):
     perm = [yaml.safe_load(open(path / p, 'r', encoding='utf-8')) for p in os.listdir(path)]
 
     if debug:
+        pprint(perm + [yaml.safe_load(open(Path('src/permissions.example/') / p, 'r', encoding='utf-8'))
+                       for p in os.listdir(Path('src/permissions.example/'))])
         return perm + [yaml.safe_load(open(Path('src/permissions.example/') / p, 'r', encoding='utf-8'))
                        for p in os.listdir(Path('src/permissions.example/'))]
 

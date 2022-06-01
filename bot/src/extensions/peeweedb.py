@@ -12,7 +12,7 @@ from src.extensions.utils import CQ, ImageType
 from src.models.chat import *
 from src.models.image import *
 
-base_path = '/mnt/0/base/'
+base_path = r'E:\LuneZ99'
 
 
 async def process_line(self, msg: MessageSegment, user_id, message_id, group_id=None):
@@ -44,7 +44,8 @@ async def log_chat(messages: Message, user_id, message_id, group_id):
         elif msg.type == CQ.face.name:
             ChatFace.create(chat_id=chat_id, face_id=int(msg.data['id']))
         elif msg.type == CQ.image.name:
-            await save_chat_image(msg.data['file'], msg.data['url'], group_id, user_id)
+            img_id = await save_chat_image(msg.data['file'], msg.data['url'], group_id, user_id)
+            ChatImage.create(chat_id=chat_id, img_id=img_id, qq_hash=msg.data['file'].split('.')[0], url=msg.data['url'])
         elif msg.type == CQ.record.name:
             # todo
             pass
@@ -80,24 +81,29 @@ async def save_chat_image(file, url, group_id, user_id, img_path=Path(base_path)
 
     file = file.split('.')[0]   # 去除 .image 后缀
     img_path /= str(group_id) if group_id else str(user_id)
-    os.mkdir(img_path) if os.path.exists(img_path) else None
-    img_chat_db: ImageChat = ImageChat.get(ImageChat.qq_hash == file)
+    os.mkdir(img_path) if not os.path.exists(img_path) else None
 
-    if img_chat_db is not None:
-        ImageChat.update(qq_count=ImageChat.qq_count + 1).where(ImageChat.qq_hash == file)
-        img_db: Image = Image.get(id=img_chat_db.image_id)
+    try:
+        img_chat_db: ImageChat = ImageChat.get(ImageChat.qq_hash == file)
 
-        if not img_db.file_existed:
-            img_db.file_existed, img_db.suffix = get_chat_image(url, file, img_path)
-            img_db.save()
-
-    else:
+    except ImageChat.DoesNotExist:
         img_db = Image(filename=file, type_id=ImageType.chat.value)
-        img_db.file_existed, img_db.suffix = get_chat_image(url, file, img_path)
+        img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
         img_id = img_db.save()
 
         img_chat_db = ImageChat(image_id=img_id, qq_hash=file, qq_count=1)
         img_chat_db.save()
+
+        return img_id
+    else:
+        ImageChat.update(qq_count=ImageChat.qq_count + 1).where(ImageChat.qq_hash == file)
+        img_db: Image = Image.get(id=img_chat_db.image_id)
+
+        if not img_db.file_existed:
+            img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
+            img_db.save()
+
+        return 0
 
 
 async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5) -> Tuple:
@@ -106,7 +112,7 @@ async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5)
         if resp.status_code == 200:
             img = resp.content
             suffix = what(img)
-            with open(path + f"{file}.{suffix}", 'wb') as fi:
+            with open(path / f"{file}.{suffix}", 'wb') as fi:
                 fi.write(img)
             return True, suffix
 

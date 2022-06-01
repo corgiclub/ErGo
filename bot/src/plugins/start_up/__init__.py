@@ -4,11 +4,18 @@ from pathlib import Path
 import nonebot
 import yaml
 from nonebot.log import logger
+from nonebot import require
 
 driver = nonebot.get_driver()
+monitor_live = require('bililive').monitor_live
 
 
 @driver.on_startup
+async def start_up():
+    await load_configs()
+    await monitor_live()
+
+
 async def load_configs():
     plugins = nonebot.get_loaded_plugins()
     names = [p.name for p in plugins]

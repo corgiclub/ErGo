@@ -3,6 +3,3 @@ test.test_perm:
   group_admin: 10
   group: 15
 
-global:
-  users: {}
-  groups: {}
