@@ -1,17 +1,17 @@
-import nonebot
 from .core import detect_living
 from .cmds import *
 from nonebot import export
 
+from src.extensions import get_config
+
 detecting = []
-driver = nonebot.get_driver()
 
 
 async def monitor_live():
 
-    cfg = driver.config.__dict__['bililive']
+    cfg = get_config('bililive')
 
-    for room_id, target_id in cfg['config']['rooms_data'].items():
+    for room_id, target_id in cfg['rooms_data'].items():
         if room_id not in detecting:
             await detect_living(room_id, target_id)
             detecting.append(room_id)

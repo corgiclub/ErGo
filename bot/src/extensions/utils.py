@@ -10,6 +10,12 @@ from nonebot import require, export, get_driver
 from nonebot.log import logger
 
 
+driver = get_driver()
+
+
+def get_config(key):
+    return driver.config.__dict__[key]['config']
+
 
 def regex_equal(keywords) -> str:
     return '|'.join(('^'+k+'$' for k in keywords))
