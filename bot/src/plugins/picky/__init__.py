@@ -9,6 +9,7 @@ from src.extensions import CQ, get_config
 from PicImageSearch import SauceNAO, Network
 
 searching_by_pic = on_regex(r'pic*|sauce*|pixiv*', priority=10, block=False)
+searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10, block=False)
 
 
 @searching_by_pic.handle(parameterless=[coolperm('.searching_by_pic')])
