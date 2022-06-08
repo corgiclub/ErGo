@@ -1,13 +1,13 @@
 create table chat
 (
     id          bigint auto_increment,
-    group_id    bigint      default 0                                             not null comment '群 id',
-    user_id     bigint      default 0                                             not null comment '用户 qq',
-    message_id  int         default 0                                             null comment 'nonebot 内部消息ID',
-    type_id        tinyint(4)  default 0                                            not null comment '消息段类型',
-    add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',
-    update_time datetime    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
-    delete_time int         default 0                                             not null comment '删除时间',
+    group_id    bigint     default 0                                             not null comment '群 id',
+    user_id     bigint     default 0                                             not null comment '用户 qq',
+    message_id  int        default 0                                             null comment 'nonebot 内部消息ID',
+    type_id     tinyint(4) default 0                                             not null comment '消息段类型',
+    add_time    datetime   default CURRENT_TIMESTAMP                             not null comment '添加时间',
+    update_time datetime   default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
+    delete_time int        default 0                                             not null comment '删除时间',
     constraint table_name_pk
         primary key (id)
 )
@@ -136,7 +136,7 @@ create table chat_contact
     update_time datetime   default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
     delete_time int        default 0                                             not null comment '删除时间',
     constraint table_name_pk
-            primary key (id)
+        primary key (id)
 )
     comment 'chat_contact';
 
@@ -208,18 +208,18 @@ create table chat_json
 
 create table image
 (
-    id          bigint auto_increment,
-    filename    varchar(255) default ''                                            not null comment '文件名',
-    type_id     tinyint(4)   default 0                                             not null comment '来源类型',
-    suffix      varchar(4)   default ''                                            not null comment '后缀名',
-    file_existed  bool       default FALSE                                         not null comment '图片是否保存',
-    p_hash      binary(32)   default 0                                             not null comment '图片 P 哈希',
+    id           bigint auto_increment,
+    filename     varchar(255) default ''                                            not null comment '文件名',
+    type_id      tinyint(4)   default 0                                             not null comment '来源类型',
+    suffix       varchar(4)   default ''                                            not null comment '后缀名',
+    file_existed bool         default FALSE                                         not null comment '图片是否保存',
+    p_hash       binary(32)   default 0                                             not null comment '图片 P 哈希',
 
-    add_time    datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
-    update_time datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
-    delete_time int          default 0                                             not null comment '删除时间',
+    add_time     datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
+    update_time  datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
+    delete_time  int          default 0                                             not null comment '删除时间',
     constraint table_name_pk
-            primary key (id)
+        primary key (id)
 )
     comment 'image';
 

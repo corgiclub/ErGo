@@ -13,6 +13,7 @@ from nonebot.params import Depends
 from pprint import pprint
 
 # todo 配置读取 配置重载 配置修改 SUPERUSER
+# fixme 当前 global.yml 的处理不对
 
 
 debug = True

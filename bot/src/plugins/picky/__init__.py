@@ -8,7 +8,9 @@ from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 from src.extensions import CQ, get_config
 from PicImageSearch import SauceNAO, Network
 
-searching_by_pic = on_regex(r'pic*|sauce*|pixiv*', priority=10, block=False)
+# fixme 读取到无需处理的 pic 指令依然会进入冷却
+
+searching_by_pic = on_regex(r'search*', priority=10, block=False)
 searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10, block=False)
 
 
@@ -16,7 +18,6 @@ searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10,
 async def _(event: Event):
     message = event.get_message()
     pic_count = sum([msg.type == CQ.image.name for msg in message])
-    print(pic_count)
     if pic_count == 0:
         return
     elif pic_count > 1:
