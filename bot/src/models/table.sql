@@ -281,4 +281,29 @@ create table image_tag
 )
     comment 'image_tag';
 
+create table image_gallery
+(
+    id          bigint auto_increment,
+    image_id    bigint      default 0                                             not null comment 'image id',
+    theme       varchar(32) default ''                                            not null comment '图像主题',
+    add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',
+    update_time datetime    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
+    delete_time int         default 0                                             not null comment '删除时间',
+    constraint table_name_pk
+        primary key (id)
+)
+    comment 'image_gallery';
 
+create table note
+(
+    id          bigint auto_increment,
+    note        varchar(32)  default 0                                             not null comment '触发词',
+    value       varchar(255) default ''                                            not null comment '回复',
+    group_id    bigint       default 0                                             not null comment '群 id',
+    add_time    datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
+    update_time datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
+    delete_time int          default 0                                             not null comment '删除时间',
+    constraint table_name_pk
+        primary key (id)
+)
+    comment 'note';

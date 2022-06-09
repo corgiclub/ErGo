@@ -2,17 +2,16 @@ import asyncio
 import os
 from pathlib import Path
 
-import httpx
+
 from nonebot.adapters.onebot.v11 import Message, MessageSegment
 from nonebot.log import logger
 from peewee import *
 
-from src.extensions.imghdr_byte import what
-from src.extensions.utils import CQ, ImageType
+from src.extensions.utils import CQ, ImageType, get_chat_image, pic_base_path
 from src.models.chat import *
 from src.models.image import *
 
-base_path = r'E:\LuneZ99'
+base_path = pic_base_path
 
 
 async def process_line(self, msg: MessageSegment, user_id, message_id, group_id=None):
@@ -74,14 +73,13 @@ async def log_chat(messages: Message, user_id, message_id, group_id):
             pass
 
 
-async def save_chat_image(file, url, group_id, user_id, img_path=Path(base_path) / 'picture' / ImageType.chat.name):
+async def save_chat_image(file, url, group_id, user_id, img_path=ImageType.chat.name):
     """
         本函数要求文件名与已有文件无重复，仅用于存储 QQ 聊天图片
     """
 
     file = file.split('.')[0]   # 去除 .image 后缀
     img_path /= str(group_id) if group_id else str(user_id)
-    os.mkdir(img_path) if not os.path.exists(img_path) else None
 
     try:
         img_chat_db: ImageChat = ImageChat.get(ImageChat.qq_hash == file)
@@ -106,23 +104,7 @@ async def save_chat_image(file, url, group_id, user_id, img_path=Path(base_path)
         return 0
 
 
-async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5) -> Tuple:
-    async with httpx.AsyncClient() as cli:
-        resp = await cli.get(url)
-        if resp.status_code == 200:
-            img = resp.content
-            suffix = what(img)
-            with open(path / f"{file}.{suffix}", 'wb') as fi:
-                fi.write(img)
-            return True, suffix
 
-    if timeout < retry_times:
-        logger.info(f"图片获取失败 {timeout} 次，重试中，地址 {url}")
-        await asyncio.sleep(wait_time)
-        await get_chat_image(url, file, path, timeout + 1)
-
-    logger.warning(f"图片获取失败 {retry_times} 次，停止重试，地址 {url}")
-    return False, ''
 
 
 if __name__ == '__main__':

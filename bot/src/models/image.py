@@ -45,5 +45,10 @@ class ImageTag(BaseModel):
     tag = CharField(max_length=255, default='')
 
 
+class ImageGallery(BaseModel):
+    image_id = BigIntegerField(default=0, help_text='chat id')
+    theme = CharField(max_length=32, default='')
+
+
 if __name__ == '__main__':
     print(ImageSauce.get_by_id(2))

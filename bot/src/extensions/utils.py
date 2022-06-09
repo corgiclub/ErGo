@@ -8,9 +8,12 @@ import yaml
 import nonebot
 from nonebot import require, export, get_driver
 from nonebot.log import logger
-
+import httpx
+from src.extensions.imghdr_byte import what
+import asyncio
 
 driver = get_driver()
+pic_base_path = r'E:\LuneZ99'
 
 
 def get_config(key):
@@ -71,6 +74,37 @@ def ham_dist(a, b):
         计算以 (二进制) 数字形式输入的汉明距离
     """
     return bin(a ^ b).count('1')
+
+
+async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5):
+    """
+
+    获取聊天消息中的图片并保存
+    url: image.url
+    file: image.file
+    path: 存储目录
+    """
+    path = Path(pic_base_path) / 'picture' / path
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    async with httpx.AsyncClient() as cli:
+        resp = await cli.get(url)
+        if resp.status_code == 200:
+            img = resp.content
+            suffix = what(img)
+            with open(path / f"{file}.{suffix}", 'wb') as fi:
+                fi.write(img)
+            return True, suffix
+
+    if timeout < retry_times:
+        logger.info(f"图片获取失败 {timeout} 次，重试中，地址 {url}")
+        await asyncio.sleep(wait_time)
+        await get_chat_image(url, file, path, timeout + 1)
+
+    logger.warning(f"图片获取失败 {retry_times} 次，停止重试，地址 {url}")
+    return False, ''
 
 
 if __name__ == '__main__':
