@@ -13,7 +13,7 @@ from src.extensions.imghdr_byte import what
 import asyncio
 
 driver = get_driver()
-pic_base_path = r'E:\LuneZ99'
+pic_base_path = r'D:\LuneZ99'
 
 
 def get_config(key):
@@ -66,6 +66,7 @@ class ImageType(Enum):
     chat = 1
     saucenao = 2
     pixiv = 3
+    gallery = 4
 
 
 

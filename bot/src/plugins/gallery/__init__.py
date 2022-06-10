@@ -1,7 +1,10 @@
-from nonebot import on_command, on_startswith, on_regex, get_driver
-from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
-from src.extensions import coolperm, CQ, regex_equal, get_chat_image
 import re
+
+from nonebot import on_regex
+from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
+from peewee import fn
+
+from src.extensions import coolperm, CQ, regex_equal, get_chat_image
 from src.models.image import ImageGallery, Image
 
 aliases = {
@@ -47,10 +50,8 @@ aliases = {
 for a in aliases:
     aliases[a] += [a]
 
-
 save_image_regex = '.*CQ:image.*|'.join(sum(aliases.values(), [])) + '*CQ:image.*'
 take_image_regex = regex_equal(sum(aliases.values(), []))
-
 
 save_image = on_regex(save_image_regex, flags=re.S, priority=10, block=False)
 take_image = on_regex(take_image_regex, priority=10, block=False)
@@ -65,21 +66,32 @@ async def _(event: Event):
         if theme_text in aliases[al]:
             theme = al
             break
-
+    lines_image = []
+    lines_gallery = []
     for msg in message:
         if msg.type == CQ.image.name:
             await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
-            pass
+
+            lines_gallery.append({'theme': theme, ''})
 
 
 @take_image.handle(parameterless=[coolperm('.take_image')])
 async def _(event: Event):
     message = event.get_message()
+    theme_text = message[0].data['text'].strip()
+    theme = '_'
+    for al in aliases:
+        if theme_text in aliases[al]:
+            theme = al
+            break
+    if theme == '_':
+        return
 
-    img = None
+    img = ImageGallery.select().where(ImageGallery.theme == theme).join(Image, on=(
+            Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
 
     await take_image.finish(
         Message([
-            MessageSegment.image(file=img),
+            MessageSegment.image(file=img.image.filename),
         ])
     )
