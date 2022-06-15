@@ -10,6 +10,7 @@ from nonebot import require, export, get_driver
 from nonebot.log import logger
 import httpx
 from src.extensions.imghdr_byte import what
+from src.extensions.peeweedb import Image
 import asyncio
 
 driver = get_driver()
@@ -77,7 +78,7 @@ def ham_dist(a, b):
     return bin(a ^ b).count('1')
 
 
-async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5):
+async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, retry_times=5, wait_time=5):
     """
 
     获取聊天消息中的图片并保存
@@ -97,15 +98,17 @@ async def get_chat_image(url, file, path, timeout=0, retry_times=5, wait_time=5)
             suffix = what(img)
             with open(path / f"{file}.{suffix}", 'wb') as fi:
                 fi.write(img)
-            return True, suffix
+            img_sql = Image.get_or_create(filename=file, type_id=img_type.value, suffix=suffix, file_existed=True)
+            return True, suffix, img_sql.id
 
     if timeout < retry_times:
         logger.info(f"图片获取失败 {timeout} 次，重试中，地址 {url}")
         await asyncio.sleep(wait_time)
-        await get_chat_image(url, file, path, timeout + 1)
+        await get_chat_image(url, file, path, img_type, timeout + 1)
 
     logger.warning(f"图片获取失败 {retry_times} 次，停止重试，地址 {url}")
-    return False, ''
+    img_sql = Image.get_or_create(filename=file, type_id=img_type.value, suffix='', file_existed=False)
+    return False, '', img_sql.id
 
 
 if __name__ == '__main__':
