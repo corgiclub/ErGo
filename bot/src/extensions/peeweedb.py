@@ -79,29 +79,37 @@ async def save_chat_image(file, url, group_id, user_id, img_path=ImageType.chat.
     """
 
     file = file.split('.')[0]   # 去除 .image 后缀
+    img_path = base_path / img_path
     img_path /= str(group_id) if group_id else str(user_id)
 
-    try:
-        img_chat_db: ImageChat = ImageChat.get(ImageChat.qq_hash == file)
+    img_id, _, _ = await get_chat_image(url, file, img_path)
+    img_chat, _ = ImageChat.get_or_create(image_id=img_id, qq_hash=file)
+    img_chat.qq_count += 1
+    img_chat.save()
 
-    except ImageChat.DoesNotExist:
-        img_db = Image(filename=file, type_id=ImageType.chat.value)
-        img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
-        img_id = img_db.save()
+    return img_chat.id
 
-        img_chat_db = ImageChat(image_id=img_id, qq_hash=file, qq_count=1)
-        img_chat_db.save()
-
-        return img_id
-    else:
-        ImageChat.update(qq_count=ImageChat.qq_count + 1).where(ImageChat.qq_hash == file)
-        img_db: Image = Image.get(id=img_chat_db.image_id)
-
-        if not img_db.file_existed:
-            img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
-            img_db.save()
-
-        return 0
+    # try:
+    #     img_chat_db: ImageChat = ImageChat.get(ImageChat.qq_hash == file)
+    #
+    # except ImageChat.DoesNotExist:
+    #     img_db = Image(filename=file, type_id=ImageType.chat.value)
+    #     img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
+    #     img_id = img_db.save()
+    #
+    #     img_chat_db = ImageChat(image_id=img_id, qq_hash=file, qq_count=1)
+    #     img_chat_db.save()
+    #
+    #     return img_id
+    # else:
+    #     ImageChat.update(qq_count=ImageChat.qq_count + 1).where(ImageChat.qq_hash == file)
+    #     img_db: Image = Image.get(id=img_chat_db.image_id)
+    #
+    #     if not img_db.file_existed:
+    #         img_db.file_existed, img_db.suffix = await get_chat_image(url, file, img_path)
+    #         img_db.save()
+    #
+    #     return 0
 
 
 

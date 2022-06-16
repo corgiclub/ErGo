@@ -66,13 +66,13 @@ async def _(event: Event):
         if theme_text in aliases[al]:
             theme = al
             break
-    lines_image = []
-    lines_gallery = []
+
     for msg in message:
         if msg.type == CQ.image.name:
-            await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
+            _, _, img_id = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
+            ImageGallery.create(image_id=img_id, theme=theme)
 
-            lines_gallery.append({'theme': theme, ''})
+    await save_image.finish(MessageSegment.text(text='已存储图片'))
 
 
 @take_image.handle(parameterless=[coolperm('.take_image')])

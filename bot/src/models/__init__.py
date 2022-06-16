@@ -4,6 +4,7 @@ from peewee import MySQLDatabase, Model, DateTimeField, IntegerField, BigAutoFie
 
 from src.models.settings import settings
 
+
 # settings = {
 #     'host': '',
 #     'user': '',
