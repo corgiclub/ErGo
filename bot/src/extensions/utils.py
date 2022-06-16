@@ -86,7 +86,7 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     file: image.file
     path: 存储目录
     """
-    path = Path(pic_base_path) / 'picture' / path
+    path = Path(pic_base_path) / path
 
     if not os.path.exists(path):
         os.makedirs(path)
