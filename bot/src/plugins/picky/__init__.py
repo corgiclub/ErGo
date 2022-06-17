@@ -53,7 +53,7 @@ async def search_sauce(pic):
             url_thumbnail = img.thumbnail
             img_sql = await get_image(url=url_thumbnail,
                                       file=img.index_name.split(' ')[-1].split('.')[0],
-                                      path=pic_base_path / 'saucenao',
+                                      path=pic_base_path / ImageType.saucenao.name,
                                       img_type=ImageType.saucenao,
                                       _proxies=proxies)
             ImageSauce.get_or_create(
@@ -69,7 +69,7 @@ async def search_sauce(pic):
                 member_id=img.member_id,
                 image_id=img_sql.id
             )
-            img_path = pic_base_path / f"saucenao/{img_sql.filename}.{img_sql.suffix}"
+            img_path = pic_base_path / f"{ImageType.saucenao.name}/{img_sql.filename}.{img_sql.suffix}"
             return img, img_path, resp.long_remaining > 0
         else:
             return None, '', resp.long_remaining > 0
