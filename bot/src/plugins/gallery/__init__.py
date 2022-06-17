@@ -79,8 +79,8 @@ async def _(event: Event):
 
     for msg in message:
         if msg.type == CQ.image.name:
-            img_id = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
-            ImageGallery.get_or_create(image_id=img_id, theme=theme)
+            img_sql = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
+            ImageGallery.get_or_create(image_id=img_sql.id, theme=theme)
 
     await save_image.finish(MessageSegment.text(text='已存储图片'))
 
