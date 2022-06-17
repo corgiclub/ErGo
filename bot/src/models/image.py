@@ -22,17 +22,15 @@ class ImageChat(BaseModel):
 class ImageSauce(BaseModel):
     image_id = BigIntegerField(default=0)
 
-    origin = CharField(max_length=1023, default='')
-    thumbnail = CharField(max_length=1023, default='')
+    thumbnail = CharField(max_length=255, default='')
     similarity = FloatField(default=0)
-    index_id = CharField(max_length=1023, default='')
-    index_name = CharField(max_length=1023, default='')
-    title = CharField(max_length=1023, default='')
-    url = CharField(max_length=1023, default='')
-    author = CharField(max_length=1023, default='')
+    index_id = BigIntegerField(default='')
+    index_name = CharField(max_length=255, default='')
+    title = CharField(max_length=255, default='')
+    url = CharField(max_length=255, default='')
+    author = CharField(max_length=50, default='')
 
     pixiv_id = BigIntegerField(default=0)
-    twitter_id = CharField(max_length=1023, default='')
     member_id = BigIntegerField(default=0)
 
 

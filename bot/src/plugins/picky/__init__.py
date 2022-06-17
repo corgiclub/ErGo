@@ -48,6 +48,8 @@ async def search_sauce(pic):
     ) as client:
         sauce = SauceNAO(client=client, api_key=saucenao_api_key, minsim=85)
         resp = await sauce.search(pic)
+        # from pprint import pprint
+        # pprint(resp.raw[0].origin)
         if len(resp.raw) > 0 and resp.raw[0].similarity > 85:
             img = resp.raw[0]
             url_thumbnail = img.thumbnail
@@ -57,7 +59,6 @@ async def search_sauce(pic):
                                       img_type=ImageType.saucenao,
                                       _proxies=proxies)
             ImageSauce.get_or_create(
-                origin=str(img.origin),
                 similarity=img.similarity,
                 thumbnail=img.thumbnail,
                 index_id=img.index_id,

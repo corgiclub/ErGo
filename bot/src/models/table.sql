@@ -241,17 +241,15 @@ create table image_sauce
 (
     id          bigint auto_increment,
 
-    origin      varchar(1023) default ''                                            not null comment '原始结果',
     similarity  float         default 0                                             not null comment '相似度',
-    thumbnail   varchar(1023) default ''                                            not null comment '临时预览链接',
-    index_id    varchar(1023) default ''                                            not null comment 'index_id',
-    index_name  varchar(1023) default ''                                            not null comment 'index_name',
-    title       varchar(1023) default ''                                            not null comment '标题',
-    url         varchar(1023) default ''                                            not null comment '找到的链接',
-    author      varchar(1023) default ''                                            not null comment '作者',
+    thumbnail   varchar(255)  default ''                                            not null comment '临时预览链接',
+    index_id    bigint        default 0                                            not null comment 'index_id',
+    index_name  varchar(255)  default ''                                            not null comment 'index_name',
+    title       varchar(255)  default ''                                            not null comment '标题',
+    url         varchar(255)  default ''                                            not null comment '找到的链接',
+    author      varchar(50)   default ''                                            not null comment '作者',
 
     pixiv_id    bigint        default 0                                             not null comment 'P站 ID',
-    twitter_id  varchar(1023) default ''                                            not null comment '推特 ID',
     image_id    bigint        default 0                                             not null comment 'image id',
     member_id   bigint        default 0                                             not null comment '作者 pixiv id',
 
