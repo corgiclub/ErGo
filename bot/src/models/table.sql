@@ -241,22 +241,19 @@ create table image_sauce
 (
     id          bigint auto_increment,
 
+    origin      varchar(1023) default ''                                            not null comment '原始结果',
+    similarity  float         default 0                                             not null comment '相似度',
     thumbnail   varchar(1023) default ''                                            not null comment '临时预览链接',
-    similarity  varchar(1023) default ''                                            not null comment '相似度',
     index_id    varchar(1023) default ''                                            not null comment 'index_id',
     index_name  varchar(1023) default ''                                            not null comment 'index_name',
     title       varchar(1023) default ''                                            not null comment '标题',
-    urls        varchar(1023) default ''                                            not null comment '找到的所有链接',
+    url         varchar(1023) default ''                                            not null comment '找到的链接',
     author      varchar(1023) default ''                                            not null comment '作者',
-    raw         varchar(1023) default ''                                            not null comment '原始结果',
 
     pixiv_id    bigint        default 0                                             not null comment 'P站 ID',
     twitter_id  varchar(1023) default ''                                            not null comment '推特 ID',
     image_id    bigint        default 0                                             not null comment 'image id',
-
-    part        bigint        default 0                                             not null comment '动画集数',
-    year        bigint        default 0                                             not null comment '年份',
-    est_time    varchar(1023) default ''                                            not null comment '出现时间',
+    member_id   bigint        default 0                                             not null comment '作者 pixiv id',
 
     add_time    datetime      default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time datetime      default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',

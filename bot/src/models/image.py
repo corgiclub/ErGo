@@ -1,4 +1,4 @@
-from peewee import BigIntegerField, CharField, SmallIntegerField, BooleanField
+from peewee import BigIntegerField, CharField, SmallIntegerField, BooleanField, FloatField
 
 from src.models import BaseModel
 
@@ -22,21 +22,18 @@ class ImageChat(BaseModel):
 class ImageSauce(BaseModel):
     image_id = BigIntegerField(default=0)
 
+    origin = CharField(max_length=1023, default='')
     thumbnail = CharField(max_length=1023, default='')
-    similarity = CharField(max_length=1023, default='')
+    similarity = FloatField(default=0)
     index_id = CharField(max_length=1023, default='')
     index_name = CharField(max_length=1023, default='')
     title = CharField(max_length=1023, default='')
-    urls = CharField(max_length=1023, default='')
+    url = CharField(max_length=1023, default='')
     author = CharField(max_length=1023, default='')
-    raw = CharField(max_length=1023, default='')
 
     pixiv_id = BigIntegerField(default=0)
     twitter_id = CharField(max_length=1023, default='')
-
-    part = BigIntegerField(default=0)
-    year = BigIntegerField(default=0)
-    est_time = CharField(max_length=1023, default='')
+    member_id = BigIntegerField(default=0)
 
 
 class ImageTag(BaseModel):

@@ -1,3 +1,4 @@
+import datetime
 import os
 from enum import Enum
 from pathlib import Path
@@ -91,25 +92,42 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     if not os.path.exists(path):
         os.makedirs(path)
 
-    async with httpx.AsyncClient() as cli:
-        resp = await cli.get(url)
-        if resp.status_code == 200:
-            img = resp.content
-            suffix = what(img)
-            with open(path / f"{file}.{suffix}", 'wb') as fi:
-                fi.write(img)
-            img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value, suffix=suffix, file_existed=True)
-            return img_sql.id, True, suffix
+    img_sql = await get_image(url, file, path, img_type)
+
+    if img_sql.file_existed:
+        return img_sql
 
     if timeout < retry_times:
         logger.info(f"图片获取失败 {timeout} 次，重试中，地址 {url}")
         await asyncio.sleep(wait_time)
-        await get_chat_image(url, file, path, img_type, timeout + 1)
+        return await get_chat_image(url, file, path, img_type, timeout + 1)
 
-    logger.warning(f"图片获取失败 {retry_times} 次，停止重试，地址 {url}")
-    img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value, suffix='', file_existed=False)
-    return img_sql.id, False, ''
+    return img_sql
 
+
+async def get_image(url, file, path, img_type, proxies=None):
+    img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value)
+
+    async with httpx.AsyncClient(
+        proxies=proxies
+    ) as cli:
+        resp = await cli.get(url)
+
+        if resp.status_code == 200:
+            img = resp.content
+            suffix = what(img)
+            if not os.path.exists(path):
+                print(f'创建路径 {path}')
+                os.makedirs(path)
+            with open(path / f"{file}.{suffix}", 'wb') as fi:
+                fi.write(img)
+
+            img_sql.suffix = suffix
+            img_sql.file_existed = True
+            img_sql.update_time = datetime.datetime.now()
+            img_sql.save()
+
+    return img_sql
 
 if __name__ == '__main__':
     

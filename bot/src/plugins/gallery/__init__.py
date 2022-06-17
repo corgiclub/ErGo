@@ -1,8 +1,7 @@
 import re
-from pathlib import Path
 
-from nonebot import on_regex, on_command, CommandGroup
-from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment, Bot
+from nonebot import on_regex, CommandGroup
+from nonebot.adapters.onebot.v11 import Event, MessageSegment, Bot
 from peewee import fn
 
 from src.extensions import coolperm, CQ, regex_equal, get_chat_image, pic_base_path
@@ -51,11 +50,13 @@ aliases = {
 for a in aliases:
     aliases[a] += [a]
 
+
 # 向下兼容至 py 3.8
 def h(x):
     return x
 
-save_image_regex = '.*CQ:image.*|'.join(sum(aliases.values(), [])) + '*CQ:image.*'
+
+save_image_regex = '.*CQ:image.*|'.join(sum(aliases.values(), [])) + '.*CQ:image.*'
 take_image_regex = regex_equal(sum(aliases.values(), []))
 cg_gallery = CommandGroup('gallery')
 
@@ -91,27 +92,20 @@ async def _(event: Event):
 
     for theme in aliases:
         if theme_text in aliases[theme]:
-
-            query = ImageGallery.select(Image.filename, Image.suffix).where(ImageGallery.theme == theme).\
+            query = ImageGallery.select(Image.filename, Image.suffix).where(ImageGallery.theme == theme). \
                 join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
 
             await take_image.finish(
-                Message([
-                    MessageSegment.image(
-                        file=(Path(pic_base_path) / f'gallery/{theme}/{query.image.filename}').with_suffix(
-                            '.' + query.image.suffix)),
-                ])
+                MessageSegment.image(
+                    file=pic_base_path / f'gallery/{theme}/{query.image.filename}.{query.image.suffix}'
+                )
             )
 
 
-@h(cg_gallery.command('list_tag', aliases={'list'}).handle(parameterless=[coolperm('.list')]))
-async def _(bot: Bot):
-    message = '目前支持的 tag:'
+@h(cg_gallery.command('list', aliases={'list_tag'}).handle(parameterless=[coolperm('.list')]))
+async def _(bot: Bot, event: Event):
+    message = '目前支持的 tag (包括全名/简写):'
     for theme in aliases:
-        message += f"\n{theme}:{'/'.join(aliases[theme])}"
+        message += f"\n{theme}({'/'.join(aliases[theme][:-1])})" if len(aliases[theme]) > 1 else f"\n{theme}"
 
-    await bot.finish(
-        Message([
-            MessageSegment.text(text=message),
-        ])
-    )
+    await bot.send(event, message=MessageSegment.text(text=message))
