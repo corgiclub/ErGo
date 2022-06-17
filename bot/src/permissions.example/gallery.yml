@@ -2,3 +2,5 @@ gallery.save_image:
   group: 0
 gallery.take_image:
   group: 30
+gallery.list:
+  group: 60

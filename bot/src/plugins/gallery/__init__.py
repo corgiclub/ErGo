@@ -1,6 +1,6 @@
 import re
 
-from nonebot import on_regex
+from nonebot import on_regex, on_command, CommandGroup
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 from peewee import fn
 
@@ -50,8 +50,13 @@ aliases = {
 for a in aliases:
     aliases[a] += [a]
 
+# 向下兼容至 py 3.8
+def h(x):
+    return x
+
 save_image_regex = '.*CQ:image.*|'.join(sum(aliases.values(), [])) + '*CQ:image.*'
 take_image_regex = regex_equal(sum(aliases.values(), []))
+cg_gallery = CommandGroup('gallery')
 
 save_image = on_regex(save_image_regex, flags=re.S, priority=10, block=False)
 take_image = on_regex(take_image_regex, priority=10, block=False)
@@ -89,6 +94,18 @@ async def _(event: Event):
 
     img = ImageGallery.select().where(ImageGallery.theme == theme).join(Image, on=(
             Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
+
+    await take_image.finish(
+        Message([
+            MessageSegment.image(file=img.image.filename),
+        ])
+    )
+
+
+@h(cg_gallery.command('list_tag', aliases={'list'}).handle(parameterless=[coolperm('.list')]))
+async def _(event: Event):
+    message = ''
+    for theme in
 
     await take_image.finish(
         Message([
