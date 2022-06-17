@@ -14,8 +14,10 @@ from src.extensions.imghdr_byte import what
 from src.models.image import Image
 import asyncio
 
+
 driver = get_driver()
-pic_base_path = Path(r'D:\LuneZ99')
+pic_base_path = Path(driver.config.pic_base_path)
+proxies = driver.config.proxies
 
 
 def get_config(key):
@@ -105,11 +107,11 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     return img_sql
 
 
-async def get_image(url, file, path, img_type, proxies=None):
+async def get_image(url, file, path, img_type, _proxies=None):
     img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value)
 
     async with httpx.AsyncClient(
-        proxies=proxies
+        proxies=_proxies
     ) as cli:
         resp = await cli.get(url)
 

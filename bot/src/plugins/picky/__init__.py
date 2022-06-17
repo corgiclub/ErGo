@@ -5,8 +5,7 @@ from PicImageSearch import SauceNAO, Network
 from nonebot import on_command, on_regex
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 
-from src.extensions import CQ, get_config, pic_base_path, ImageType
-from src.extensions import coolperm, get_image
+from src.extensions import CQ, get_config, pic_base_path, ImageType, proxies, coolperm, get_image
 from src.models.image import ImageSauce
 
 
@@ -46,7 +45,7 @@ async def _(event: Event):
 async def search_sauce(pic):
     saucenao_api_key = get_config('picky')['saucenao_api_key']
     async with Network(
-            proxies='http://127.0.0.1:1081/'
+            proxies=proxies
     ) as client:
         sauce = SauceNAO(client=client, api_key=saucenao_api_key, minsim=85)
         resp = await sauce.search(pic)
@@ -57,7 +56,7 @@ async def search_sauce(pic):
                                       file=img.index_name.split(' ')[-1].split('.')[0],
                                       path=pic_base_path / 'saucenao',
                                       img_type=ImageType.saucenao,
-                                      proxies='http://127.0.0.1:1081/')
+                                      _proxies=proxies)
             ImageSauce.get_or_create(
                 origin=str(img.origin),
                 similarity=img.similarity,
@@ -71,7 +70,7 @@ async def search_sauce(pic):
                 member_id=img.member_id,
                 image_id=img_sql.id
             )
-            img_path = Path(pic_base_path) / 'saucenao' / f"{img_sql.filename}.{img_sql.suffix}"
+            img_path = pic_base_path / f"saucenao/{img_sql.filename}.{img_sql.suffix}"
             return img, img_path, resp.long_remaining > 0
         else:
             return None, '', resp.long_remaining > 0
