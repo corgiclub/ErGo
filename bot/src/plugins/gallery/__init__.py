@@ -1,10 +1,11 @@
 import re
+from pathlib import Path
 
 from nonebot import on_regex, on_command, CommandGroup
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 from peewee import fn
 
-from src.extensions import coolperm, CQ, regex_equal, get_chat_image
+from src.extensions import coolperm, CQ, regex_equal, get_chat_image, pic_base_path
 from src.models.image import ImageGallery, Image
 
 aliases = {
@@ -22,7 +23,7 @@ aliases = {
     'blue_archive': ['blda', 'ba'],
     'arknights': ['mrfz', 'ak'],
     'honkai_impact': ['honkai', 'bbb', 'hi'],
-    'genshin_impact': ['genshin', 'gs', 'gi', 'ys', 'op'],
+    'genshin_impact': ['genshin', 'gs', 'gi', 'ys'],
     'pretty_derby': ['umamusume', 'umamu', 'smn', 'umm'],
     'granblue_fantasy': ['gbf'],
     'Princess_Connect!_Re:Dive': ['pcr'],
@@ -72,10 +73,13 @@ async def _(event: Event):
             theme = al
             break
 
+    if theme == '_':
+        return
+
     for msg in message:
         if msg.type == CQ.image.name:
-            _, _, img_id = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
-            ImageGallery.create(image_id=img_id, theme=theme)
+            img_id, *_ = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
+            ImageGallery.get_or_create(image_id=img_id, theme=theme)
 
     await save_image.finish(MessageSegment.text(text='已存储图片'))
 
@@ -84,22 +88,20 @@ async def _(event: Event):
 async def _(event: Event):
     message = event.get_message()
     theme_text = message[0].data['text'].strip()
-    theme = '_'
-    for al in aliases:
-        if theme_text in aliases[al]:
-            theme = al
-            break
-    if theme == '_':
-        return
 
-    img = ImageGallery.select().where(ImageGallery.theme == theme).join(Image, on=(
-            Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
+    for theme in aliases:
+        if theme_text in aliases[theme]:
 
-    await take_image.finish(
-        Message([
-            MessageSegment.image(file=img.image.filename),
-        ])
-    )
+            query = ImageGallery.select(Image.filename, Image.suffix).where(ImageGallery.theme == theme).\
+                join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
+
+            await take_image.finish(
+                Message([
+                    MessageSegment.image(
+                        file=(Path(pic_base_path) / f'gallery/{theme}/{query.image.filename}').with_suffix(
+                            '.' + query.image.suffix)),
+                ])
+            )
 
 
 @h(cg_gallery.command('list_tag', aliases={'list'}).handle(parameterless=[coolperm('.list')]))
