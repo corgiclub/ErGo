@@ -7,7 +7,7 @@ from peewee import fn
 from src.extensions import coolperm, CQ, regex_equal, regex_startswith_key_with_image, get_chat_image, pic_base_path
 from src.models.image import ImageGallery, Image
 
-aliases = {
+themes = {
     # ACG
     'touhou_project': ['touhou', 'th'],
     'virtual_singer': ['vocaloid', 'vc', 'v+', 'sv', 'cevio'],
@@ -47,8 +47,9 @@ aliases = {
 
 }
 
-for a in aliases:
-    aliases[a] += [a]
+for a in themes:
+    themes[a] += [a]
+themes_all = sum(themes.values(), [])
 
 
 # 向下兼容至 py 3.8
@@ -56,8 +57,8 @@ def h(x):
     return x
 
 
-save_image_regex = regex_startswith_key_with_image(sum(aliases.values(), []))
-take_image_regex = regex_equal(sum(aliases.values(), []))
+save_image_regex = regex_startswith_key_with_image(themes_all)
+take_image_regex = regex_equal(themes_all)
 cg_gallery = CommandGroup('gallery')
 
 save_image = on_regex(save_image_regex, flags=re.S, priority=10, block=False)
@@ -67,19 +68,18 @@ take_image = on_regex(take_image_regex, priority=10, block=False)
 @save_image.handle(parameterless=[coolperm('.save_image')])
 async def _(event: Event):
     message = event.get_message()
-    theme_text = message[0].data['text'].strip()
-    theme = '_'
-    for al in aliases:
-        if theme_text in aliases[al]:
-            theme = al
-            break
+    theme = theme_text = message[0].data['text'].strip()
 
-    if theme == '_':
+    if theme_text not in themes_all:
         return
+
+    for theme in themes:
+        if theme_text in themes[theme]:
+            break
 
     for msg in message:
         if msg.type == CQ.image.name:
-            img_id, *_ = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
+            img_id = await get_chat_image(msg.data['url'], msg.data['file'].split('.')[0], path=f'gallery/{theme}')
             ImageGallery.get_or_create(image_id=img_id, theme=theme)
 
     await save_image.finish(MessageSegment.text(text='已存储图片'))
@@ -90,8 +90,8 @@ async def _(event: Event):
     message = event.get_message()
     theme_text = message[0].data['text'].strip()
 
-    for theme in aliases:
-        if theme_text in aliases[theme]:
+    for theme in themes:
+        if theme_text in themes[theme]:
             query = ImageGallery.select(Image.filename, Image.suffix).where(ImageGallery.theme == theme). \
                 join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
 
@@ -105,7 +105,7 @@ async def _(event: Event):
 @h(cg_gallery.command('list', aliases={'list_tag'}).handle(parameterless=[coolperm('.list')]))
 async def _(bot: Bot, event: Event):
     message = '目前支持的 tag (包括全名/简写):'
-    for theme in aliases:
-        message += f"\n{theme}({'/'.join(aliases[theme][:-1])})" if len(aliases[theme]) > 1 else f"\n{theme}"
+    for theme in themes:
+        message += f"\n{theme}({'/'.join(themes[theme][:-1])})" if len(themes[theme]) > 1 else f"\n{theme}"
 
     await bot.send(event, message=MessageSegment.text(text=message))
