@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 
 from nonebot import on_regex, on_command, CommandGroup
-from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
+from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment, Bot
 from peewee import fn
 
 from src.extensions import coolperm, CQ, regex_equal, get_chat_image, pic_base_path
@@ -105,12 +105,13 @@ async def _(event: Event):
 
 
 @h(cg_gallery.command('list_tag', aliases={'list'}).handle(parameterless=[coolperm('.list')]))
-async def _(event: Event):
-    message = ''
-    for theme in
+async def _(bot: Bot):
+    message = '目前支持的 tag:'
+    for theme in aliases:
+        message += f"\n{theme}:{'/'.join(aliases[theme])}"
 
-    await take_image.finish(
+    await bot.finish(
         Message([
-            MessageSegment.image(file=img.image.filename),
+            MessageSegment.text(text=message),
         ])
     )
