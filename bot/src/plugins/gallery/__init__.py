@@ -4,7 +4,7 @@ from nonebot import on_regex, CommandGroup
 from nonebot.adapters.onebot.v11 import Event, MessageSegment, Bot
 from peewee import fn
 
-from src.extensions import coolperm, CQ, regex_equal, get_chat_image, pic_base_path
+from src.extensions import coolperm, CQ, regex_equal, regex_startswith_key_with_image, get_chat_image, pic_base_path
 from src.models.image import ImageGallery, Image
 
 aliases = {
@@ -56,7 +56,7 @@ def h(x):
     return x
 
 
-save_image_regex = '.*CQ:image.*|'.join(sum(aliases.values(), [])) + '.*CQ:image.*'
+save_image_regex = regex_startswith_key_with_image(sum(aliases.values(), []))
 take_image_regex = regex_equal(sum(aliases.values(), []))
 cg_gallery = CommandGroup('gallery')
 

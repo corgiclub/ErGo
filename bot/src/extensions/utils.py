@@ -1,19 +1,15 @@
+import asyncio
 import datetime
 import os
 from enum import Enum
 from pathlib import Path
-from shutil import copyfile
-from asyncio import sleep
 
-import yaml
-import nonebot
-from nonebot import require, export, get_driver
-from nonebot.log import logger
 import httpx
+from nonebot import get_driver
+from nonebot.log import logger
+
 from src.extensions.imghdr_byte import what
 from src.models.image import Image
-import asyncio
-
 
 driver = get_driver()
 pic_base_path = Path(driver.config.pic_base_path)
@@ -24,8 +20,12 @@ def get_config(key):
     return driver.config.__dict__[key]['config']
 
 
+def regex_startswith_key_with_image(keywords):
+    return '.*CQ:image.*|'.join(keywords) + '.*CQ:image.*'
+
+
 def regex_equal(keywords) -> str:
-    return '|'.join(('^'+k+'$' for k in keywords))
+    return '|'.join(('^' + k + '$' for k in keywords))
 
 
 class PicSource(str, Enum):
@@ -54,9 +54,9 @@ class CQ(Enum):
     reply = 11
     xml = 12
     json = 13
-    music = 14      # 只发送，不做适配
-    forward = 15    # 需要适配转发消息
-    node = 16       # 格式复杂
+    music = 14  # 只发送，不做适配
+    forward = 15  # 需要适配转发消息
+    node = 16  # 格式复杂
 
     @classmethod
     def get_type(cls, msg_type):
@@ -71,7 +71,6 @@ class ImageType(Enum):
     saucenao = 2
     pixiv = 3
     gallery = 4
-
 
 
 def ham_dist(a, b):
@@ -111,7 +110,7 @@ async def get_image(url, file, path, img_type, _proxies=None):
     img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value)
 
     async with httpx.AsyncClient(
-        proxies=_proxies
+            proxies=_proxies
     ) as cli:
         resp = await cli.get(url)
 
@@ -131,7 +130,6 @@ async def get_image(url, file, path, img_type, _proxies=None):
 
     return img_sql
 
-if __name__ == '__main__':
-    
-    pass
 
+if __name__ == '__main__':
+    pass

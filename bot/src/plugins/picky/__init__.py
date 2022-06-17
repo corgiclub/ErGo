@@ -1,15 +1,14 @@
 import re
-from pathlib import Path
 
 from PicImageSearch import SauceNAO, Network
 from nonebot import on_command, on_regex
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 
-from src.extensions import CQ, get_config, pic_base_path, ImageType, proxies, coolperm, get_image
+from src.extensions import CQ, get_config, pic_base_path, ImageType, proxies, coolperm, get_image, \
+    regex_startswith_key_with_image
 from src.models.image import ImageSauce
 
-
-searching_by_pic = on_regex(r'search.*CQ:image.*|pic.*CQ:image.*', flags=re.S, priority=10, block=False)
+searching_by_pic = on_regex(regex_startswith_key_with_image(['search', 'pic']), flags=re.S, priority=10, block=False)
 searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10, block=False)
 
 
