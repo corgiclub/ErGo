@@ -302,3 +302,34 @@ create table note
         primary key (id)
 )
     comment 'note';
+
+create table image_pixiv
+(
+    id          bigint auto_increment,
+    image_id    bigint        default 0                                             not null comment 'image id',
+
+
+    pixiv_id    bigint        default 0                                             not null comment 'P站 ID',
+    author_id   int           default 0                                             not null comment '作者 ID',
+    title       varchar(255)  default ''                                            not null comment '标题',
+    bookmarks   int           default 0                                             not null comment '收藏数',
+    view        int           default 0                                             not null comment '点击数',
+    illust_type varchar(32)   default ''                                            not null comment '图片类型',
+
+    page_count  smallint      default 0                                             not null comment '页数',
+    page        smallint      default 0                                             not null comment '页数',
+
+    sanity_level tinyint      default 0                                             not null comment '限制级',
+    x_restrict  bool          default FALSE                                         not null comment 'x级图片',
+
+    image_url   varchar(255)  default ''                                            not null comment '原始图链接',
+    create_date datetime      default CURRENT_TIMESTAMP                             not null comment '上传时间',
+
+    add_time    datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
+    update_time datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',
+    delete_time int          default 0                                             not null comment '删除时间',
+
+    constraint table_name_pk
+        primary key (id)
+)
+    comment 'image_pixiv';

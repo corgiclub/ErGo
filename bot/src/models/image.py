@@ -1,4 +1,4 @@
-from peewee import BigIntegerField, CharField, SmallIntegerField, BooleanField, FloatField
+from peewee import BigIntegerField, CharField, SmallIntegerField, BooleanField, FloatField, DateTimeField, IntegerField
 
 from src.models import BaseModel
 
@@ -35,14 +35,32 @@ class ImageSauce(BaseModel):
 
 
 class ImageTag(BaseModel):
-    image_id = BigIntegerField(default=0, help_text='chat id')
+    image_id = BigIntegerField(default=0, help_text='image id')
     tag_source = SmallIntegerField(default=0)
     tag = CharField(max_length=255, default='')
 
 
 class ImageGallery(BaseModel):
-    image_id = BigIntegerField(default=0, help_text='chat id')
+    image_id = BigIntegerField(default=0, help_text='image id')
     theme = CharField(max_length=32, default='')
+
+
+class ImagePixiv(BaseModel):
+    image_id = BigIntegerField(default=0, help_text='image id')
+
+    pixiv_id = BigIntegerField(default=0)
+    author_id = IntegerField(default=0)
+    title = CharField(max_length=255, default='')
+    bookmarks = IntegerField(default=0)
+    view = IntegerField(default=0)
+    illust_type = CharField(max_length=32, default='')
+    page_count = SmallIntegerField(default=0)
+    page = SmallIntegerField(default=0)
+    sanity_level = SmallIntegerField(default=0)
+    x_restrict = BooleanField(default=False)
+    image_url = CharField(max_length=255, default='')
+    create_date = DateTimeField()
+
 
 
 if __name__ == '__main__':

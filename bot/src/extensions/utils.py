@@ -1,8 +1,10 @@
 import asyncio
 import datetime
 import os
+import sys
 from enum import Enum
 from pathlib import Path
+from glob import glob
 
 import httpx
 from nonebot import get_driver
@@ -10,6 +12,8 @@ from nonebot.log import logger
 
 from src.extensions.imghdr_byte import what
 from src.models.image import Image
+
+from pixivpy_async import PixivClient, AppPixivAPI
 
 driver = get_driver()
 pic_base_path = Path(driver.config.pic_base_path)
@@ -26,14 +30,6 @@ def regex_startswith_key_with_image(keywords):
 
 def regex_equal(keywords) -> str:
     return '|'.join(('^' + k + '$' for k in keywords))
-
-
-class PicSource(str, Enum):
-    Chat = 'chat'
-    ChatRecord = 'chat_record'
-    Pixiv = 'pixiv'
-    Twitter = 'twitter'
-    SauceNAO = 'saucenao'
 
 
 class CQ(Enum):
@@ -106,28 +102,38 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     return img_sql
 
 
-async def get_image(url, file, path, img_type, _proxies=None):
-    img_sql, _ = Image.get_or_create(filename=file, type_id=img_type.value)
+async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppPixivAPI=None):
+    img_sql, _ = Image.get_or_create(filename=filename, type_id=img_type.value)
 
     if not img_sql.file_existed:
-        async with httpx.AsyncClient(
-                proxies=_proxies
-        ) as cli:
-            resp = await cli.get(url)
+        if not path:
+            path = pic_base_path / img_type.name
+        if not os.path.exists(path):
+            print(f'创建路径 {path}')
+            os.makedirs(path)
 
-            if resp.status_code == 200:
-                img = resp.content
-                suffix = what(img)
-                if not os.path.exists(path):
-                    print(f'创建路径 {path}')
-                    os.makedirs(path)
-                with open(path / f"{file}.{suffix}", 'wb') as fi:
-                    fi.write(img)
+        if img_type == ImageType.pixiv:
+            await app.download(url, name=filename, path=path)
+            suffix = glob(str(path/filename)+'*')[0].split('.')[-1]
+            file_existed = True
+        else:
+            async with httpx.AsyncClient(proxies=_proxies) as cli:
+                resp = await cli.get(url)
+                if resp.status_code == 200:
+                    img = resp.content
+                    suffix = what(img)
+                    file_existed = True
+                    with open(path / f"{filename}.{suffix}", 'wb') as fi:
+                        fi.write(img)
+                else:
+                    logger.warning(f'图片获取错误 - http code {resp.status_code}')
+                    suffix = ''
+                    file_existed = False
 
-                img_sql.suffix = suffix
-                img_sql.file_existed = True
-                img_sql.update_time = datetime.datetime.now()
-                img_sql.save()
+        img_sql.update(
+            suffix=suffix,
+            file_existed=file_existed,
+        ).execute()
 
     return img_sql
 
