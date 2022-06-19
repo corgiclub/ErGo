@@ -1,4 +1,4 @@
-from .core import detect_living
+from .func import detect_living
 from .cmds import *
 from nonebot import export
 

@@ -4,7 +4,7 @@ from nonebot.matcher import Matcher
 import nonebot
 
 from src.extensions import coolperm
-from .core import b23_extract, bili_keyword
+from .func import b23_extract, bili_keyword
 
 
 driver = nonebot.get_driver()

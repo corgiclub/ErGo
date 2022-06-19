@@ -8,12 +8,14 @@ from nonebot import require
 
 driver = nonebot.get_driver()
 monitor_live = require('bililive').monitor_live
+test_picky = require('picky').test
 
 
 @driver.on_startup
 async def start_up():
     await load_configs()
     await monitor_live()
+    await test_picky()
 
 
 async def load_configs():

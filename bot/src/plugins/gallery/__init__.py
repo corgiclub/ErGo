@@ -16,6 +16,7 @@ themes = {
     'lovelive': ['ll'],
     'fate': [],
     'virtual_liver': ['vtb', 'vup', 'liver'],
+    'gundam': ['gd'],
 
     # popular mobile game
     'azur_lane': ['blhx', 'al'],

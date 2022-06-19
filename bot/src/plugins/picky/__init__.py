@@ -1,8 +1,10 @@
 import re
 
-from PicImageSearch import SauceNAO, Network
-from nonebot import on_command, on_regex
+from nonebot import on_command, on_startswith, on_regex, get_driver, export
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
+from src.extensions import CQ, get_config
+from PicImageSearch import SauceNAO, Network
+from .func import *
 
 from src.extensions import CQ, get_config, pic_base_path, ImageType, proxies, coolperm, get_image, \
     regex_startswith_key_with_image
@@ -41,36 +43,17 @@ async def _(event: Event):
                     await searching_by_pic.send(MessageSegment.text(f"未搜到相似图片"))
 
 
-async def search_sauce(pic):
-    saucenao_api_key = get_config('picky')['saucenao_api_key']
-    async with Network(
-            proxies=proxies
-    ) as client:
-        sauce = SauceNAO(client=client, api_key=saucenao_api_key, minsim=85)
-        resp = await sauce.search(pic)
-        # from pprint import pprint
-        # pprint(resp.raw[0].origin)
-        if len(resp.raw) > 0 and resp.raw[0].similarity > 85:
-            img = resp.raw[0]
-            url_thumbnail = img.thumbnail
-            img_sql = await get_image(url=url_thumbnail,
-                                      file=img.index_name.split(' ')[-1].split('.')[0],
-                                      path=pic_base_path / ImageType.saucenao.name,
-                                      img_type=ImageType.saucenao,
-                                      _proxies=proxies)
-            ImageSauce.get_or_create(
-                similarity=img.similarity,
-                thumbnail=img.thumbnail,
-                index_id=img.index_id,
-                index_name=img.index_name,
-                title=img.title,
-                url=img.url,
-                author=img.author,
-                pixiv_id=img.pixiv_id,
-                member_id=img.member_id,
-                image_id=img_sql.id
-            )
-            img_path = pic_base_path / f"{ImageType.saucenao.name}/{img_sql.filename}.{img_sql.suffix}"
-            return img, img_path, resp.long_remaining > 0
-        else:
-            return None, '', resp.long_remaining > 0
+@searching_by_text.handle(parameterless=[coolperm('.searching_by_text')])
+async def _(event: Event):
+    message = event.get_message().extract_plain_text()
+    if message.strip() == '':
+        img = await get_daily_pixiv()
+    else:
+        img = await search_pixiv()
+
+
+async def test_on_startup():
+    await get_daily_pixiv()
+
+
+export().test = test_on_startup

@@ -146,7 +146,6 @@ mirai/
 
 
 logs/
-src/plugins/jrrp/jrrp.yml
 
 bot/.idea/
 bot/logs/
@@ -159,3 +158,6 @@ client/session.token
 client/device.json
 
 bot-monitor-web/node_modules
+
+bot/src/config
+bot/src/permissions
