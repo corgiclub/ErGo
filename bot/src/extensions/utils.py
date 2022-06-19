@@ -102,7 +102,7 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     return img_sql
 
 
-async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppPixivAPI=None):
+async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppPixivAPI = None):
     img_sql, _ = Image.get_or_create(filename=filename, type_id=img_type.value)
 
     if not img_sql.file_existed:

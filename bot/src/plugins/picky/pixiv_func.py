@@ -5,6 +5,7 @@ from pixivpy_async import PixivClient, AppPixivAPI
 
 from src.extensions import get_config, ImageType, proxies, get_image
 from src.models.image import ImagePixiv, ImageTag
+from nonebot import logger
 
 """
 sanity_level
@@ -64,9 +65,10 @@ async def save_pixiv_img(illust, app):
     )
 
 
-async def get_daily_pixiv(offset_total=1):
+async def get_daily_pixiv(offset_total=3):
     refresh_token = get_config('picky')['refresh_token']
     st = datetime.datetime.now()
+
     async with PixivClient(proxy=proxies) as client:
         app = AppPixivAPI(client=client)
         await app.login(refresh_token=refresh_token)
@@ -76,4 +78,5 @@ async def get_daily_pixiv(offset_total=1):
               sum([(await app.illust_ranking(mode="day", date=None, offset=offset))['illusts'] for offset in
                    range(offset_total)], [])]
         )
-    print(datetime.datetime.now() - st)
+
+    logger.info(f'pixiv 每日热图更新完成 耗时 {datetime.datetime.now() - st}')
