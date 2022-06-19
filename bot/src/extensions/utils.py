@@ -113,9 +113,14 @@ async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppP
             os.makedirs(path)
 
         if img_type == ImageType.pixiv:
-            await app.download(url, name=filename, path=path)
-            suffix = glob(str(path/filename)+'*')[0].split('.')[-1]
-            file_existed = True
+            try:
+                await app.download(url, name=filename, path=path)
+                suffix = glob(str(path/filename)+'*')[0].split('.')[-1]
+                file_existed = True
+            except asyncio.exceptions.TimeoutError as e:
+                suffix = ''
+                file_existed = False
+                logger.warning(f'图片获取错误 - {img_type} - {e}')
         else:
             async with httpx.AsyncClient(proxies=_proxies) as cli:
                 resp = await cli.get(url)
@@ -126,7 +131,7 @@ async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppP
                     with open(path / f"{filename}.{suffix}", 'wb') as fi:
                         fi.write(img)
                 else:
-                    logger.warning(f'图片获取错误 - http code {resp.status_code}')
+                    logger.warning(f'图片获取错误 - {img_type} - http code {resp.status_code}')
                     suffix = ''
                     file_existed = False
 

@@ -65,7 +65,7 @@ async def save_pixiv_img(illust, app):
     )
 
 
-async def get_daily_pixiv(offset_total=3):
+async def get_daily_pixiv(offset_total=5):
     refresh_token = get_config('picky')['refresh_token']
     st = datetime.datetime.now()
 
