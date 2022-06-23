@@ -9,13 +9,14 @@ from nonebot import require
 driver = nonebot.get_driver()
 monitor_live = require('bililive').monitor_live
 test_picky = require('picky').test
+refresh_daily_pixiv = require("picky").refresh_daily_pixiv
 
 
 @driver.on_startup
 async def start_up():
     await load_configs()
     await monitor_live()
-    await test_picky()
+    await refresh_daily_pixiv()
 
 
 async def load_configs():

@@ -1,11 +1,17 @@
 import re
 
-from nonebot import on_command, on_regex, export
+from nonebot import on_command, on_regex, export, require
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
+from nonebot.matcher import Matcher
 
 from src.extensions import CQ, coolperm, regex_startswith_key_with_image
 from .sauce_func import *
 from .pixiv_func import *
+
+
+scheduler = require("apscheduler").scheduler
+scheduler.add_job(refresh_daily_pixiv, "interval", days=1, id="refresh_pixiv_daily")
+export().refresh_daily_pixiv = refresh_daily_pixiv
 
 searching_by_pic = on_regex(regex_startswith_key_with_image(['search', 'pic']), flags=re.S, priority=10, block=False)
 searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10, block=False)
@@ -41,16 +47,29 @@ async def _(event: Event):
 
 
 @searching_by_text.handle(parameterless=[coolperm('.searching_by_text')])
-async def _(event: Event):
-    message = event.get_message().extract_plain_text()
-    if message.strip() == '':
-        img = await get_daily_pixiv()
+async def _(event: Event, matcher: Matcher):
+    args = ' '.join(event.get_message().extract_plain_text().split(' ')[1:]).strip()
+    print(args)
+    if args == '':
+        query = ImagePixiv.select(Image.filename, Image.suffix).where(ImagePixiv.illust_type == 'illust'). \
+            join(Image, on=(Image.id == ImagePixiv.image_id)).order_by(fn.Rand()).get()
+        await searching_by_text.finish(
+            MessageSegment.image(
+                file=pic_base_path / f'pixiv/{query.image.filename}.{query.image.suffix}'
+            )
+        )
     else:
-        img = await search_pixiv()
+        result = await search_pixiv(args)
+        if len(result) == 0:
+            await searching_by_text.finish(MessageSegment.text(f'网络错误或未搜索到结果'))
+        else:
+            await searching_by_text.finish(
+                Message(
+                    [
+                        MessageSegment.image(
+                            file=pic_base_path / f'pixiv/{_fn}'
+                        ) for _fn in result
+                    ]
+                )
+            )
 
-
-async def test_on_startup():
-    await get_daily_pixiv()
-
-
-export().test = test_on_startup

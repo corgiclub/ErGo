@@ -89,7 +89,7 @@ async def get_chat_image(url, file, path, img_type=ImageType.chat, timeout=0, re
     if not os.path.exists(path):
         os.makedirs(path)
 
-    img_sql = await get_image(url, file, path, img_type)
+    img_sql = await get_image(url, file, img_type, path)
 
     if img_sql.file_existed:
         return img_sql
@@ -135,10 +135,9 @@ async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppP
                     suffix = ''
                     file_existed = False
 
-        img_sql.update(
-            suffix=suffix,
-            file_existed=file_existed,
-        ).execute()
+        img_sql.suffix=suffix
+        img_sql.file_existed=file_existed
+        img_sql.save()
 
     return img_sql
 

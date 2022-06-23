@@ -1,2 +1,4 @@
 picky.searching_by_pic:
   group: 10
+picky.searching_by_text:
+  group: 0
