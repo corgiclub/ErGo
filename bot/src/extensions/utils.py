@@ -135,8 +135,8 @@ async def get_image(url, filename, img_type, path=None, _proxies=None, app: AppP
                     suffix = ''
                     file_existed = False
 
-        img_sql.suffix=suffix
-        img_sql.file_existed=file_existed
+        img_sql.suffix = suffix
+        img_sql.file_existed = file_existed
         img_sql.save()
 
     return img_sql
