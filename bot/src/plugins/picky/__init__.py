@@ -8,7 +8,6 @@ from src.extensions import CQ, coolperm, regex_startswith_key_with_image
 from .sauce_func import *
 from .pixiv_func import *
 
-
 scheduler = require("apscheduler").scheduler
 scheduler.add_job(refresh_daily_pixiv, "interval", days=1, id="refresh_pixiv_daily")
 export().refresh_daily_pixiv = refresh_daily_pixiv
@@ -51,7 +50,8 @@ async def _(event: Event, matcher: Matcher):
     args = ' '.join(event.get_message().extract_plain_text().split(' ')[1:]).strip()
     print(args)
     if args == '':
-        query = ImagePixiv.select(Image.filename, Image.suffix).where(ImagePixiv.illust_type == 'illust'). \
+        query = ImagePixiv.select(Image.filename, Image.suffix).\
+            where(ImagePixiv.illust_type == 'illust', Image.file_existed is True).\
             join(Image, on=(Image.id == ImagePixiv.image_id)).order_by(fn.Rand()).get()
         await searching_by_text.finish(
             MessageSegment.image(
@@ -72,4 +72,3 @@ async def _(event: Event, matcher: Matcher):
                     ]
                 )
             )
-
