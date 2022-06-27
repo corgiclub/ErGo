@@ -101,7 +101,7 @@ async def refresh_daily_pixiv(offset_total=1):
 
 async def search_pixiv(text):
     refresh_token = get_config('picky')['refresh_token']
-
+    # text += ' 1000users入り'
     async with PixivClient(proxy=proxies) as client:
         app = AppPixivAPI(client=client)
         await app.login(refresh_token=refresh_token)
