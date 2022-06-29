@@ -13,6 +13,9 @@ from src.models.image import ImageSauce
 
 async def search_sauce(pic):
     saucenao_api_key = get_config('picky')['saucenao_api_key']
+    proxies = None
+    print(proxies)
+
     async with Network(
             proxies=proxies
     ) as client:
