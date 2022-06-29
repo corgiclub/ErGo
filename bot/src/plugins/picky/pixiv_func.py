@@ -35,6 +35,10 @@ async def _save_page(illust, app, page):
     url = illust['meta_single_page']['original_image_url'] if illust['page_count'] == 1 \
         else illust['meta_pages'][page]['image_urls']['original']
 
+    img_p, create = ImagePixiv.get_or_create(
+        pixiv_id=illust['id']
+    )
+
     img_sql = await get_image(
         url=url,
         filename=f"pixiv_{illust['id']}_p{page}",
@@ -43,31 +47,27 @@ async def _save_page(illust, app, page):
         app=app
     )
 
-    img_p, create = ImagePixiv.get_or_create(
-        image_id=img_sql.id
-    )
+    # 未拉取过元数据
+    if create:
 
-    if img_sql.file_existed:
+        img_p.author_id = illust['user']['id']
+        img_p.title = illust['title']
+        img_p.illust_type = illust['type']
+        img_p.page_count = illust['page_count']
+        img_p.page = page
+        img_p.sanity_level = illust['sanity_level']
+        img_p.x_restrict = illust['x_restrict']
+        img_p.image_url = url
+        img_p.create_date = illust['create_date']
 
-        if img_p.pixiv_id == 0:
-            img_p.pixiv_id = illust['id']
-            img_p.author_id = illust['user']['id']
-            img_p.title = illust['title']
-            img_p.illust_type = illust['type']
-            img_p.page_count = illust['page_count']
-            img_p.page = page
-            img_p.sanity_level = illust['sanity_level']
-            img_p.x_restrict = illust['x_restrict']
-            img_p.image_url = url
-            img_p.create_date = illust['create_date']
+        ImageTag.insert_many(
+            [dict(image_id=img_sql.id, tag_source=image_type.value, tag=tag['name']) for tag in illust['tags']]
+        ).execute()
 
-            ImageTag.insert_many(
-                [dict(image_id=img_sql.id, tag_source=image_type.value, tag=tag['name']) for tag in illust['tags']]
-            ).execute()
-
-        img_p.bookmarks = illust['total_bookmarks']
-        img_p.view = illust['total_view']
-        img_p.save()
+    img_p.image_id = img_sql.id
+    img_p.bookmarks = illust['total_bookmarks']
+    img_p.view = illust['total_view']
+    img_p.save()
 
     return Page(image=img_sql, image_pixiv=img_p)
 

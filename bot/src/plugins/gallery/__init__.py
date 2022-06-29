@@ -1,8 +1,9 @@
 import re
 
 from nonebot import on_regex, CommandGroup
+from nonebot.log import logger
 from nonebot.adapters.onebot.v11 import Event, MessageSegment, Bot
-from peewee import fn
+from peewee import fn, DoesNotExist
 
 from src.extensions import coolperm, CQ, regex_equal, regex_startswith_key_with_image, get_chat_image, pic_base_path
 from src.models.image import ImageGallery, Image
@@ -93,18 +94,21 @@ async def _(event: Event):
 
     for theme in themes:
         if theme_text in themes[theme]:
+
             try:
                 query = ImageGallery.select(Image.filename, Image.suffix). \
-                    where(ImageGallery.theme == theme, Image.file_existed is True). \
+                    where(ImageGallery.theme == theme, Image.file_existed). \
                     join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
+            except DoesNotExist as e:
+                logger.warning(e)
+                await take_image.finish(
+                    MessageSegment.text(f'该分类还没有图片 使用 {theme_text}[图片] 给 {theme} 加入图片吧')
+                )
+            else:
                 await take_image.finish(
                     MessageSegment.image(
                         file=pic_base_path / f'gallery/{theme}/{query.image.filename}.{query.image.suffix}'
                     )
-                )
-            except ImageGallery.ImageGalleryDoesNotExist:
-                await take_image.finish(
-                    MessageSegment.text(f'该分类还没有图片 使用 {theme_text}[图片] 给 {theme} 加入图片吧')
                 )
 
 
