@@ -2,6 +2,7 @@ import httpx
 import os
 import numpy as np
 import tempfile
+from pathlib import Path
 from nonebot import on_regex
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
 from moviepy.editor import VideoFileClip
@@ -17,8 +18,8 @@ pepe = on_regex(r'^pepe.*', priority=50, block=False)
 
 @pepe.handle(parameterless=[coolperm('.pepe')])
 async def _(event: Event):
-    sender = event.get_user_id
-    message = event.get_plaintext()[1:]
+    sender = int(event.get_user_id())
+    message = ' '.join(event.get_plaintext().split()[1:])
     data = {
         "text": message,
         "num_resp_gifs": 5
@@ -32,11 +33,12 @@ async def _(event: Event):
     # Create a random file for the GIF
     temp_gif_fd, temp_gif_filepath = tempfile.mkstemp(prefix="pepe-gitbot-temp-", suffix=".gif")
     os.close(temp_gif_fd) # close the tmp file descriptor
+    temp_gif_filepath = Path(temp_gif_filepath)
     VideoFileClip(chosen_gif_url).write_gif(temp_gif_filepath)
 
     msg = Message([
-        MessageSegment.reply(sender),
-        MessageSegment.text(f"Normalized Text: {normalized_text}"),
+        # MessageSegment.reply(id_=sender),
+        # MessageSegment.text(f"Normalized Text: {normalized_text}"),
         MessageSegment.image(file=temp_gif_filepath)
     ])
 
