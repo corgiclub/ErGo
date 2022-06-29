@@ -1,4 +1,5 @@
 import re
+import os
 
 from nonebot import on_command, on_regex, export, require
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
@@ -48,10 +49,10 @@ async def _(event: Event):
 @searching_by_text.handle(parameterless=[coolperm('.searching_by_text')])
 async def _(event: Event, matcher: Matcher):
     args = ' '.join(event.get_message().extract_plain_text().split(' ')[1:]).strip()
-    print(args)
+
     if args == '':
         query = ImagePixiv.select(Image.filename, Image.suffix).\
-            where(ImagePixiv.illust_type == 'illust', Image.file_existed is True).\
+            where(ImagePixiv.illust_type == 'illust', Image.file_existed, ImagePixiv.bookmarks > 5000).\
             join(Image, on=(Image.id == ImagePixiv.image_id)).order_by(fn.Rand()).get()
         await searching_by_text.finish(
             MessageSegment.image(

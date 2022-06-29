@@ -4,11 +4,13 @@ from src.models import BaseModel
 
 
 class Image(BaseModel):
+    url = CharField(max_length=255, default='')
     filename = CharField(max_length=255, default='')
     type_id = SmallIntegerField(default=0)
     suffix = CharField(max_length=4, default='')
     file_existed = BooleanField(default=False)
     p_hash = BigIntegerField(default=0)
+    fix_count = SmallIntegerField(default=0)
 
 
 class ImageChat(BaseModel):

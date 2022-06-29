@@ -209,11 +209,13 @@ create table chat_json
 create table image
 (
     id           bigint auto_increment,
+    url          varchar(255) default ''                                            not null comment '图片链接',
     filename     varchar(255) default ''                                            not null comment '文件名',
     type_id      tinyint(4)   default 0                                             not null comment '来源类型',
     suffix       varchar(4)   default ''                                            not null comment '后缀名',
     file_existed bool         default FALSE                                         not null comment '图片是否保存',
     p_hash       binary(32)   default 0                                             not null comment '图片 P 哈希',
+    fix_count    tinyint(4)   default 0                                             not null comment '图片库修复次数',
 
     add_time     datetime     default CURRENT_TIMESTAMP                             not null comment '添加时间',
     update_time  datetime     default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP not null comment '修改时间',

@@ -49,7 +49,7 @@ async def _save_page(illust, app, page):
 
     if img_sql.file_existed:
 
-        if create:
+        if img_p.pixiv_id == 0:
             img_p.pixiv_id = illust['id']
             img_p.author_id = illust['user']['id']
             img_p.title = illust['title']
@@ -83,20 +83,20 @@ async def refresh_daily_pixiv(offset_total=1):
 
     logger.info(f'pixiv 每日热图更新中 ...')
 
-    # refresh_token = get_config('picky')['refresh_token']
-    # st = datetime.datetime.now()
-    #
-    # async with PixivClient(proxy=proxies) as client:
-    #     app = AppPixivAPI(client=client)
-    #     await app.login(refresh_token=refresh_token)
-    #
-    #     await asyncio.gather(
-    #         *[save_pixiv_img(ill, app) for ill in
-    #           sum([(await app.illust_ranking(mode="week", date=None, offset=offset))['illusts'] for offset in
-    #                range(offset_total)], [])]
-    #     )
-    #
-    # logger.info(f'pixiv 每日热图更新完成 耗时 {datetime.datetime.now() - st}')
+    refresh_token = get_config('picky')['refresh_token']
+    st = datetime.datetime.now()
+
+    async with PixivClient(proxy=proxies) as client:
+        app = AppPixivAPI(client=client)
+        await app.login(refresh_token=refresh_token)
+
+        await asyncio.gather(
+            *[save_pixiv_img(ill, app) for ill in
+              sum([(await app.illust_ranking(mode="week", date=None, offset=offset))['illusts'] for offset in
+                   range(offset_total)], [])]
+        )
+
+    logger.info(f'pixiv 每日热图更新完成 耗时 {datetime.datetime.now() - st}')
 
 
 async def search_pixiv(text):

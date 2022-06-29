@@ -93,7 +93,8 @@ async def _(event: Event):
 
     for theme in themes:
         if theme_text in themes[theme]:
-            query = ImageGallery.select(Image.filename, Image.suffix).where(ImageGallery.theme == theme). \
+            query = ImageGallery.select(Image.filename, Image.suffix). \
+                where(ImageGallery.theme == theme, Image.file_existed is True). \
                 join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
 
             await take_image.finish(
