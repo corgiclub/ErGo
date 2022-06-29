@@ -93,15 +93,19 @@ async def _(event: Event):
 
     for theme in themes:
         if theme_text in themes[theme]:
-            query = ImageGallery.select(Image.filename, Image.suffix). \
-                where(ImageGallery.theme == theme, Image.file_existed is True). \
-                join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
-
-            await take_image.finish(
-                MessageSegment.image(
-                    file=pic_base_path / f'gallery/{theme}/{query.image.filename}.{query.image.suffix}'
+            try:
+                query = ImageGallery.select(Image.filename, Image.suffix). \
+                    where(ImageGallery.theme == theme, Image.file_existed is True). \
+                    join(Image, on=(Image.id == ImageGallery.image_id)).order_by(fn.Rand()).get()
+                await take_image.finish(
+                    MessageSegment.image(
+                        file=pic_base_path / f'gallery/{theme}/{query.image.filename}.{query.image.suffix}'
+                    )
                 )
-            )
+            except ImageGallery.ImageGalleryDoesNotExist:
+                await take_image.finish(
+                    MessageSegment.text(f'该分类还没有图片 使用 {theme_text}[图片] 给 {theme} 加入图片吧')
+                )
 
 
 @h(cg_gallery.command('list', aliases={'list_tag'}).handle(parameterless=[coolperm('.list')]))
