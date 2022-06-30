@@ -53,14 +53,17 @@ async def load_configs():
 async def fix_image_library():
     async def fix_image(q: Image):
         image_type = ImageType.get_type(q.type_id)
-        if not os.path.exists(pic_base_path / image_type.name / f'{q.filename}.{q.suffix}') and q.fix_count < 10:
+        if q.fix_count > 10:
+            q.file_existed = False
+            q.save()
+            return 0, 0
+        if not os.path.exists(pic_base_path / image_type.name / f'{q.filename}.{q.suffix}'):
             if image_type == ImageType.pixiv:
                 async with PixivClient(proxy=proxies) as client:
                     app = AppPixivAPI(client=client)
                     await download_image(q.url, q.filename, image_type, app=app)
             else:
                 await download_image(q.url, q.filename, image_type)
-
             q.fix_count += 1
             if os.path.exists(pic_base_path / image_type.name / f'{q.filename}.{q.suffix}'):
                 q.file_existed = True
@@ -70,9 +73,10 @@ async def fix_image_library():
                 q.file_existed = False
                 q.save()
                 return 1, 0
-        q.file_existed = True
-        q.save()
-        return 0, 0
+        else:
+            q.file_existed = True
+            q.save()
+            return 0, 0
 
     query = Image.select()
     count = await asyncio.gather(
