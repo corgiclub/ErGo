@@ -6,4 +6,6 @@ meta:
     - 另见 rp 插件
   commands:
     - /jrrp
+  visible_in_help: true
+  enabled: true
 config: {}
