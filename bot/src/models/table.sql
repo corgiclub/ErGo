@@ -229,6 +229,7 @@ create table image_chat
 (
     id          bigint auto_increment,
     image_id    bigint      default 0                                             not null comment 'image id',
+    session_id  bigint      default 0                                             not null comment '群号',
     qq_hash     varchar(32) default ''                                            not null comment 'QQ 返回的 hash 值',
     qq_count    bigint      default 0                                             not null comment '总计发送次数',
     add_time    datetime    default CURRENT_TIMESTAMP                             not null comment '添加时间',

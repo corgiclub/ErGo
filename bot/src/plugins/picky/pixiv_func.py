@@ -99,19 +99,26 @@ async def refresh_daily_pixiv(offset_total=1):
     logger.info(f'pixiv 每日热图更新完成 耗时 {datetime.datetime.now() - st}')
 
 
-async def search_pixiv(text):
+async def search_pixiv(text, offset_total=3, max_page=3):
     refresh_token = get_config('picky')['refresh_token']
     # text += ' 1000users入り'
     async with PixivClient(proxy=proxies) as client:
         app = AppPixivAPI(client=client)
         await app.login(refresh_token=refresh_token)
-        illusts = await app.search_illust(text)
-        illusts = [i for i in illusts['illusts'] if safety_illust(i)]
+        illusts = [
+            i for i in
+            sum([(await app.search_illust(text, sort='popular_desc', offset=offset))['illusts']
+                for offset in range(offset_total)], [])
+            if safety_illust(i)
+        ]
+
         if len(illusts) - 1 == 0:
             return []
+
         illusts = illusts[random.randint(0, len(illusts)-1)]
         page_all = await save_pixiv_img(illusts, app)
-        if any(page.image.file_existed for page in page_all):
+
+        if any(page.image.file_existed for page in page_all[:max_page]):
             return [f'{page.image.filename}.{page.image.suffix}' for page in page_all]
         else:
             return []

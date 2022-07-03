@@ -6,7 +6,7 @@ import nonebot
 import yaml
 from nonebot.log import logger
 from nonebot import require, get_driver
-from models.image import Image
+from models.image import Image, ImageChat, ImageGallery
 from src.extensions import ImageType, download_image, pic_base_path
 from pixivpy_async import PixivClient, AppPixivAPI
 
@@ -27,8 +27,9 @@ async def start_up():
 
 @driver.on_bot_connect
 async def bot_connect():
-    await refresh_daily_pixiv()
-    await fix_image_library()
+    pass
+    # await refresh_daily_pixiv()
+    # await fix_image_library()
 
 
 async def load_configs():
@@ -53,11 +54,24 @@ async def load_configs():
 async def fix_image_library():
     async def fix_image(q: Image):
         image_type = ImageType.get_type(q.type_id)
+
         if q.fix_count > 10:
             q.file_existed = False
             q.save()
             return 0, 0
-        if not os.path.exists(pic_base_path / image_type.name / f'{q.filename}.{q.suffix}'):
+
+        if image_type == ImageType.chat:
+            image = ImageChat.get(image_id=q.id)
+            path = pic_base_path / image_type.name / image.session_id / f'{q.filename}.{q.suffix}'
+        elif image_type == ImageType.gallery:
+            image = ImageGallery.get(image_id=q.id)
+            path = pic_base_path / image_type.name / image.theme / f'{q.filename}.{q.suffix}'
+        elif image_type == ImageType.pixiv:
+            path = pic_base_path / image_type.name / f'{q.filename}.{q.suffix}'
+        else:
+            return 0, 0
+
+        if not os.path.exists(path):
             if image_type == ImageType.pixiv:
                 async with PixivClient(proxy=proxies) as client:
                     app = AppPixivAPI(client=client)
@@ -65,7 +79,7 @@ async def fix_image_library():
             else:
                 await download_image(q.url, q.filename, image_type)
             q.fix_count += 1
-            if os.path.exists(pic_base_path / image_type.name / f'{q.filename}.{q.suffix}'):
+            if os.path.exists(path):
                 q.file_existed = True
                 q.save()
                 return 1, 1

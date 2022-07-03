@@ -17,6 +17,7 @@ class ImageChat(BaseModel):
     # 所有 QQ 聊天中
 
     image_id = BigIntegerField(default=0)
+    session_id = BigIntegerField(default=0)
     qq_hash = CharField(max_length=32, default='')
     qq_count = BigIntegerField(default=0)
 
