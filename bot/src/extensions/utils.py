@@ -25,7 +25,7 @@ def get_config(key):
 
 
 def regex_startswith_key_with_image(keywords):
-    return '.*CQ:image.*|'.join(keywords) + '.*CQ:image.*'
+    return r'\s*\[CQ:image,.*|'.join(['^' + k for k in keywords]) + r'\s*\[CQ:image,.*'
 
 
 def regex_equal(keywords) -> str:

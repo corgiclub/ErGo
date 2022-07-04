@@ -60,6 +60,8 @@ def h(x):
 
 
 save_image_regex = regex_startswith_key_with_image(themes_all)
+print(save_image_regex)
+
 take_image_regex = regex_equal(themes_all)
 cg_gallery = CommandGroup('gallery')
 

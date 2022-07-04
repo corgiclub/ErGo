@@ -84,7 +84,7 @@ async def save_chat_image(file, url, group_id, user_id, img_path=ImageType.chat.
     img_path /= str(group_id) if group_id else str(user_id)
 
     img_sql = await get_chat_image(url, file, img_path)
-    img_chat, _ = ImageChat.get_or_create(image_id=img_sql.id, qq_hash=file, session_id=img_path)
+    img_chat, _ = ImageChat.get_or_create(image_id=img_sql.id, qq_hash=file, session_id=group_id if group_id else user_id)
     img_chat.qq_count += 1
     img_chat.update_time = datetime.datetime.now()
     img_chat.save()

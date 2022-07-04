@@ -1,6 +1,6 @@
 meta:
   name: 今日人品
-  description: 使用了 ANU 所提供的量子随机数的的随机每日人品算法
+  description: 使用了 ANU 所提供的量子随机数的的随机每日人品算法 参考 https://qrng.anu.edu.au/
   help:
     - 输入 /jrrp 获得每日人品
     - 另见 rp 插件
@@ -8,4 +8,6 @@ meta:
     - /jrrp
   visible_in_help: true
   enabled: true
+  silent_grpups: []
+  disabled_grpups: []
 config: {}
