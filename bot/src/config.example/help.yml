@@ -1,2 +1,14 @@
-help:
-  group: 0
+meta:
+  name: 帮助
+  description: 提供 bot 使用帮助信息
+  help:
+      - 发送 /help 查看帮助信息
+      - 发送 /help [指令] 查看指令说明
+  commands:
+      - /help
+      - /help [指令]
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

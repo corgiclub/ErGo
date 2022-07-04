@@ -2,7 +2,11 @@ meta:
   name: 系统状态
   description: 查看服务器的运行状态——当然，服务器很卡的时候这个插件也可能罢工。
   help:
-    - 发送 /系统状态 等指令查询当前系统占用
+    - 发送 /系统状态 (/sys /glances) 查看服务器的运行状态
   commands:
     - /系统状态 (/sys /glances)
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
 config: {}

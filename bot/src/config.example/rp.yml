@@ -6,4 +6,8 @@ meta:
     - 另见 jrrp
   commands:
     - /rp
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
 config: {}

@@ -1,0 +1,10 @@
+meta:
+  name: 启动函数
+  description: 启动 bot 时自动执行的函数
+  help: []
+  commands: []
+  visible_in_help: false
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

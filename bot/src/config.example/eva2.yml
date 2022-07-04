@@ -1,0 +1,12 @@
+meta:
+  name: 对话插件
+  description: 基于 悟道 - EVA2.0 的对话插件 详见 https://wudaoai.cn/model/detail/EVA
+  help:
+    - 发送 :[消息] 与机器人对话
+  commands:
+    - :[消息]
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

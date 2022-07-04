@@ -1,0 +1,16 @@
+meta:
+  name: 搜图 / 推图 插件
+  description: 通过 SauceNao / Pixiv 搜索图片，推送优质插画
+  help:
+    - 发送 /search [图片] 以图搜图
+    - 发送 /pixiv [text] 搜索图片
+    - 发送 /pixiv 推送一张优质插画
+  commands:
+    - /search [图片]
+    - /pixiv [text]
+    - /pixiv
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

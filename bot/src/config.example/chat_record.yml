@@ -3,4 +3,8 @@ meta:
   description: 自动记录所在群聊天内容
   help: []
   commands: []
+  visible_in_help: false
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
 config: {}

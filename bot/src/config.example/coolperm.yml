@@ -1,0 +1,16 @@
+meta:
+  name: 权限 / 冷却 管理
+  description: 精确至用户级别的权限管理和冷却管理
+  help:
+    - 输入 /perm 获得权限管理帮助
+    - 输入 /cool 获得冷却管理帮助
+    - 通过插件修改配置功能仍未实现
+  commands:
+    - /perm.add ...
+    - /perm.del ...
+    - /cool.set ...
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

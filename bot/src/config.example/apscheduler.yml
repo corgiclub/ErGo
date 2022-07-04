@@ -1,6 +1,6 @@
 meta:
-  name: 测试插件
-  description: 测试插件
+  name: 定时任务
+  description: 创建、管理定时任务
   help: []
   commands: []
   visible_in_help: false

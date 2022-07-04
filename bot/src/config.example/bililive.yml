@@ -11,6 +11,10 @@ meta:
     - /bililive [直播间号]
     - /bililive.add [直播间号]
     - /bililive.remove [直播间号]
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
 config:
   rooms_max: 10
   rooms_max_all: 64

@@ -1,0 +1,16 @@
+meta:
+  name: 图库
+  description: 在指定 tag 下保存图片，并可以通过 tag 查看图片
+  help:
+    - 发送 /gallery.list 查看支持的 tag 及其缩写
+    - 发送 [tag][图片] 添加图片，支持一次添加多张图片
+    - 发送 [tag] 随机获得一张图片
+  commands:
+    - /gallery.list
+    - [tag] [图片]
+    - [tag]
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}

@@ -1,0 +1,13 @@
+meta:
+  name: gif 回复机器人
+  description: "使用 gif 回复对应的消息 from EMNLP 2021 paper An animated picture says at least a thousand words:"
+               "Selecting Gif-based Replies in Multimodal Dialog by Xingyao Wang and David Jurgens"
+  help:
+    - 发送 pepe [messaage] 获得一个 gif 回复
+  commands:
+    - pepe [message]
+  visible_in_help: true
+  enabled: true
+  silent_grpups: []
+  disabled_grpups: []
+config: {}
