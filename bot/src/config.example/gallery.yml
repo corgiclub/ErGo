@@ -7,8 +7,8 @@ meta:
     - 发送 [tag] 随机获得一张图片
   commands:
     - /gallery.list
-    - [tag] [图片]
-    - [tag]
+    - "[tag] [图片]"
+    - "[tag]"
   visible_in_help: true
   enabled: true
   silent_grpups: []
