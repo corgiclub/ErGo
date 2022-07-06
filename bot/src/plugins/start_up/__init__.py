@@ -28,8 +28,8 @@ async def start_up():
 @driver.on_bot_connect
 async def bot_connect():
     pass
-    await refresh_daily_pixiv()
-    await fix_image_library()
+    # await refresh_daily_pixiv()
+    # await fix_image_library()
 
 
 async def load_configs():
