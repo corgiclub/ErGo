@@ -93,7 +93,7 @@ async def refresh_daily_pixiv(offset_total=1):
         await asyncio.gather(
             *[save_pixiv_img(ill, app) for ill in
               sum([(await app.illust_ranking(mode="week", date=None, offset=offset))['illusts'] for offset in
-                   range(offset_total)], [])]
+                   range(offset_total)], []) if safety_illust(ill)]
         )
 
     logger.info(f'pixiv 每日热图更新完成 耗时 {datetime.datetime.now() - st}')
@@ -112,13 +112,13 @@ async def search_pixiv(text, offset_total=3, max_page=3):
             if safety_illust(i)
         ]
 
-        if len(illusts) - 1 == 0:
+        if len(illusts) <= 1:
             return []
 
         illusts = illusts[random.randint(0, len(illusts)-1)]
         page_all = await save_pixiv_img(illusts, app)
 
         if any(page.image.file_existed for page in page_all[:max_page]):
-            return [f'{page.image.filename}.{page.image.suffix}' for page in page_all]
+            return [f'{page.image.filename}.{page.image.suffix}' for page in page_all[:max_page]]
         else:
             return []

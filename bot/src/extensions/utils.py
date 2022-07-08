@@ -137,12 +137,14 @@ async def download_image(url, filename, img_type: ImageType, path=None, _proxies
         os.makedirs(path)
 
     if img_type == ImageType.pixiv:
+        # await app.download(url, name=filename, path=path)
+        # suffix = glob(str(path / filename) + '*')[0].split('.')[-1]
         try:
             await app.download(url, name=filename, path=path)
             suffix = glob(str(path / filename) + '*')[0].split('.')[-1]
         except asyncio.exceptions.TimeoutError as e:
             suffix = ''
-            logger.warning(f'图片获取错误 - {img_type} - {e}')
+            logger.warning(f'图片获取错误 - {img_type} - {"获取超时"}')
     else:
         async with httpx.AsyncClient(proxies=_proxies) as cli:
             resp = await cli.get(url)

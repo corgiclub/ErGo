@@ -4,6 +4,7 @@ from enum import Enum
 import os
 from .config import Glances
 
+
 cfg = Glances()
 GB = 1073741824
 
@@ -47,7 +48,7 @@ async def get_gpu(api) -> str:
                 return f'❌显卡: 读取失败，错误未知'
         else:
             msg = f'显卡: \n' + \
-                  '\n'.join([f'┃{d["gpu_id"]} {d["name"]}\n┗{d["proc"]:>2d}% {d["mem"] * 0.24:.1f}/24GB'
+                  '\n'.join([f'┃{d["gpu_id"]} {d["name"]}\n┗{d["proc"]:>2d}% {d["mem"] * 0.24:0>4.1f}/24GB'
                              f' {d["temperature"]}℃' for d in dic])
 
             if max(d['temperature'] for d in dic) > cfg.gpu_warning_temp:
@@ -64,9 +65,9 @@ async def get_file_sys(api) -> str:
         dic = [d for d in dic if d["size"] > 128 * GB]
         if api == cfg.corgitech_api:
             msg = f'硬盘:\n' + \
-                  '\n'.join([f'┃{d["mnt_point"]}\n┗{gb(d["used"]):.2f} / {gb(d["size"]):.2f} GB' for d in dic]) + \
+                  '\n'.join([f'┃{d["mnt_point"]}\n┗{gb(d["used"]):7.2f} / {gb(d["size"]):7.2f} GB' for d in dic]) + \
                   '\n' + \
-                  '\n'.join([f'┃{d.split()[-1]}\n┗{gb(d.split()[2]):.2f} / {gb(d.split()[1]):.2f} TB'
+                  '\n'.join([f'┃{d.split()[-1]}\n┗{gb(d.split()[2]):7.2f} / {gb(d.split()[1]):7.2f} TB'
                              for d in os.popen('df | grep 192.168').read().split('\n')[:-1]])
         else:
             # todo nas硬盘

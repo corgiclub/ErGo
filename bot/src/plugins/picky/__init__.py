@@ -13,7 +13,7 @@ scheduler = require("apscheduler").scheduler
 scheduler.add_job(refresh_daily_pixiv, "interval", days=1, id="refresh_pixiv_daily")
 export().refresh_daily_pixiv = refresh_daily_pixiv
 
-searching_by_pic = on_regex('^search.*CQ:image.*', flags=re.S, priority=10, block=False)
+searching_by_pic = on_regex('^/search.*CQ:image.*', flags=re.S, priority=10, block=False)
 searching_by_text = on_command('setu', aliases={'色图', 'pixiv'}, priority=10, block=False)
 
 
