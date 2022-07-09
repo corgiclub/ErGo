@@ -3,7 +3,7 @@ meta:
   description: 在自定义 note 下保存内容，并可以通过 note 查看内容
   help:
     - 发送 /note.list 查看目前已经存储的 note
-    - 发送 /[note] \n [message]保存自定义 note 对应的回复内容
+    - 发送 ![note] [message]保存自定义 note 对应的回复内容
   commands:
     - /note.list
     - /[note] \n [message]
