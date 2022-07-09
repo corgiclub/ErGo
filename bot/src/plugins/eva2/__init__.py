@@ -1,10 +1,11 @@
 import httpx
 from nonebot import on_regex
 from nonebot.adapters.onebot.v11 import Event, Message, MessageSegment
+from nonebot import get_driver
 
 from src.extensions import coolperm
 
-eva2_api = 'http://i.tech.corgi.plus:6666/api/inference'
+
 header = {
     'Content-Type': 'application/json'
 }
@@ -14,6 +15,8 @@ eva = on_regex(r'^:.*|^：.*', priority=50, block=False)
 
 @eva.handle(parameterless=[coolperm('.eva')])
 async def _(event: Event):
+    eva2_api = get_driver().config.dict()['eva2']['config']['eva2_api']
+
     sender = event.get_user_id
     message = event.get_plaintext()[1:]
     data = {
