@@ -6,7 +6,7 @@ from nonebot.adapters.onebot.v11 import MessageSegment
 from src.extensions import get_sys_info, coolperm
 
 
-server_status = on_command('系统状态', aliases={'sys', 'glances'}, priority=10, block=False)
+server_status = on_command('系统状态', aliases={'sys', 'glances', 'server_status'}, priority=10, block=False)
 
 
 @server_status.handle(parameterless=[coolperm('.query')])

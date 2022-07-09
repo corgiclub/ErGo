@@ -9,6 +9,7 @@ class Glances(BaseSettings):
 
     memory_warning = 90
     gpu_warning_temp = 80
+    cpu_warning_temp = 90
     file_sys_warning = 90
 
 
