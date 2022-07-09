@@ -18,7 +18,6 @@ from src.models.settings import settings
 # db = MySQLDatabase("ergo", **settings)
 
 
-
 class RetryMySQLDatabase(ReconnectMixin, PooledMySQLDatabase):
     _instance = None
 
