@@ -11,4 +11,4 @@ bilibili-api~=9.1.0
 peewee==3.14.8
 pymysql==1.0.2
 APScheduler~=3.8.1
-moviepy~=1.0.3
+
