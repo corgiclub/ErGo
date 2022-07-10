@@ -16,7 +16,7 @@ from src.models.image import Image
 from pixivpy_async import PixivClient, AppPixivAPI
 
 driver = get_driver()
-pic_base_path = Path(driver.config.pic_base_path)
+pic_base_path = Path(driver.config.data_base_path) / 'picture'
 proxies = driver.config.proxies
 
 

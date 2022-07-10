@@ -13,6 +13,15 @@ services:
     depends_on:
       - bot
 
+  glances:
+    build: ./dockers/glances
+    expose:
+      - "61208"
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+
+
 #  bot-monitor-web:
 #    build: ./bot-monitor-web
 #    ports:
@@ -24,6 +33,8 @@ services:
 
   bot:
     build: ./bot
+    volumes:
+      - /opt/ergo_database/:/mnt/hdd-2/ergo_database/
     expose:
       - "9080"
     environment:

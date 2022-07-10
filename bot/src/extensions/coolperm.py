@@ -11,15 +11,17 @@ from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
 from nonebot.matcher import Matcher
 from nonebot.params import Depends
 from pprint import pprint
+from nonebot import get_driver
 
 # todo 配置读取 配置重载 配置修改 SUPERUSER
 # fixme 当前 global.yml 的处理不对
 
 
 debug = True
+driver = get_driver()
 
 
-def load_all_permissions(path=Path('src/permissions/')):
+def load_all_permissions(path=Path(driver.config.data_base_path) / 'vol' / 'permissions'):
     perm = [yaml.safe_load(open(path / p, 'r', encoding='utf-8')) for p in os.listdir(path)]
 
     if debug:

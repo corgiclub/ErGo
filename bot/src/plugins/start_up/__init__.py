@@ -32,10 +32,10 @@ async def bot_connect():
     await fix_image_library()
 
 
-async def load_configs():
+async def load_configs(config_path = Path(driver.config.data_base_path) / 'vol' / 'config'):
     plugins = nonebot.get_loaded_plugins()
     names = [p.name for p in plugins]
-    paths = ['src/config' / Path(p.name).with_suffix('.yml') for p in plugins]
+    paths = [config_path / Path(p.name).with_suffix('.yml') for p in plugins]
     paths_example = ['src/config.example' / Path(p.name).with_suffix('.yml') for p in plugins]
     for n, p, pe in zip(names, paths, paths_example):
         if not os.path.exists(p):
