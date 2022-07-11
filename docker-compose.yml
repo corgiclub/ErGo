@@ -36,6 +36,6 @@ services:
     volumes:
       - /opt/ergo_database/:/mnt/hdd-2/ergo_database/
     expose:
-      - "9080"
+      - "9081"
     environment:
       - TZ=Asia/Shanghai
