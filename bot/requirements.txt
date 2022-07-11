@@ -12,3 +12,4 @@ APScheduler==3.8.1
 PicImageSearch~=3.3.9
 PixivPy_Async==1.2.14
 lxml==4.9.1
+typing-extensions
