@@ -16,7 +16,7 @@ nonebot.load_plugins('src/plugins')
 # nonebot.load_all_plugins(["src.plugins.test", "src.plugins.bilibili", "src.plugins.bililive"], [])
 
 if __name__ == "__main__":
-    nonebot.run(port=8080)
+    nonebot.run(port=9080)
 
     logger.add("file_1.log", rotation="4096 MB")
 
