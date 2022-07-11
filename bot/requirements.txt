@@ -1,7 +1,7 @@
 nonebot2==2.0.0a14
 nonebot-adapter-cqhttp==2.0.0a14
 pydantic==1.9.1
-PyYAML==6.0
+PyYAML==5.4.1
 ruamel.yaml~=0.17.16
 lxml==4.9.1
 httpx==0.18.2
