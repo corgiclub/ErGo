@@ -2,9 +2,10 @@ version: "3"
 
 services:
   client:
-    image: xzsk2/gocqhttp-docker:latest
+    image: xzsk2/gocqhttp-docker:dev
     volumes:
       - ./client:/data:delegated
+      - /mnt/hdd-2/ergo_database:/mnt/hdd-2/ergo_database
     tty: true
     stdin_open: true
     environment:
@@ -12,14 +13,6 @@ services:
       - LANG=en_US.UTF-8
     depends_on:
       - bot
-
-  glances:
-    build: ./dockers/glances
-    expose:
-      - "61208"
-    environment:
-      - TZ=Asia/Shanghai
-      - LANG=en_US.UTF-8
 
 
 #  bot-monitor-web:
@@ -32,10 +25,21 @@ services:
 #      - bot
 
   bot:
-    build: ./bot
+    build:
+      context: ./bot
+      network: bridge
     volumes:
-      - /opt/ergo_database/:/mnt/hdd-2/ergo_database/
+      - /mnt/hdd-2/ergo_database:/mnt/hdd-2/ergo_database
     expose:
       - "9080"
     environment:
       - TZ=Asia/Shanghai
+
+
+#  glances:
+#    build: ./dockers/glances
+#    expose:
+#      - "61208"
+#    environment:
+#      - TZ=Asia/Shanghai
+#      - LANG=en_US.UTF-8

@@ -6,6 +6,7 @@ import nonebot
 import yaml
 from nonebot.log import logger
 from nonebot import require, get_driver
+from nonebot.adapters.onebot.v11 import MessageSegment, Bot, Message
 from src.models.image import Image, ImageChat, ImageGallery
 from src.extensions import ImageType, download_image, pic_base_path
 from pixivpy_async import PixivClient, AppPixivAPI
@@ -26,10 +27,22 @@ async def start_up():
 
 
 @driver.on_bot_connect
-async def bot_connect():
+async def bot_connect(bot: Bot):
     pass
     await refresh_daily_pixiv()
     await fix_image_library()
+    print(os.path.exists('/opt/ergo_database/picture/gallery/yuri/0ee549efafdca90897da5c7b1ef12842.png'))
+    logger.info(str(os.path.exists('/opt/ergo_database/picture/gallery/yuri/0ee549efafdca90897da5c7b1ef12842.png'))+'pic')
+    await bot.send_msg(
+        message=Message([
+            MessageSegment.text(bot.self_id),
+            MessageSegment.text(' 已连接'),
+            MessageSegment.at(bot.self_id),
+            MessageSegment.image(file=Path('/mnt/hdd-2/ergo_database/picture/gallery/yuri/12676e550bfc396d0b3d2fa58ec7ee19.jpeg')),
+            # MessageSegment.image(file=Path('/mnt/hdd-2/ergo_database/picture/gallery/yuri/0ee549efafdca90897da5c7b1ef12842.png'))
+        ]),
+        group_id=726949472
+    )
 
 
 async def load_configs(config_path = Path(driver.config.data_base_path) / 'vol' / 'config'):

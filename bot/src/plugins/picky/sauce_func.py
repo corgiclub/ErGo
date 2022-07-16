@@ -4,17 +4,13 @@ from pprint import pprint
 from PicImageSearch import SauceNAO, Network
 from pixivpy_async import PixivClient, AppPixivAPI
 
-from src.extensions import get_config, pic_base_path, ImageType, proxies, get_image
+from src.extensions import get_config, pic_base_path, ImageType, get_image
 from src.models.image import ImageSauce
 
 
 
-
-
-async def search_sauce(pic):
+async def search_sauce(pic, proxies=None):
     saucenao_api_key = get_config('picky')['saucenao_api_key']
-    proxies = None
-    print(proxies)
 
     async with Network(
             proxies=proxies

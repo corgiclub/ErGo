@@ -35,7 +35,7 @@ themes = {
     'capoo': [],
 
     # meme
-    'mars': ['m'],
+    # 'mars': ['m'],
     'inm': [],
 
     # others

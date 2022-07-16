@@ -54,6 +54,8 @@ async def _(event: Event, matcher: Matcher):
         query = ImagePixiv.select(Image.filename, Image.suffix).\
             where(ImagePixiv.illust_type == 'illust', Image.file_existed, ImagePixiv.bookmarks > 5000).\
             join(Image, on=(Image.id == ImagePixiv.image_id)).order_by(fn.Rand()).get()
+        print(pic_base_path / f'pixiv/{query.image.filename}.{query.image.suffix}')
+        print(query)
         await searching_by_text.finish(
             MessageSegment.image(
                 file=pic_base_path / f'pixiv/{query.image.filename}.{query.image.suffix}'

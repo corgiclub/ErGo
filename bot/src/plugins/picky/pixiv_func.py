@@ -122,3 +122,6 @@ async def search_pixiv(text, offset_total=3, max_page=3):
             return [f'{page.image.filename}.{page.image.suffix}' for page in page_all[:max_page]]
         else:
             return []
+
+if __name__ == '__main__':
+    asyncio.run(search_pixiv('touhou'))
